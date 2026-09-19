@@ -5,6 +5,12 @@
         <stop offset="0" stop-color="#070C22"/><stop offset=".30" stop-color="#17224F"/><stop offset=".50" stop-color="#4A3B7C"/>
         <stop offset=".64" stop-color="#8E5580"/><stop offset=".76" stop-color="#D97F6E"/><stop offset=".86" stop-color="#F3B877"/><stop offset="1" stop-color="#FBE3AE"/>
       </linearGradient>
+      <linearGradient id="dawnSky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#233D67" stop-opacity="0"/><stop offset=".45" stop-color="#D9859B" stop-opacity=".42"/><stop offset=".78" stop-color="#FFCA89" stop-opacity=".65"/><stop offset="1" stop-color="#FFE9BD" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="aurora" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8ADFD6" stop-opacity="0"/><stop offset=".45" stop-color="#8ADFD6" stop-opacity=".24"/><stop offset=".78" stop-color="#F9B2AF" stop-opacity=".19"/><stop offset="1" stop-color="#F9B2AF" stop-opacity="0"/>
+      </linearGradient>
       <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1160 470) scale(380 270)">
         <stop offset="0" stop-color="#FFEFC2" stop-opacity=".95"/><stop offset=".35" stop-color="#F7A874" stop-opacity=".45"/><stop offset="1" stop-color="#F7A874" stop-opacity="0"/>
       </radialGradient>
@@ -28,14 +34,26 @@
 
   <!-- sky -->
   <svg class="L l-sky" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><rect x="0" y="0" width="1600" height="900" fill="url(#sky)"/></svg>
+  <svg class="L l-dawn" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><rect x="0" y="0" width="1600" height="900" fill="url(#dawnSky)"/></svg>
   <!-- stars + moon -->
   <svg class="L l-stars" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <g id="stars"></g>
     <circle cx="270" cy="128" r="28" fill="#F4ECD6" mask="url(#mcut)"/>
+    <g class="constellation" fill="none" stroke="#F6D9C0" stroke-width="1.3" opacity=".46">
+      <path d="M1000 92 1060 125 1120 84 1175 120 1225 75 1310 112"/>
+      <path d="M1120 84 1112 165 1175 120" stroke-dasharray="3 6"/>
+      <g fill="#FFE8C6" stroke="none"><circle cx="1000" cy="92" r="2.5"/><circle cx="1060" cy="125" r="2"/><circle cx="1120" cy="84" r="3"/><circle cx="1175" cy="120" r="2.5"/><circle cx="1225" cy="75" r="3"/><circle cx="1310" cy="112" r="2"/></g>
+    </g>
+  </svg>
+  <svg class="L l-meteors" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g class="meteor meteor-a"><path d="M1250 82 1140 147" stroke="#FFF3CE" stroke-width="2" stroke-linecap="round"/><circle cx="1140" cy="147" r="3" fill="#FFF8E4"/></g>
+    <g class="meteor meteor-b"><path d="M1470 184 1400 225" stroke="#FFF3CE" stroke-width="1.5" stroke-linecap="round"/><circle cx="1400" cy="225" r="2" fill="#FFF8E4"/></g>
   </svg>
   <!-- sun, glow, birds -->
   <svg class="L l-glow" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <rect x="700" y="150" width="900" height="600" fill="url(#glow)"/>
+    <circle class="sun-ring sun-ring-one" cx="1160" cy="458" r="54" fill="none" stroke="#FFE8B0" stroke-width="1" opacity=".3"/>
+    <circle class="sun-ring sun-ring-two" cx="1160" cy="458" r="76" fill="none" stroke="#FFE8B0" stroke-width="1" opacity=".15"/>
     <circle cx="1160" cy="458" r="36" fill="#FFF2C8"/>
     <g stroke="#1B2440" stroke-width="2" fill="none" stroke-linecap="round" transform="translate(880 300)">
       <path d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/><path transform="translate(40 -14) scale(.8)" d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/><path transform="translate(76 8) scale(.7)" d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/>
@@ -49,6 +67,10 @@
     <g class="cloud" style="--dx:-60px;--dd:125s" transform="translate(560 150) scale(.7)" opacity=".85"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#D9B7C9"/><rect x="-100" y="4" width="300" height="60" fill="#6E5B93"/></g></g>
     <g class="cloud" style="--dx:80px;--dd:150s" transform="translate(1440 330) scale(.6)" opacity=".9"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#FAD5BE"/><rect x="-100" y="6" width="300" height="60" fill="#B3808F"/></g></g>
     <g class="cloud" style="--dx:-40px;--dd:200s" transform="translate(80 400) scale(.5)" opacity=".8"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#F3C9BC"/><rect x="-140" y="8" width="380" height="60" fill="#9C7A99"/></g></g>
+  </svg>
+  <svg class="L l-atmos" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path class="aurora-band aurora-one" d="M430 315 C700 155 950 390 1310 210 S1690 205 1780 115" fill="none" stroke="url(#aurora)" stroke-width="95"/>
+    <path class="aurora-band aurora-two" d="M440 395 C720 250 1050 420 1380 285 S1690 270 1770 225" fill="none" stroke="url(#aurora)" stroke-width="45"/>
   </svg>
   <!-- far snow range -->
   <svg class="L l-far" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
@@ -68,6 +90,7 @@
     <polygon fill="#2C3C6C" points="0,650 120,620 260,660 380,610 520,655 640,615 780,660 900,625 1040,665 1180,620 1320,660 1460,630 1600,665 1600,860 0,860"/>
     <polygon fill="#33447A" opacity=".5" points="380,610 520,655 520,860 380,860"/>
     <polygon fill="#33447A" opacity=".5" points="1180,620 1320,660 1320,860 1180,860"/>
+    <g class="valley-lights" fill="#FFD798"><circle cx="244" cy="673" r="2"/><circle cx="268" cy="670" r="1.5"/><circle cx="736" cy="678" r="2"/><circle cx="752" cy="680" r="1.2"/><circle cx="1280" cy="676" r="2"/><circle cx="1303" cy="681" r="1.4"/><circle cx="1342" cy="668" r="1.7"/></g>
   </svg>
   <!-- tree line -->
   <svg class="L l-trees" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><polygon id="ridgeB" fill="#1F2D55"/></svg>
@@ -77,7 +100,7 @@
     <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#52628E" stroke-width="16" stroke-linecap="round"/>
     <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#E6D7B3" stroke-width="1.6" stroke-dasharray="12 16" opacity=".55"/>
     <g class="bus" id="bus">
-      <polygon fill="url(#beamg)" points="118,26 400,-40 400,110 118,40"/>
+      <polygon class="bus-beam" fill="url(#beamg)" points="118,26 400,-40 400,110 118,40"/>
       <rect x="18" y="-5" width="44" height="7" rx="3" fill="#D3DBE6"/>
       <rect x="0" y="0" width="120" height="44" rx="8" fill="#ECF1F7"/>
       <rect x="7" y="8" width="108" height="17" rx="3" fill="#1B2440"/>
@@ -116,10 +139,17 @@
   <div class="mast" id="mast"><div class="wrap">
     <h1>Overnight<span>Six hill escapes from Delhi, all by night bus from Kashmere Gate.</span></h1>
   </div></div>
+  <div class="cover-route" aria-label="Travel from Delhi at night and arrive in the mountains by morning">
+    <div class="cover-route-top"><span>THE NIGHT ROUTE</span><span>DEL → HILLS</span></div>
+    <div class="cover-route-track" aria-hidden="true"><span class="cover-route-dot start"></span><span class="cover-route-line"></span><span class="cover-route-dot end"></span></div>
+    <div class="cover-route-stops"><span><strong>21:00</strong>Kashmere Gate</span><span><strong>07:00</strong>Mountain air</span></div>
+    <div class="cover-route-foot">One bus ride. Six possible mornings.</div>
+  </div>
   <div class="lines" id="lines"><div class="wrap">
     <div class="kicker">Gandhi Jayanti weekend · 1–5 Oct 2026</div>
     <h2>Leave Delhi on Thursday night. <em>Wake up in the mountains.</em></h2>
     <p class="dek">A planning issue for the crew: six ridgelines you can reach on one overnight Volvo, compared side by side, with a day‑by‑day plan for each and an escape hatch if we want one more day.</p>
+    <a class="cover-explore" href="#contents"><span class="cover-explore-icon" aria-hidden="true">↓</span><span>Explore the issue</span></a>
     <div class="inside">
       <span class="lbl">Inside</span>
       <a href="#mcleod">Triund at sunrise</a>

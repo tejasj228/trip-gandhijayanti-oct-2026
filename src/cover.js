@@ -36,19 +36,4 @@
   // bus: if motion-path is unsupported, park it on the road
   const bus = $('#bus');
   if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.setAttribute('transform', 'translate(500 748) rotate(4)');
-  // fallback parallax for browsers without scroll-driven animations
-  if(RM || CSS.supports('animation-timeline', 'scroll()')) return;
-  const PAR = {'l-stars':[0,70],'l-glow':[0,-90],'l-clouds':[-90,30],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
-  const mast = $('#mast'), lines = $('#lines'); let ticking=false;
-  const run = () => {
-    ticking=false; const p = Math.min(1, Math.max(0, scrollY/(innerHeight*.88))); if(p>=1 && run.done) return; run.done = p>=1;
-    layers.forEach(l => { const k = [...l.classList].find(c => PAR[c]); if(!k) return; const [x,y] = PAR[k]; l.style.transform = `translate3d(${(x*p).toFixed(1)}px, ${(y*p).toFixed(1)}px, 0)`; });
-    $('.l-stars', cov).style.opacity = 1 - .8*p; $('.l-mist', cov).style.opacity = 1 - .85*p;
-    mast.style.transform = `translate3d(0, ${(150*p).toFixed(1)}px, 0)`; mast.style.opacity = 1-p;
-    lines.style.transform = `translate3d(0, ${(70*p).toFixed(1)}px, 0)`; lines.style.opacity = 1-p;
-    const portrait = matchMedia('(max-aspect-ratio: 4/5)').matches; bus.style.offsetDistance = (portrait ? 30 + 36*p : 14 + 64*p).toFixed(1) + '%';
-  };
-  addEventListener('scroll', () => { if(!ticking){ ticking=true; requestAnimationFrame(run); } }, {passive:true});
-  run();
 })();
-
