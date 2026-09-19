@@ -1,0 +1,133 @@
+<header class="cover" id="cover">
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#070C22"/><stop offset=".30" stop-color="#17224F"/><stop offset=".50" stop-color="#4A3B7C"/>
+        <stop offset=".64" stop-color="#8E5580"/><stop offset=".76" stop-color="#D97F6E"/><stop offset=".86" stop-color="#F3B877"/><stop offset="1" stop-color="#FBE3AE"/>
+      </linearGradient>
+      <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1160 470) scale(380 270)">
+        <stop offset="0" stop-color="#FFEFC2" stop-opacity=".95"/><stop offset=".35" stop-color="#F7A874" stop-opacity=".45"/><stop offset="1" stop-color="#F7A874" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="snow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#E9A39B"/><stop offset=".55" stop-color="#F6C4B0"/><stop offset="1" stop-color="#FFE3CC"/>
+      </linearGradient>
+      <linearGradient id="beamg" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#FFE7A3" stop-opacity=".7"/><stop offset="1" stop-color="#FFE7A3" stop-opacity="0"/>
+      </linearGradient>
+      <radialGradient id="mistg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#F7DDD0" stop-opacity=".55"/><stop offset="1" stop-color="#F7DDD0" stop-opacity="0"/></radialGradient>
+      <mask id="mcut"><rect x="0" y="0" width="1600" height="900" fill="#fff"/><circle cx="286" cy="118" r="26" fill="#000"/></mask>
+      <symbol id="pine" viewBox="-34 -78 68 96" overflow="visible">
+        <path d="M0 -76 L15 -46 L8 -46 L24 -18 L13 -18 L33 12 L-33 12 L-13 -18 L-24 -18 L-8 -46 L-15 -46 Z"/>
+        <rect x="-3" y="10" width="6" height="10"/>
+      </symbol>
+      <clipPath id="c1"><ellipse cx="0" cy="0" rx="92" ry="42"/><ellipse cx="74" cy="-16" rx="66" ry="52"/><ellipse cx="150" cy="6" rx="78" ry="38"/><ellipse cx="-62" cy="10" rx="58" ry="28"/></clipPath>
+      <clipPath id="c2"><ellipse cx="0" cy="0" rx="80" ry="36"/><ellipse cx="60" cy="-18" rx="56" ry="46"/><ellipse cx="128" cy="4" rx="64" ry="32"/><ellipse cx="-56" cy="8" rx="50" ry="24"/></clipPath>
+      <clipPath id="c3"><ellipse cx="0" cy="0" rx="60" ry="22"/><ellipse cx="46" cy="-10" rx="44" ry="30"/><ellipse cx="96" cy="2" rx="50" ry="20"/></clipPath>
+    </defs>
+  </svg>
+
+  <!-- sky -->
+  <svg class="L l-sky" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><rect x="0" y="0" width="1600" height="900" fill="url(#sky)"/></svg>
+  <!-- stars + moon -->
+  <svg class="L l-stars" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g id="stars"></g>
+    <circle cx="270" cy="128" r="28" fill="#F4ECD6" mask="url(#mcut)"/>
+  </svg>
+  <!-- sun, glow, birds -->
+  <svg class="L l-glow" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <rect x="700" y="150" width="900" height="600" fill="url(#glow)"/>
+    <circle cx="1160" cy="458" r="36" fill="#FFF2C8"/>
+    <g stroke="#1B2440" stroke-width="2" fill="none" stroke-linecap="round" transform="translate(880 300)">
+      <path d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/><path transform="translate(40 -14) scale(.8)" d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/><path transform="translate(76 8) scale(.7)" d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/>
+    </g>
+  </svg>
+  <!-- clouds -->
+  <svg class="L l-clouds" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g class="cloud" style="--dx:70px;--dd:110s" transform="translate(300 262)"><g clip-path="url(#c1)"><rect x="-140" y="-80" width="380" height="140" fill="#F5CDBB"/><rect x="-140" y="8" width="380" height="60" fill="#8C6EA8"/></g></g>
+    <g class="cloud" style="--dx:-90px;--dd:140s" transform="translate(1210 232) scale(.9)"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#FBD6BE"/><rect x="-140" y="6" width="380" height="60" fill="#A47993"/></g></g>
+    <g class="cloud" style="--dx:50px;--dd:170s" transform="translate(760 350) scale(.55)" opacity=".92"><g clip-path="url(#c1)"><rect x="-140" y="-80" width="380" height="140" fill="#F9D9C6"/><rect x="-140" y="10" width="380" height="60" fill="#B98A94"/></g></g>
+    <g class="cloud" style="--dx:-60px;--dd:125s" transform="translate(560 150) scale(.7)" opacity=".85"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#D9B7C9"/><rect x="-100" y="4" width="300" height="60" fill="#6E5B93"/></g></g>
+    <g class="cloud" style="--dx:80px;--dd:150s" transform="translate(1440 330) scale(.6)" opacity=".9"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#FAD5BE"/><rect x="-100" y="6" width="300" height="60" fill="#B3808F"/></g></g>
+    <g class="cloud" style="--dx:-40px;--dd:200s" transform="translate(80 400) scale(.5)" opacity=".8"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#F3C9BC"/><rect x="-140" y="8" width="380" height="60" fill="#9C7A99"/></g></g>
+  </svg>
+  <!-- far snow range -->
+  <svg class="L l-far" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <polygon fill="#4A4E86" points="0,585 70,548 130,570 200,505 255,540 330,462 400,520 470,445 540,498 610,455 690,492 760,418 830,468 905,430 985,480 1060,436 1130,472 1210,400 1290,455 1350,428 1430,478 1500,440 1600,470 1600,760 0,760"/>
+    <polygon fill="url(#snow)" points="0,585 70,548 130,570 200,505 255,540 330,462 400,520 470,445 540,498 610,455 690,492 760,418 830,468 905,430 985,480 1060,436 1130,472 1210,400 1290,455 1350,428 1430,478 1500,440 1600,470 1600,520 1540,505 1500,492 1465,525 1430,528 1390,505 1350,478 1320,512 1290,505 1250,470 1210,450 1170,485 1130,522 1095,515 1060,486 1020,528 985,530 945,500 905,480 865,522 830,518 795,485 760,468 725,520 690,542 650,515 610,505 575,545 540,548 505,505 470,495 435,540 400,570 365,530 330,512 295,560 255,590 225,570 200,555 165,600 130,620 100,595 70,598 35,620 0,635"/>
+    <polygon fill="#3D4176" opacity=".55" points="470,445 540,498 610,455 610,760 470,760"/>
+    <polygon fill="#3D4176" opacity=".55" points="1210,400 1290,455 1350,428 1350,760 1210,760"/>
+  </svg>
+  <!-- valley mist -->
+  <svg class="L l-mist" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <ellipse cx="420" cy="640" rx="360" ry="46" fill="url(#mistg)"/>
+    <ellipse cx="1180" cy="660" rx="420" ry="52" fill="url(#mistg)"/>
+    <ellipse cx="820" cy="700" rx="300" ry="36" fill="url(#mistg)" opacity=".8"/>
+  </svg>
+  <!-- mid ridge -->
+  <svg class="L l-mid" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <polygon fill="#2C3C6C" points="0,650 120,620 260,660 380,610 520,655 640,615 780,660 900,625 1040,665 1180,620 1320,660 1460,630 1600,665 1600,860 0,860"/>
+    <polygon fill="#33447A" opacity=".5" points="380,610 520,655 520,860 380,860"/>
+    <polygon fill="#33447A" opacity=".5" points="1180,620 1320,660 1320,860 1180,860"/>
+  </svg>
+  <!-- tree line -->
+  <svg class="L l-trees" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><polygon id="ridgeB" fill="#1F2D55"/></svg>
+  <!-- near slope, road, bus -->
+  <svg class="L l-road" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <polygon fill="#172440" points="0,790 200,760 420,780 620,745 860,775 1100,740 1340,770 1600,745 1600,960 0,960"/>
+    <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#52628E" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#E6D7B3" stroke-width="1.6" stroke-dasharray="12 16" opacity=".55"/>
+    <g class="bus" id="bus">
+      <polygon fill="url(#beamg)" points="118,26 400,-40 400,110 118,40"/>
+      <rect x="18" y="-5" width="44" height="7" rx="3" fill="#D3DBE6"/>
+      <rect x="0" y="0" width="120" height="44" rx="8" fill="#ECF1F7"/>
+      <rect x="7" y="8" width="108" height="17" rx="3" fill="#1B2440"/>
+      <g stroke="#ECF1F7" stroke-width="2"><line x1="24" y1="8" x2="24" y2="25"/><line x1="42" y1="8" x2="42" y2="25"/><line x1="60" y1="8" x2="60" y2="25"/><line x1="78" y1="8" x2="78" y2="25"/><line x1="96" y1="8" x2="96" y2="25"/></g>
+      <rect x="0" y="30" width="120" height="9" fill="#EF7B6B"/>
+      <rect x="0" y="39" width="120" height="5" fill="#C9D3E0"/>
+      <circle cx="118" cy="34" r="3" fill="#FFF0B8"/>
+      <circle cx="2" cy="34" r="2.2" fill="#FF6B6B"/>
+      <circle cx="26" cy="44" r="7.5" fill="#0E1526" stroke="#6B7A99" stroke-width="2"/>
+      <circle cx="94" cy="44" r="7.5" fill="#0E1526" stroke="#6B7A99" stroke-width="2"/>
+    </g>
+  </svg>
+  <!-- foreground pines -->
+  <svg class="L l-fg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" fill="#0B1220">
+    <polygon points="0,862 300,838 600,858 900,840 1200,860 1600,842 1600,1100 0,1100"/>
+    <use href="#pine" transform="translate(30 838) scale(1.35)"/>
+    <use href="#pine" transform="translate(96 850) scale(1.05)"/>
+    <use href="#pine" transform="translate(160 832) scale(1.6)"/>
+    <use href="#pine" transform="translate(236 858) scale(.95)"/>
+    <use href="#pine" transform="translate(1400 852) scale(1.15)"/>
+    <use href="#pine" transform="translate(1470 834) scale(1.7)"/>
+    <use href="#pine" transform="translate(1545 852) scale(1.1)"/>
+    <use href="#pine" transform="translate(1598 866) scale(.85)"/>
+  </svg>
+  <!-- prayer flags -->
+  <svg class="L l-flags" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path id="line" d="M-10 30 Q 300 260 660 190" fill="none" stroke="#1B2440" stroke-width="2.2"/>
+    <g id="flags"></g>
+  </svg>
+  <div class="scrim"></div>
+
+  <div class="topbar"><div class="wrap in">
+    <span>The long-weekend issue &nbsp;·&nbsp; No. 01</span>
+    <span>Oct 2026 &nbsp;·&nbsp; Price: one bus ticket</span>
+  </div></div>
+  <div class="mast" id="mast"><div class="wrap">
+    <h1>Overnight<span>Six hill escapes from Delhi, all by night bus from Kashmere Gate.</span></h1>
+  </div></div>
+  <div class="lines" id="lines"><div class="wrap">
+    <div class="kicker">Gandhi Jayanti weekend · 1–5 Oct 2026</div>
+    <h2>Leave Delhi on Thursday night. <em>Wake up in the mountains.</em></h2>
+    <p class="dek">A planning issue for the crew: six ridgelines you can reach on one overnight Volvo, compared side by side, with a day‑by‑day plan for each and an escape hatch if we want one more day.</p>
+    <div class="inside">
+      <span class="lbl">Inside</span>
+      <a href="#mcleod">Triund at sunrise</a>
+      <a href="#kasol">Parvati on café time</a>
+      <a href="#bir">Flying at Billing</a>
+      <a href="#nainital">Boats at dawn</a>
+      <a href="#mussoorie">Char Dukan omelettes</a>
+      <a href="#lansdowne">Nobody in Lansdowne</a>
+    </div>
+  </div></div>
+</header>

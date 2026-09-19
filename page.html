@@ -1,0 +1,1211 @@
+<title>The Overnight Issue</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --paper:#EEF2F5; --card:#FFFFFF; --ink:#101A2E; --ink-2:#4F5B70; --ink-3:#7E8A9E;
+  --line:#D5DDE7; --line-2:#E5EBF1;
+  --accent:#EF7B6B; --accent-ink:#B9463A; --accent-soft:#FBE4DE;
+  --gold:#D9A036; --pine:#2F5D50; --dusk:#2E3F6E; --dusk-soft:#DFE5F3;
+  --shadow:0 1px 2px rgba(16,26,46,.06),0 14px 34px -18px rgba(16,26,46,.28);
+  --display:"Instrument Serif","Iowan Old Style",Georgia,"Times New Roman",serif;
+  --sans:"Manrope","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --gutter:clamp(16px,4vw,40px);
+  --nav-h:54px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1322; --card:#141D31; --ink:#E9EDF5; --ink-2:#A9B4C8; --ink-3:#7F8BA3;
+    --line:#26314A; --line-2:#1C263B;
+    --accent:#F28E7E; --accent-ink:#F7A899; --accent-soft:#3A2530;
+    --gold:#F1BE5B; --pine:#7BB8A2; --dusk:#93A5D8; --dusk-soft:#1C2745;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 34px -18px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1322; --card:#141D31; --ink:#E9EDF5; --ink-2:#A9B4C8; --ink-3:#7F8BA3;
+  --line:#26314A; --line-2:#1C263B;
+  --accent:#F28E7E; --accent-ink:#F7A899; --accent-soft:#3A2530;
+  --gold:#F1BE5B; --pine:#7BB8A2; --dusk:#93A5D8; --dusk-soft:#1C2745;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 34px -18px rgba(0,0,0,.6);
+}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 12px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+*,*::before,*::after{box-sizing:border-box}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{width:min(1180px,100% - 2*var(--gutter));margin-inline:auto}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.h-display{font-family:var(--display);font-weight:400;letter-spacing:-.02em;line-height:.95;text-wrap:balance}
+.h-display em{font-style:italic;color:var(--accent-ink)}
+.ital{font-family:var(--display);font-style:italic;font-weight:400}
+h1,h2,h3,h4,p{margin:0}
+
+/* ---------- COVER ---------- */
+.cover{position:relative;min-height:clamp(620px,94svh,940px);display:flex;flex-direction:column;background:#0B1230;color:#F6F1E8;overflow:hidden;isolation:isolate;contain:paint}
+.cover .L{position:absolute;inset:0;width:100%;height:100%;display:block;will-change:transform;pointer-events:none}
+.cover .defs{position:absolute;width:0;height:0;overflow:hidden}
+.cover .scrim{position:absolute;inset:auto 0 0 0;height:56%;background:linear-gradient(to top,rgba(8,12,30,.94) 0%,rgba(8,12,30,.6) 40%,rgba(8,12,30,0) 100%);pointer-events:none}
+.cover .topbar{position:relative;padding-top:calc(env(safe-area-inset-top,0px) + 14px);z-index:2}
+.cover .topbar .in{display:flex;justify-content:space-between;align-items:center;gap:12px;font:500 10.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(246,241,232,.78);border-bottom:1px solid rgba(246,241,232,.22);padding-bottom:12px}
+.cover .topbar .in span:last-child{text-align:right}
+.cover .mast{position:relative;padding-top:clamp(10px,2vh,22px);pointer-events:none;will-change:transform,opacity;z-index:2}
+.cover .mast h1{font-family:var(--display);font-weight:400;font-size:clamp(72px,15vw,210px);line-height:.84;letter-spacing:-.035em;color:#F6F1E8;text-shadow:0 18px 60px rgba(11,18,48,.55)}
+.cover .mast h1 span{display:block;font-family:var(--sans);font-weight:500;font-size:clamp(14px,1.5vw,19px);letter-spacing:.01em;line-height:1.3;color:rgba(246,241,232,.85);margin-top:.55em;text-shadow:none;max-width:40ch}
+.cover .lines{position:relative;margin-top:auto;padding-top:clamp(40px,8vh,90px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + clamp(22px,4vh,44px));will-change:transform,opacity;z-index:2}
+.cover .lines .kicker{font:600 11px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#F6C27A;margin-bottom:12px}
+.cover .lines h2{font-family:var(--display);font-weight:400;font-size:clamp(34px,5.2vw,70px);line-height:.96;letter-spacing:-.025em;max-width:17ch;text-wrap:balance}
+.cover .lines h2 em{font-style:italic;color:#F6C27A}
+.cover .lines .dek{font-family:var(--sans);font-size:clamp(15px,1.25vw,18px);line-height:1.55;color:rgba(246,241,232,.84);max-width:56ch;margin-top:14px}
+.cover .inside{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:20px;padding-top:14px;border-top:1px solid rgba(246,241,232,.22);font:500 12px/1.5 var(--mono);letter-spacing:.04em;color:rgba(246,241,232,.82)}
+.cover .inside a{color:#F6F1E8;text-decoration:none;border-bottom:1px solid rgba(246,241,232,.35);padding-bottom:1px}
+.cover .inside a:hover{border-color:#F6C27A;color:#F6C27A}
+.cover .inside .lbl{color:#F6C27A;font-weight:700}
+@media (max-width:640px){
+  .cover .inside{gap:6px 14px;font-size:11px}
+  .cover .inside .lbl{flex-basis:100%}
+  .cover .topbar .in span:last-child{display:none}
+}
+@media (max-height:720px) and (min-width:641px){
+  .cover .mast h1{font-size:clamp(56px,10vw,120px)}
+  .cover .mast h1 span{display:none}
+  .cover .lines h2{font-size:clamp(26px,3.8vw,44px)}
+  .cover .lines .dek{display:none}
+  .cover .inside{margin-top:12px;padding-top:10px}
+}
+
+/* ambient (time-based) motion — cheap, few animations */
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.35}}
+.cover .sg{animation:tw var(--d,5s) ease-in-out var(--dl,0s) infinite}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(var(--dx,60px))}}
+.cover .cloud{animation:drift var(--dd,90s) linear infinite alternate}
+@keyframes wave{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.cover .flag{transform-box:fill-box;transform-origin:50% 0%;animation:wave var(--wd,3.4s) ease-in-out var(--wdl,0s) infinite}
+@media (prefers-reduced-motion:reduce){.cover *{animation:none !important}}
+
+/* bus follows the road */
+.cover .bus{offset-path:path("M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790");offset-distance:14%;offset-rotate:auto;transform-box:fill-box;offset-anchor:60px 84px}
+
+/* scroll-driven parallax — composited transforms, no JS */
+@supports (animation-timeline: scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    .cover .L,.cover .mast,.cover .lines,.cover .bus{animation-timing-function:linear;animation-fill-mode:both;animation-timeline:scroll(root);animation-range:0 88vh}
+    .cover .l-stars{animation-name:c-stars}
+    .cover .l-glow{animation-name:c-sun}
+    .cover .l-clouds{animation-name:c-clouds}
+    .cover .l-far{animation-name:c-far}
+    .cover .l-mist{animation-name:c-mist}
+    .cover .l-mid{animation-name:c-mid}
+    .cover .l-trees{animation-name:c-trees}
+    .cover .l-road{animation-name:c-road}
+    .cover .l-fg{animation-name:c-fg}
+    .cover .l-flags{animation-name:c-flags}
+    .cover .mast{animation-name:c-mast}
+    .cover .lines{animation-name:c-lines}
+    .cover .bus{animation-name:c-bus}
+  }
+}
+@keyframes c-stars{to{transform:translateY(70px);opacity:.2}}
+@keyframes c-sun{to{transform:translateY(-90px)}}
+@keyframes c-clouds{to{transform:translate(-90px,30px)}}
+@keyframes c-far{to{transform:translateY(30px)}}
+@keyframes c-mist{to{transform:translate(140px,-30px);opacity:.15}}
+@keyframes c-mid{to{transform:translateY(-20px)}}
+@keyframes c-trees{to{transform:translateY(-70px)}}
+@keyframes c-road{to{transform:translateY(-120px)}}
+@keyframes c-fg{to{transform:translateY(-190px)}}
+@keyframes c-flags{to{transform:translateY(-240px)}}
+@keyframes c-mast{to{transform:translateY(150px);opacity:0}}
+@keyframes c-lines{to{transform:translateY(70px);opacity:0}}
+@keyframes c-bus{from{offset-distance:14%}to{offset-distance:78%}}
+@keyframes c-bus-m{from{offset-distance:30%}to{offset-distance:66%}}
+@media (max-aspect-ratio:4/5){.cover .bus{offset-distance:30%;animation-name:c-bus-m}}
+
+/* ---------- FOLIO / NAV ---------- */
+.folio{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--paper) 94%,transparent);border-bottom:1px solid var(--line)}
+@supports not (background:color-mix(in srgb,red 50%,blue)){.folio{background:var(--paper)}}
+.folio .in{display:flex;align-items:center;gap:16px;height:var(--nav-h)}
+.folio .brand{font-family:var(--display);font-size:24px;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;display:flex;align-items:baseline;gap:10px;line-height:1}
+.folio .brand small{font:500 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.folio .tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-left:auto;padding:4px 0;mask-image:linear-gradient(to right,transparent,black 14px,black calc(100% - 14px),transparent)}
+.folio .tabs::-webkit-scrollbar{display:none}
+.folio .tab{font:600 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;border-radius:999px;color:var(--ink-2);text-decoration:none;white-space:nowrap;border:1px solid transparent;transition:background .2s,color .2s}
+.folio .tab:hover{border-color:var(--line)}
+.folio .tab.active{background:var(--ink);color:var(--paper)}
+@media (max-width:640px){.folio .brand small{display:none}.folio .brand{font-size:22px}}
+
+/* ---------- SECTIONS ---------- */
+.section{padding-block:clamp(56px,9vw,112px)}
+.section-head{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:clamp(28px,4vw,48px)}
+.section-head h2{font-size:clamp(40px,5.8vw,72px)}
+.section-head .lede{font-size:clamp(20px,1.7vw,25px);line-height:1.35;color:var(--ink-2);max-width:56ch}
+@media (min-width:900px){.section-head{grid-template-columns:1.1fr 1fr;align-items:end}}
+
+/* ---------- CONTENTS ---------- */
+.peaks{margin:8px 0 34px;padding:22px clamp(14px,2vw,28px) 14px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.peaks .cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:500 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.peaks .scroller{overflow-x:auto;scrollbar-width:thin}
+.peaks svg{width:100%;min-width:640px;height:auto;display:block}
+.peaks .pk{cursor:pointer}
+.peaks .pk .m{fill:var(--dusk-soft);stroke:var(--dusk);stroke-width:1.5;transition:fill .25s}
+.peaks .pk:hover .m,.peaks .pk:focus .m{fill:var(--accent-soft);stroke:var(--accent-ink)}
+.peaks .pk text{fill:var(--ink);font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:-.01em}
+.peaks .pk .alt{font-family:var(--mono);font-weight:500;font-size:11px;fill:var(--ink-2);letter-spacing:.04em}
+.peaks .base{stroke:var(--line);stroke-dasharray:3 5}
+.peaks .baselbl{font:500 10px var(--mono);fill:var(--ink-3);letter-spacing:.08em}
+.sorts{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:22px}
+.sorts .lbl{font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-right:6px}
+.chip{font:600 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:9px 13px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;color:var(--ink-2);transition:all .2s}
+.chip:hover{border-color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.card:hover{transform:translateY(-4px);box-shadow:0 2px 3px rgba(16,26,46,.06),0 26px 48px -22px rgba(16,26,46,.4)}
+.card .ph{aspect-ratio:4/3;overflow:hidden;background:var(--dusk-soft)}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.card .body{padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card .name{font-family:var(--display);font-size:34px;letter-spacing:-.02em;line-height:.95}
+.card .sub{font:500 10.5px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.card .tag{font-family:var(--display);font-style:italic;color:var(--ink-2);font-size:19px;line-height:1.3}
+.card .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line-2)}
+.card .stat b{display:block;font:500 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.card .stat span{font:700 13.5px/1.2 var(--sans);font-variant-numeric:tabular-nums}
+.card .go{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-top:6px}
+
+/* ---------- PLAN STRIP ---------- */
+.plan{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.plan .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:18px;margin-bottom:28px}
+.plan h2{font-size:clamp(34px,4.2vw,54px)}
+.plan .head p{color:var(--ink-2);max-width:52ch;font-size:16px}
+.switch{display:inline-flex;align-items:center;gap:12px;background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 14px 8px 8px;cursor:pointer;font:600 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);transition:border-color .2s}
+.switch:hover{border-color:var(--ink-2)}
+.switch .knob{width:38px;height:22px;border-radius:999px;background:var(--line);position:relative;transition:background .25s;flex:none}
+.switch .knob::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+.switch[aria-checked="true"]{color:var(--ink)}
+.switch[aria-checked="true"] .knob{background:var(--accent)}
+.switch[aria-checked="true"] .knob::after{transform:translateX(16px)}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+body.ext .steps{grid-template-columns:repeat(6,minmax(0,1fr))}
+.steps .step{position:relative;padding:16px 10px 6px 0;border-top:2px solid var(--line)}
+.steps .step::before{content:"";position:absolute;top:-6px;left:0;width:10px;height:10px;border-radius:50%;background:var(--ink);border:2px solid var(--card)}
+.steps .step.s-night::before{background:var(--dusk)}
+.steps .step.s-day::before{background:var(--gold)}
+.steps .step.s-home::before{background:var(--accent)}
+.steps .step.s-ext{opacity:.4;transition:opacity .3s}
+.steps .step .d{font:600 10.5px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.steps .step .t{font:700 17px/1.2 var(--sans);letter-spacing:-.015em}
+.steps .step .n{font-size:14.5px;color:var(--ink-2);margin-top:6px;line-height:1.45}
+body.ext .steps .step.s-ext{opacity:1}
+.steps .step.s-tue{display:none}
+body.ext .steps .step.s-tue{display:block}
+.steps .step .alt-on{display:none}
+body.ext .steps .step .alt-on{display:inline}
+body.ext .steps .step .alt-off{display:none}
+@media (max-width:820px){
+  .steps,body.ext .steps{grid-template-columns:1fr;gap:0;border-left:2px solid var(--line);margin-left:6px;padding-left:20px}
+  .steps .step{border-top:0;padding:8px 0 16px}
+  .steps .step::before{left:-27px;top:12px}
+}
+
+/* ---------- FEATURE SPREADS ---------- */
+.feature{padding-top:clamp(30px,5vw,64px);content-visibility:auto;contain-intrinsic-size:auto 3200px}
+.feature + .feature{border-top:1px solid var(--line)}
+.feature .hero{position:relative;height:clamp(440px,74vh,780px);overflow:hidden;background:var(--dusk-soft)}
+.feature .hero img{width:100%;height:100%;object-fit:cover}
+.feature .hero .veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,32,.88) 0%,rgba(10,15,32,.4) 42%,rgba(10,15,32,0) 70%)}
+.feature .hero .title{position:absolute;left:0;right:0;bottom:0;color:#F6F1E8;padding-bottom:clamp(22px,3.5vw,44px)}
+.feature .hero .title .where{font:600 10.5px/1.6 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#F6C27A;display:flex;flex-wrap:wrap;gap:4px 16px;margin-bottom:10px}
+.feature .hero .title h2{font-size:clamp(52px,10.5vw,148px);line-height:.88;letter-spacing:-.03em;text-shadow:0 20px 50px rgba(0,0,0,.35)}
+.feature .hero .title .tag{font-family:var(--display);font-style:italic;font-size:clamp(20px,2.3vw,31px);line-height:1.25;margin-top:14px;max-width:32ch;color:rgba(246,241,232,.92)}
+.feature .hero .credit{position:absolute;right:var(--gutter);top:14px;font:500 10px/1 var(--mono);letter-spacing:.06em;color:rgba(246,241,232,.75);text-decoration:none;background:rgba(10,15,32,.45);padding:6px 9px;border-radius:4px}
+.feature .hero .credit:hover{color:#F6F1E8}
+.feature .intro{display:grid;grid-template-columns:1fr;gap:28px;padding-block:clamp(32px,5vw,64px) clamp(24px,3vw,40px)}
+@media (min-width:900px){.feature .intro{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(30px,5vw,80px)}}
+.feature .intro .lead{font-size:clamp(18px,1.4vw,20px);line-height:1.6;max-width:62ch}
+.feature .intro .lead::first-letter{font-family:var(--display);font-size:4.6em;float:left;line-height:.78;padding:.08em .12em 0 0;color:var(--accent-ink);letter-spacing:0}
+.feature .intro .lead + p{margin-top:16px;color:var(--ink-2);font-size:16.5px;max-width:62ch}
+.glance{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;align-self:start}
+.glance div{background:var(--card);padding:14px 16px}
+.glance b{display:block;font:500 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:7px}
+.glance span{font:700 15px/1.3 var(--sans);letter-spacing:-.01em;display:block}
+.glance .wide{grid-column:1/-1}
+.two{display:grid;grid-template-columns:1fr;gap:28px;padding-block:clamp(10px,2vw,24px) clamp(28px,4vw,56px)}
+@media (min-width:900px){.two{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(30px,5vw,80px);align-items:start}}
+
+/* boarding pass */
+.pass{position:relative;display:grid;grid-template-columns:1fr;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;font-family:var(--mono)}
+@media (min-width:640px){.pass{grid-template-columns:minmax(0,1fr) 200px}}
+.pass .main{padding:20px 22px 22px;position:relative;min-width:0}
+.pass .stub{padding:20px 20px 22px;background:var(--dusk-soft);position:relative;border-top:1px dashed var(--ink-3);min-width:0}
+@media (min-width:640px){.pass .stub{border-top:0;border-left:1px dashed var(--ink-3)}
+  .pass .stub::before,.pass .stub::after{content:"";position:absolute;left:-10px;width:20px;height:20px;border-radius:50%;background:var(--paper);border:1px solid var(--line)}
+  .pass .stub::before{top:-11px}.pass .stub::after{bottom:-11px}}
+.pass .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;font:600 10px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+.pass .hd em{font-style:normal;color:var(--accent-ink);text-align:right}
+.pass .route{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:18px}
+.pass .route .code{font:700 clamp(30px,3.6vw,42px)/1 var(--mono);letter-spacing:-.03em}
+.pass .route .city{font:500 10.5px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-top:6px}
+.pass .route .to{text-align:right}
+.pass .route .arrow{color:var(--ink-3);font-size:22px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.pass .route .arrow small{font:500 9.5px/1 var(--mono);letter-spacing:.1em;color:var(--ink-3);white-space:nowrap}
+.pass .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+@media (min-width:480px){.pass .grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pass .f b{display:block;font:500 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.pass .f span{font:600 13px/1.45 var(--mono);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.pass .f.span2{grid-column:1/-1}
+@media (min-width:480px){.pass .f.span2{grid-column:span 2}}
+.pass .note{margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2);font-family:var(--sans);font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.pass .stub .f{margin-bottom:14px}
+.pass .stub .f span{font-size:12.5px}
+.pass .barcode{height:44px;margin-top:6px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 13px,var(--ink) 13px 14px,transparent 14px 17px);opacity:.75}
+.pass .ret-on{display:none}
+body.ext .pass .ret-on{display:inline}
+body.ext .pass .ret-off{display:none}
+
+/* photo card */
+.ph2{position:relative;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:var(--dusk-soft);margin:0}
+.ph2 img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.ph2 figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;font-family:var(--display);font-style:italic;font-size:17px;line-height:1.3;color:#F6F1E8;background:linear-gradient(to top,rgba(10,15,32,.88),rgba(10,15,32,0))}
+.ph2 figcaption a{font:500 10px/1 var(--mono);letter-spacing:.06em;color:rgba(246,241,232,.75);text-decoration:none;font-style:normal;display:block;margin-top:5px}
+
+/* itinerary */
+.itin{padding-block:clamp(10px,2vw,24px) clamp(28px,4vw,56px)}
+.itin .hd{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:14px;margin-bottom:22px}
+.itin h3{font-size:clamp(30px,3.4vw,44px)}
+.itin .hd p{font-family:var(--display);font-style:italic;color:var(--ink-2);font-size:19px}
+.days{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:26px}
+.days::-webkit-scrollbar{display:none}
+.day{font:600 11.5px/1.35 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--ink-2);white-space:nowrap;text-align:left;transition:all .2s}
+.day small{display:block;font-weight:500;letter-spacing:.04em;text-transform:none;color:var(--ink-3);font-size:10.5px}
+.day:hover{border-color:var(--ink-2)}
+.day[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.day[aria-selected="true"] small{color:color-mix(in srgb,var(--paper) 70%,transparent)}
+.day.opt{border-style:dashed}
+body.ext .day.opt{border-style:solid}
+.day .opt-on{display:none}
+body.ext .day .opt-on{display:inline}
+body.ext .day .opt-off{display:none}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:78px;top:6px;bottom:6px;width:1px;background:var(--line)}
+@media (max-width:520px){.tl::before{left:58px}}
+.tl li{display:grid;grid-template-columns:64px 28px minmax(0,1fr);gap:0 10px;padding:12px 0;align-items:start}
+@media (max-width:520px){.tl li{grid-template-columns:48px 20px minmax(0,1fr)}}
+.tl .t{font:600 12.5px/1.6 var(--mono);color:var(--ink-2);font-variant-numeric:tabular-nums;text-align:right;padding-top:2px}
+.tl .dot{width:9px;height:9px;border-radius:50%;background:var(--card);border:2px solid var(--ink);justify-self:center;margin-top:7px}
+.tl li.hi .dot{background:var(--accent);border-color:var(--accent)}
+.tl .w{font:700 16.5px/1.3 var(--sans);letter-spacing:-.015em}
+.tl .n{color:var(--ink-2);font-size:15.5px;line-height:1.5;margin-top:3px;max-width:62ch}
+.tl-wrap{animation:fadein .35s ease both}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.daynote{font-family:var(--display);font-style:italic;color:var(--ink-2);margin-bottom:8px;font-size:19px;line-height:1.35;max-width:60ch}
+
+/* the edit */
+.edit{padding-block:clamp(10px,2vw,24px) clamp(28px,4vw,56px)}
+.edit h3,.stay h3,.eat h3,.notes h3{font-size:clamp(28px,2.8vw,36px);margin-bottom:6px}
+.edit .sub{font-family:var(--display);font-style:italic;color:var(--ink-2);margin-bottom:22px;font-size:19px}
+.edit ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;border-top:1px solid var(--line)}
+@media (min-width:760px){.edit ul{grid-template-columns:1fr 1fr;column-gap:40px}}
+.edit li{display:grid;grid-template-columns:70px minmax(0,1fr);gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.edit li .k{font:600 10px/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink)}
+.edit li .k.act{color:var(--pine)}
+.edit li .k.mkt{color:var(--gold)}
+.edit li b{font:700 16px/1.3 var(--sans);letter-spacing:-.015em;display:block;margin-bottom:2px}
+.edit li span{color:var(--ink-2);font-size:15px;line-height:1.5}
+
+.cols{display:grid;grid-template-columns:1fr;gap:28px;padding-block:clamp(10px,2vw,24px) clamp(40px,6vw,80px)}
+@media (min-width:900px){.cols{grid-template-columns:1fr 1fr 1.1fr;gap:clamp(24px,3vw,44px)}}
+.cols ul{list-style:none;margin:14px 0 0;padding:0}
+.cols li{padding:10px 0;border-top:1px solid var(--line-2);font-size:15.5px;line-height:1.5}
+.cols li b{font:700 15.5px/1.35 var(--sans);letter-spacing:-.01em}
+.cols li span{color:var(--ink-2)}
+.cols li em{font-style:normal;font:500 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-left:6px;white-space:nowrap}
+.notes{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px 12px;background-image:repeating-linear-gradient(to bottom,transparent 0 27px,var(--line-2) 27px 28px);background-origin:content-box;background-position:0 8px}
+.notes .hd{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}
+.notes h3{font-size:28px;margin-bottom:8px}
+.notes ul{margin-top:6px}
+.notes li{border-top:0;padding:6px 0;font-size:15px;line-height:28px}
+.notes .wx{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 6px;padding:10px 0;border-block:1px solid var(--line)}
+.notes .wx b{display:block;font:500 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.notes .wx span{font:700 14.5px/1.2 var(--sans);font-variant-numeric:tabular-nums}
+
+/* ---------- BACK PAGE ---------- */
+.back{background:#0B1230;color:#F6F1E8;padding-block:clamp(56px,9vw,112px)}
+.back .eyebrow{color:#F6C27A}
+.back h2{font-size:clamp(40px,5.8vw,72px);color:#F6F1E8;margin:14px 0 10px}
+.back .lede{font-family:var(--display);font-style:italic;color:rgba(246,241,232,.82);font-size:clamp(20px,1.7vw,25px);line-height:1.35;max-width:52ch}
+.back .grid{display:grid;grid-template-columns:1fr;gap:26px;margin-top:40px}
+@media (min-width:900px){.back .grid{grid-template-columns:1.2fr 1fr 1fr}}
+.back .box{border:1px solid rgba(246,241,232,.18);border-radius:12px;padding:20px 22px}
+.back .box h3{font:700 18px/1.2 var(--sans);letter-spacing:-.02em;color:#F6F1E8;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.back .box h3 small{font:500 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#F6C27A}
+.back ul{list-style:none;margin:0;padding:0}
+.back li{padding:9px 0;border-top:1px solid rgba(246,241,232,.12);font-size:15px;line-height:1.5;color:rgba(246,241,232,.88);display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px}
+.back li .when{font:600 10.5px/1.7 var(--mono);letter-spacing:.06em;color:#F6C27A;white-space:nowrap;min-width:62px}
+.back li.one{grid-template-columns:1fr}
+.back .pack{columns:2;column-gap:20px}
+@media (max-width:420px){.back .pack{columns:1}}
+.back .pack li{break-inside:avoid;grid-template-columns:1fr;font-size:14.5px;padding:6px 0}
+.back .fine{margin-top:40px;padding-top:22px;border-top:1px solid rgba(246,241,232,.18);font-size:13.5px;line-height:1.6;color:rgba(246,241,232,.62);max-width:80ch}
+
+/* reveal — scroll-driven, pure CSS; content is fully visible wherever this is unsupported */
+@keyframes rise{from{opacity:.1;transform:translateY(26px)}to{opacity:1;transform:none}}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion:no-preference){
+    [data-rv]{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+    .pass[data-rv],.notes[data-rv]{animation-range:entry 0% entry 40%}
+  }
+}
+</style>
+
+<header class="cover" id="cover">
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#070C22"/><stop offset=".30" stop-color="#17224F"/><stop offset=".50" stop-color="#4A3B7C"/>
+        <stop offset=".64" stop-color="#8E5580"/><stop offset=".76" stop-color="#D97F6E"/><stop offset=".86" stop-color="#F3B877"/><stop offset="1" stop-color="#FBE3AE"/>
+      </linearGradient>
+      <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1160 470) scale(380 270)">
+        <stop offset="0" stop-color="#FFEFC2" stop-opacity=".95"/><stop offset=".35" stop-color="#F7A874" stop-opacity=".45"/><stop offset="1" stop-color="#F7A874" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="snow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#E9A39B"/><stop offset=".55" stop-color="#F6C4B0"/><stop offset="1" stop-color="#FFE3CC"/>
+      </linearGradient>
+      <linearGradient id="beamg" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#FFE7A3" stop-opacity=".7"/><stop offset="1" stop-color="#FFE7A3" stop-opacity="0"/>
+      </linearGradient>
+      <radialGradient id="mistg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#F7DDD0" stop-opacity=".55"/><stop offset="1" stop-color="#F7DDD0" stop-opacity="0"/></radialGradient>
+      <mask id="mcut"><rect x="0" y="0" width="1600" height="900" fill="#fff"/><circle cx="286" cy="118" r="26" fill="#000"/></mask>
+      <symbol id="pine" viewBox="-34 -78 68 96" overflow="visible">
+        <path d="M0 -76 L15 -46 L8 -46 L24 -18 L13 -18 L33 12 L-33 12 L-13 -18 L-24 -18 L-8 -46 L-15 -46 Z"/>
+        <rect x="-3" y="10" width="6" height="10"/>
+      </symbol>
+      <clipPath id="c1"><ellipse cx="0" cy="0" rx="92" ry="42"/><ellipse cx="74" cy="-16" rx="66" ry="52"/><ellipse cx="150" cy="6" rx="78" ry="38"/><ellipse cx="-62" cy="10" rx="58" ry="28"/></clipPath>
+      <clipPath id="c2"><ellipse cx="0" cy="0" rx="80" ry="36"/><ellipse cx="60" cy="-18" rx="56" ry="46"/><ellipse cx="128" cy="4" rx="64" ry="32"/><ellipse cx="-56" cy="8" rx="50" ry="24"/></clipPath>
+      <clipPath id="c3"><ellipse cx="0" cy="0" rx="60" ry="22"/><ellipse cx="46" cy="-10" rx="44" ry="30"/><ellipse cx="96" cy="2" rx="50" ry="20"/></clipPath>
+    </defs>
+  </svg>
+
+  <!-- sky -->
+  <svg class="L l-sky" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><rect x="0" y="0" width="1600" height="900" fill="url(#sky)"/></svg>
+  <!-- stars + moon -->
+  <svg class="L l-stars" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g id="stars"></g>
+    <circle cx="270" cy="128" r="28" fill="#F4ECD6" mask="url(#mcut)"/>
+  </svg>
+  <!-- sun, glow, birds -->
+  <svg class="L l-glow" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <rect x="700" y="150" width="900" height="600" fill="url(#glow)"/>
+    <circle cx="1160" cy="458" r="36" fill="#FFF2C8"/>
+    <g stroke="#1B2440" stroke-width="2" fill="none" stroke-linecap="round" transform="translate(880 300)">
+      <path d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/><path transform="translate(40 -14) scale(.8)" d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/><path transform="translate(76 8) scale(.7)" d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/>
+    </g>
+  </svg>
+  <!-- clouds -->
+  <svg class="L l-clouds" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g class="cloud" style="--dx:70px;--dd:110s" transform="translate(300 262)"><g clip-path="url(#c1)"><rect x="-140" y="-80" width="380" height="140" fill="#F5CDBB"/><rect x="-140" y="8" width="380" height="60" fill="#8C6EA8"/></g></g>
+    <g class="cloud" style="--dx:-90px;--dd:140s" transform="translate(1210 232) scale(.9)"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#FBD6BE"/><rect x="-140" y="6" width="380" height="60" fill="#A47993"/></g></g>
+    <g class="cloud" style="--dx:50px;--dd:170s" transform="translate(760 350) scale(.55)" opacity=".92"><g clip-path="url(#c1)"><rect x="-140" y="-80" width="380" height="140" fill="#F9D9C6"/><rect x="-140" y="10" width="380" height="60" fill="#B98A94"/></g></g>
+    <g class="cloud" style="--dx:-60px;--dd:125s" transform="translate(560 150) scale(.7)" opacity=".85"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#D9B7C9"/><rect x="-100" y="4" width="300" height="60" fill="#6E5B93"/></g></g>
+    <g class="cloud" style="--dx:80px;--dd:150s" transform="translate(1440 330) scale(.6)" opacity=".9"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#FAD5BE"/><rect x="-100" y="6" width="300" height="60" fill="#B3808F"/></g></g>
+    <g class="cloud" style="--dx:-40px;--dd:200s" transform="translate(80 400) scale(.5)" opacity=".8"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#F3C9BC"/><rect x="-140" y="8" width="380" height="60" fill="#9C7A99"/></g></g>
+  </svg>
+  <!-- far snow range -->
+  <svg class="L l-far" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <polygon fill="#4A4E86" points="0,585 70,548 130,570 200,505 255,540 330,462 400,520 470,445 540,498 610,455 690,492 760,418 830,468 905,430 985,480 1060,436 1130,472 1210,400 1290,455 1350,428 1430,478 1500,440 1600,470 1600,760 0,760"/>
+    <polygon fill="url(#snow)" points="0,585 70,548 130,570 200,505 255,540 330,462 400,520 470,445 540,498 610,455 690,492 760,418 830,468 905,430 985,480 1060,436 1130,472 1210,400 1290,455 1350,428 1430,478 1500,440 1600,470 1600,520 1540,505 1500,492 1465,525 1430,528 1390,505 1350,478 1320,512 1290,505 1250,470 1210,450 1170,485 1130,522 1095,515 1060,486 1020,528 985,530 945,500 905,480 865,522 830,518 795,485 760,468 725,520 690,542 650,515 610,505 575,545 540,548 505,505 470,495 435,540 400,570 365,530 330,512 295,560 255,590 225,570 200,555 165,600 130,620 100,595 70,598 35,620 0,635"/>
+    <polygon fill="#3D4176" opacity=".55" points="470,445 540,498 610,455 610,760 470,760"/>
+    <polygon fill="#3D4176" opacity=".55" points="1210,400 1290,455 1350,428 1350,760 1210,760"/>
+  </svg>
+  <!-- valley mist -->
+  <svg class="L l-mist" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <ellipse cx="420" cy="640" rx="360" ry="46" fill="url(#mistg)"/>
+    <ellipse cx="1180" cy="660" rx="420" ry="52" fill="url(#mistg)"/>
+    <ellipse cx="820" cy="700" rx="300" ry="36" fill="url(#mistg)" opacity=".8"/>
+  </svg>
+  <!-- mid ridge -->
+  <svg class="L l-mid" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <polygon fill="#2C3C6C" points="0,650 120,620 260,660 380,610 520,655 640,615 780,660 900,625 1040,665 1180,620 1320,660 1460,630 1600,665 1600,860 0,860"/>
+    <polygon fill="#33447A" opacity=".5" points="380,610 520,655 520,860 380,860"/>
+    <polygon fill="#33447A" opacity=".5" points="1180,620 1320,660 1320,860 1180,860"/>
+  </svg>
+  <!-- tree line -->
+  <svg class="L l-trees" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><polygon id="ridgeB" fill="#1F2D55"/></svg>
+  <!-- near slope, road, bus -->
+  <svg class="L l-road" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <polygon fill="#172440" points="0,790 200,760 420,780 620,745 860,775 1100,740 1340,770 1600,745 1600,960 0,960"/>
+    <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#52628E" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#E6D7B3" stroke-width="1.6" stroke-dasharray="12 16" opacity=".55"/>
+    <g class="bus" id="bus">
+      <polygon fill="url(#beamg)" points="118,26 400,-40 400,110 118,40"/>
+      <rect x="18" y="-5" width="44" height="7" rx="3" fill="#D3DBE6"/>
+      <rect x="0" y="0" width="120" height="44" rx="8" fill="#ECF1F7"/>
+      <rect x="7" y="8" width="108" height="17" rx="3" fill="#1B2440"/>
+      <g stroke="#ECF1F7" stroke-width="2"><line x1="24" y1="8" x2="24" y2="25"/><line x1="42" y1="8" x2="42" y2="25"/><line x1="60" y1="8" x2="60" y2="25"/><line x1="78" y1="8" x2="78" y2="25"/><line x1="96" y1="8" x2="96" y2="25"/></g>
+      <rect x="0" y="30" width="120" height="9" fill="#EF7B6B"/>
+      <rect x="0" y="39" width="120" height="5" fill="#C9D3E0"/>
+      <circle cx="118" cy="34" r="3" fill="#FFF0B8"/>
+      <circle cx="2" cy="34" r="2.2" fill="#FF6B6B"/>
+      <circle cx="26" cy="44" r="7.5" fill="#0E1526" stroke="#6B7A99" stroke-width="2"/>
+      <circle cx="94" cy="44" r="7.5" fill="#0E1526" stroke="#6B7A99" stroke-width="2"/>
+    </g>
+  </svg>
+  <!-- foreground pines -->
+  <svg class="L l-fg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" fill="#0B1220">
+    <polygon points="0,862 300,838 600,858 900,840 1200,860 1600,842 1600,1100 0,1100"/>
+    <use href="#pine" transform="translate(30 838) scale(1.35)"/>
+    <use href="#pine" transform="translate(96 850) scale(1.05)"/>
+    <use href="#pine" transform="translate(160 832) scale(1.6)"/>
+    <use href="#pine" transform="translate(236 858) scale(.95)"/>
+    <use href="#pine" transform="translate(1400 852) scale(1.15)"/>
+    <use href="#pine" transform="translate(1470 834) scale(1.7)"/>
+    <use href="#pine" transform="translate(1545 852) scale(1.1)"/>
+    <use href="#pine" transform="translate(1598 866) scale(.85)"/>
+  </svg>
+  <!-- prayer flags -->
+  <svg class="L l-flags" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path id="line" d="M-10 30 Q 300 260 660 190" fill="none" stroke="#1B2440" stroke-width="2.2"/>
+    <g id="flags"></g>
+  </svg>
+  <div class="scrim"></div>
+
+  <div class="topbar"><div class="wrap in">
+    <span>The long-weekend issue &nbsp;·&nbsp; No. 01</span>
+    <span>Oct 2026 &nbsp;·&nbsp; Price: one bus ticket</span>
+  </div></div>
+  <div class="mast" id="mast"><div class="wrap">
+    <h1>Overnight<span>Six hill escapes from Delhi, all by night bus from Kashmere Gate.</span></h1>
+  </div></div>
+  <div class="lines" id="lines"><div class="wrap">
+    <div class="kicker">Gandhi Jayanti weekend · 1–5 Oct 2026</div>
+    <h2>Leave Delhi on Thursday night. <em>Wake up in the mountains.</em></h2>
+    <p class="dek">A planning issue for the crew: six ridgelines you can reach on one overnight Volvo, compared side by side, with a day‑by‑day plan for each and an escape hatch if we want one more day.</p>
+    <div class="inside">
+      <span class="lbl">Inside</span>
+      <a href="#mcleod">Triund at sunrise</a>
+      <a href="#kasol">Parvati on café time</a>
+      <a href="#bir">Flying at Billing</a>
+      <a href="#nainital">Boats at dawn</a>
+      <a href="#mussoorie">Char Dukan omelettes</a>
+      <a href="#lansdowne">Nobody in Lansdowne</a>
+    </div>
+  </div></div>
+</header>
+
+<nav class="folio" id="folio" aria-label="Destinations"><div class="wrap in">
+  <a class="brand" href="#cover">Overnight <small>No. 01 · Oct 2026</small></a>
+  <div class="tabs" id="tabs"></div>
+</div></nav>
+
+<main>
+  <section class="section" id="contents"><div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">In this issue</p><h2 class="h-display" style="margin-top:12px">Six ridgelines, one night bus.</h2></div>
+      <p class="lede ital">Every place here is an evening departure from Kashmere Gate ISBT and a morning arrival in cool air. Three are in Himachal, three in Uttarakhand; two are classics, two are quieter, two sit in between. Tap a peak or a card to jump in.</p>
+    </div>
+    <div class="peaks" data-rv>
+      <div class="cap"><span>Altitude, to scale · tap a peak</span><span>Delhi baseline 216 m</span></div>
+      <div class="scroller"><svg id="peaks" viewBox="0 0 1200 280" role="img" aria-label="Elevation of the six destinations compared with Delhi"></svg></div>
+    </div>
+    <div class="sorts" data-rv>
+      <span class="lbl">Sort by</span>
+      <button class="chip" data-sort="issue" aria-pressed="true">Issue order</button>
+      <button class="chip" data-sort="alt" aria-pressed="false">Highest first</button>
+      <button class="chip" data-sort="hours" aria-pressed="false">Shortest bus</button>
+      <button class="chip" data-sort="budget" aria-pressed="false">Cheapest</button>
+      <button class="chip" data-sort="crowd" aria-pressed="false">Quietest</button>
+    </div>
+    <div class="cards" id="cards"></div>
+  </div></section>
+
+  <section class="plan section" id="plan"><div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow">The shape of the weekend</p><h2 class="h-display" style="margin-top:10px">Three nights out, two of them on a bus.</h2>
+        <p style="margin-top:10px">Same skeleton whichever place we pick. Flip the switch if the group wants to stretch into Monday — every boarding pass and itinerary below updates.</p></div>
+      <button class="switch" id="ext" role="switch" aria-checked="false"><span class="knob"></span><span class="txt">Stretch to Monday</span></button>
+    </div>
+    <div class="steps" data-rv>
+      <div class="step s-night"><div class="d">Thu 1 Oct · night</div><div class="t">Board at Kashmere Gate</div><div class="n">Buses leave 7–11 pm. Dinner stop on the highway; sleep.</div></div>
+      <div class="step s-day"><div class="d">Fri 2 Oct · Gandhi Jayanti</div><div class="t">Arrive by morning</div><div class="n">Check in, first chai with a view, easy day on our feet.</div></div>
+      <div class="step s-day"><div class="d">Sat 3 Oct</div><div class="t">The big day</div><div class="n">The trek, the flight, the lake — whatever the place is for.</div></div>
+      <div class="step s-day s-home"><div class="d">Sun 4 Oct</div><div class="t"><span class="alt-off">Slow morning, night bus home</span><span class="alt-on">Slow morning, one more night</span></div><div class="n"><span class="alt-off">Markets, a last café, board 7–10 pm.</span><span class="alt-on">Day trip or a second trek; we stay put.</span></div></div>
+      <div class="step s-ext s-day"><div class="d">Mon 5 Oct</div><div class="t"><span class="alt-off">Back in Delhi by breakfast</span><span class="alt-on">Bonus day, night bus home</span></div><div class="n"><span class="alt-off">Bus pulls into Kashmere Gate 5–9 am. Straight to work, smug.</span><span class="alt-on">Take the day off. Board 7–10 pm.</span></div></div>
+      <div class="step s-tue s-home"><div class="d">Tue 6 Oct</div><div class="t">Back in Delhi by breakfast</div><div class="n">Kashmere Gate 5–9 am.</div></div>
+    </div>
+  </div></section>
+
+  <div id="features"></div>
+
+  <section class="back" id="before-you-board"><div class="wrap">
+    <p class="eyebrow">Back page</p>
+    <h2 class="h-display">Before you board</h2>
+    <p class="lede">Long‑weekend buses and rooms sell out first. The plan is only as good as the bookings behind it.</p>
+    <div class="grid">
+      <div class="box" data-rv>
+        <h3>Booking timeline <small>from today, 19 Sept</small></h3>
+        <ul>
+          <li><span class="when">By 22 Sep</span><span>Pick the destination in the group. Vote, don't debate.</span></li>
+          <li><span class="when">By 23 Sep</span><span>Book buses both ways — HRTC / UTC sites, redBus, Zingbus, IntrCity. Thu-night and Sun-night departures for 1–4 Oct go first. Window seats on the left for sunrise heading north.</span></li>
+          <li><span class="when">By 24 Sep</span><span>Book the stay for 2 nights (3 if stretching). Message hosts directly for group rates on 4–6 people.</span></li>
+          <li><span class="when">By 27 Sep</span><span>Pre-book activity slots: Bir tandem flights, Kheerganga/Tosh taxis, Sattal kayaks. Confirm local cab for the last-mile.</span></li>
+          <li><span class="when">30 Sep</span><span>Split costs on Splitwise. Everyone withdraws ₹5–8k cash. Screenshots of tickets in the group.</span></li>
+          <li><span class="when">1 Oct</span><span>Reach Kashmere Gate ISBT 45 min early (Metro: Red, Yellow & Violet lines). Carry the ID you booked with.</span></li>
+        </ul>
+      </div>
+      <div class="box" data-rv>
+        <h3>Pack <small>October, 1,500–2,900 m</small></h3>
+        <ul class="pack">
+          <li>Fleece + light down or puffer</li><li>Rain shell (stray post-monsoon showers)</li><li>Shoes with grip (Triund, Kheerganga, Naina Peak)</li><li>Cap, sunglasses, SPF — the sun bites at altitude</li><li>Headlamp / torch</li><li>Power bank (10k mAh+)</li><li>Reusable bottle, 1 L</li><li>Earplugs + neck pillow for the bus</li><li>Basic meds: ORS, paracetamol, motion-sickness tabs</li><li>Cash ₹5–8k; ATMs are thin in the hills</li><li>Government ID (buses & hotels check)</li><li>A deck of cards. Non-negotiable.</li>
+        </ul>
+      </div>
+      <div class="box" data-rv>
+        <h3>Group rules <small>so it stays fun</small></h3>
+        <ul>
+          <li class="one">Bus night: no loud calls after 11. The Volvo is a shared bedroom.</li>
+          <li class="one">Altitude here is mild (max ~2,900 m at Triund). Drink water, go easy on the first evening; no Diamox needed.</li>
+          <li class="one">One person owns bookings, one owns money, one owns the route. Rotate the aux.</li>
+          <li class="one">Return bus is the hard deadline. Last local jeeps/taxis leave earlier than you think — check in the itinerary.</li>
+          <li class="one">Leave the hills the way we'd like to find them. Carry your wrappers down.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">Fares, timings and prices are approximate as of September 2026 and move with demand — treat the boarding passes as a planning guide and verify on HRTC, UTC, redBus or the operator before paying. Weather figures are typical October ranges. This is a personal trip zine for friends, not an operator or an agency.</p>
+  </div></section>
+</main>
+
+<script>
+/* ============================ DATA ============================ */
+const CREDITS = {
+  mcleod:   {t:'Dhauladhar alpenglow above Dharamshala', a:'UnpetitproleX', l:'CC BY-SA 4.0', lu:'https://creativecommons.org/licenses/by-sa/4.0/', p:'https://commons.wikimedia.org/wiki/File:Dhauladhar_alpenglow_above_Dharamshala,_India.jpg'},
+  mcleod2:  {t:'Triund sunrise over the Dhauladhars', a:'Kiran Jonnalagadda', l:'CC BY-SA 2.0', lu:'https://creativecommons.org/licenses/by-sa/2.0/', p:'https://commons.wikimedia.org/wiki/File:Triund_sunrise_over_the_Dhauladhars_(8680900740).jpg'},
+  kasol:    {t:'The Parvati River at Kasol', a:'Jan J George', l:'CC BY-SA 4.0', lu:'https://creativecommons.org/licenses/by-sa/4.0/', p:'https://commons.wikimedia.org/wiki/File:The_Fast_Flowing_Parvati_River_on_the_banks_of_Kasol,_Himachal_Pradesh.jpg'},
+  kasol2:   {t:'Hills of Tosh', a:'Ramkishan950', l:'CC BY-SA 4.0', lu:'https://creativecommons.org/licenses/by-sa/4.0/', p:'https://commons.wikimedia.org/wiki/File:Hills_of_Tosh.jpg'},
+  bir:      {t:'Paragliding at Bir', a:'PanWoyteczek (derivative: UnpetitproleX)', l:'CC BY-SA 4.0', lu:'https://creativecommons.org/licenses/by-sa/4.0/', p:'https://commons.wikimedia.org/wiki/File:Paragliding_at_Bir,_HP.jpg'},
+  bir2:     {t:'Chokling Monastery, Bir', a:'Brahmavadini', l:'CC BY 4.0', lu:'https://creativecommons.org/licenses/by/4.0/', p:'https://commons.wikimedia.org/wiki/File:Chokling_Monastery,_Bir.jpg'},
+  nainital: {t:'Naini Lake, Nainital', a:'Praveen Singh Bisht', l:'CC BY 2.0', lu:'https://creativecommons.org/licenses/by/2.0/', p:'https://commons.wikimedia.org/wiki/File:Naini_Lake,_Nainital,_Uttarakhand,_India.jpg'},
+  nainital2:{t:'Naini Lake from Snow View Point', a:'Slyronit', l:'CC BY-SA 4.0', lu:'https://creativecommons.org/licenses/by-sa/4.0/', p:'https://commons.wikimedia.org/wiki/File:View_of_Nainital_lake_from_Snow_View_Point.jpg'},
+  mussoorie:{t:'Mussoorie bazaar from Landour', a:'Paul Hamilton', l:'CC BY-SA 2.0', lu:'https://creativecommons.org/licenses/by-sa/2.0/', p:'https://commons.wikimedia.org/wiki/File:Mussoorie_Bazaar_from_Landour_(5275310799).jpg'},
+  mussoorie2:{t:'Deodar light at Lal Tibba', a:'Abhay Gobade', l:'CC BY 3.0', lu:'https://creativecommons.org/licenses/by/3.0/', p:'https://commons.wikimedia.org/wiki/File:Lal_Tibba_-_panoramio.jpg'},
+  lansdowne:{t:'The road into Lansdowne', a:'Navdeep Gusain', l:'CC BY-SA 4.0', lu:'https://creativecommons.org/licenses/by-sa/4.0/', p:'https://commons.wikimedia.org/wiki/File:Lansdowne_in_monsoon.jpg'},
+  lansdowne2:{t:'Bhulla Tal, Lansdowne', a:'Priyambada Nath', l:'CC BY 2.0', lu:'https://creativecommons.org/licenses/by/2.0/', p:'https://commons.wikimedia.org/wiki/File:Bhulla_Tal_Lake_in_Lansdowne_town_of_Uttarakhand,_India.jpg'},
+};
+
+const D = [
+{
+  id:'mcleod', name:'McLeod Ganj', code:'MCL', sub:'Dharamshala · Himachal Pradesh', state:'HP',
+  alt:2082, altLabel:'2,082 m', altNote:'Triund 2,850 m',
+  hours:'10–12 h', hoursN:11, km:'≈ 475 km', fare:'₹1,000–1,600', fareN:1300, budget:'₹6–8k', budgetN:7,
+  crowd:'High', crowdN:3, vibe:'Cafés + one classic trek', best:'Triund sunrise & Tibetan culture',
+  tagline:'Prayer flags over the square, the Dhauladhar wall in your face, and momos at every hour.',
+  img:'img/mcleod.jpg', imgAlt:'Snow-tipped Dhauladhar peaks glowing pink at dawn above the rooftops and forest of Dharamshala', cr:'mcleod',
+  img2:'img/mcleod-2.jpg', img2Alt:'Blue dawn light over the Dhauladhar ridge seen from the grassy Triund campsite', cr2:'mcleod2', cap2:'Dawn from the Triund ridge — the reason people stay the night up there.',
+  lead:'McLeod Ganj is the one everyone has heard of, and it still earns it. The town sits on a spur at 2,000 m with the granite Dhauladhar range rising almost vertically behind it, close enough that the snowline feels like a wall at the end of the street. It is the Dalai Lama’s home, so the vernacular is Tibetan: prayer wheels, butter lamps, thukpa steam, a monastery kora at sunset.',
+  lead2:'For a long weekend it works because it stacks two very different days: a proper 9 km trek to Triund with a ridge-top sunrise, and a lazy café-and-monastery day to recover. Base yourself in Dharamkot, ten minutes above the square, where the cafés are and the traffic isn’t.',
+  bus:{dep:'Thu 1 Oct · 20:00–22:00', arr:'Fri 2 Oct · 07:00–09:00', ops:'HRTC Himsuta Volvo · Zingbus · Laxmi Holidays', cls:'Volvo AC / sleeper',
+    ret:'Sun 4 Oct · 19:00–20:30', retExt:'Mon 5 Oct · 19:00–20:30', from:'McLeod Ganj / Dharamshala bus stand',
+    note:'A few HRTC Volvos run right up to McLeod Ganj; most end at Dharamshala bus stand, from where a shared taxi (₹40–60 pp) or local bus climbs 30 min to McLeod. Book the return from the same stand.'},
+  days:[
+    {k:'thu', note:'Board fed and watered; the Volvo makes one dhaba stop around Karnal or Ambala near midnight.', items:[
+      ['20:30','Board at Kashmere Gate ISBT','Gate numbers change — check the board. Left-side window for the sunrise later.'],
+      ['23:30','Dhaba stop on NH-44','Paranthas at a Karnal-side dhaba. Last proper meal until McLeod.'],
+      ['00:30','Lights out','Chandigarh, Una, Kangra roll past in the dark. Eyeshade, earplugs, jacket as blanket.']]},
+    {k:'fri', note:'Arrival day: shower, real breakfast, then feet on the ground with no climbing. Save the legs.', items:[
+      ['08:00','Arrive Dharamshala / McLeod','Shared taxi up to Dharamkot. Drop bags, hot shower, the first Dhauladhar view from a café terrace.',1],
+      ['09:30','Breakfast in Dharamkot','Illiterati (books, valley view) or Morgan’s Place. Shakshuka, banana pancakes, real coffee.'],
+      ['11:30','Bhagsunag Temple + Bhagsu waterfall','20-min downhill walk from Dharamkot; the falls are modest, the walk and the sky are the point.'],
+      ['14:00','Lunch in Bhagsu','Shiva Café-style terraces above the falls. Momos, thukpa, or an Israeli plate.'],
+      ['16:00','Tsuglagkhang — the Dalai Lama Temple','Prayer wheels, the Kalachakra temple, and the small Tibet Museum next door (closes ~17:00).',1],
+      ['17:45','The kora at sunset','Circumambulation path behind the temple: mani stones, chanting, the valley going gold.'],
+      ['20:00','Dinner on Temple Road','Tibet Kitchen for shapta and tingmo; Jimmy’s Italian Kitchen if someone rebels.']]},
+    {k:'sat', note:'Triund is 9 km and ~1,000 m of ascent — steady, not technical. Start early, carry 2 L water, and decide at the top whether to stay the night.', items:[
+      ['06:15','Start from Gallu Devi temple','Above Dharamkot. Chai at the temple stall, then the forest trail begins.'],
+      ['08:30','Magic View Café','Halfway. Maggi and lemon-honey-ginger tea with the Kangra valley below.'],
+      ['10:00','The 22 curves','The last steep hour. Rhododendron, oak, then bare ridge.'],
+      ['11:15','Triund ridge, 2,850 m','The Dhauladhar wall fills the sky; behind you the plains blur into haze. Sit down.',1],
+      ['13:00','Lunch at the top-shops','Rajma-chawal or parathas from the shacks. Tents rent for ₹1,000–1,500 with dinner if you’re staying.'],
+      ['14:00','Decide: descend or stay','Down takes 3 h, back by 17:30. Stay and you get Milky Way + this ridge at dawn (see photo). Bring the puffer either way.'],
+      ['19:30','Dinner in Dharamkot','Hot shower, then Illiterati or Trek & Dine. Early night — legs will report in tomorrow.']]},
+    {k:'sun', note:'Slow day: viewpoints by taxi, Norbulingka for the art, the market for gifts, then the bus.', items:[
+      ['08:30','Breakfast at Woeser Bakery','Tibetan bread, cinnamon rolls, Dharamkot’s best coffee.'],
+      ['10:00','Naddi viewpoint + Dal Lake','Taxi 20 min. The Naddi meadow has the cleanest full-range view in town; the lake is small — the view isn’t.'],
+      ['12:30','Norbulingka Institute','40 min down towards Sidhpur: thangka painters, woodcarvers, Japanese-style gardens, a good café for lunch.',1],
+      ['15:30','Jogiwara & Temple Road market','Prayer flags, singing bowls, TCV handicrafts (proceeds to Tibetan schools), yak-wool shawls. Haggle gently.'],
+      ['17:30','Last coffee at Common Ground','Taiwanese-Tibetan café near the square. Charge phones, download offline maps for home.'],
+      ['19:00','Board the return Volvo','From McLeod / Dharamshala stand. Delhi by 06:00–08:00 Monday.',1]]},
+    {k:'mon', note:'If we stretch: one more mountain, then the Monday-night bus.', items:[
+      ['06:30','Kareri Lake day-trek','13 km one-way to a 2,934 m glacial lake (long day, hire a guide in Kareri village, ₹1,500). Or —'],
+      ['09:00','— Bir for a tandem flight','2 h by taxi. Fly at Billing by 11, cake in Bir Tibetan Colony, back by 17:00.'],
+      ['13:00','— or Palampur tea gardens + Baijnath','The lazy version: tea estates, a 13th-century Shiva temple, dham lunch at a dhaba.'],
+      ['19:00','Board the return Volvo','Delhi by breakfast Tuesday.',1]]}
+  ],
+  edit:[
+    ['see','Triund ridge','The trek. 9 km, 2,850 m, the Dhauladhar filling the frame.'],
+    ['see','Tsuglagkhang complex','Dalai Lama temple, Namgyal monastery, Tibet Museum.'],
+    ['see','St John in the Wilderness','1852 stone church in a deodar grove between McLeod and Forsyth Ganj.'],
+    ['see','Naddi viewpoint','Meadow with the widest range view; sunset spot.'],
+    ['do','Kora walk','The sunset circumambulation path behind the temple.'],
+    ['do','Tibetan cooking class','Lhamo’s Kitchen-style momo class, 2 h, ~₹400.'],
+    ['do','Drop-in yoga in Dharamkot','Morning classes everywhere; pick one with a view.'],
+    ['shop','Jogiwara Road & TCV shop','Flags, bowls, shawls; TCV proceeds fund Tibetan children’s schools.'],
+  ],
+  stay:[['Dharamkot','hostels ₹500–900 a bed; guesthouses ₹1,200–2,500. Cafés, quiet, 10 min above the square.','base here'],['Bhagsu','backpacker strip, cheaper, louder on weekends.','budget'],['McLeod square','buses, market, monasteries at the door; traffic and noise.','convenient']],
+  eat:[['Tibet Kitchen','shapta, tingmo, thukpa — the standard-bearer.',''],['Illiterati','breakfast with the valley; books to borrow.',''],['Woeser Bakery','Tibetan bread, cinnamon rolls, coffee.',''],['Himachali dham','madra, sepu vadi, rice — at a Kotwali Bazaar dhaba if you see it.','local'],['Butter tea','salty, controversial, do it once.','dare']],
+  wx:[['Days','14–20 °C'],['Nights','6–9 °C'],['Triund night','0–5 °C']],
+  notes:['Post-monsoon skies are the clearest of the year; Triund views are near-guaranteed in early October.','Long-weekend crowds are real in the square — Dharamkot and Bhagsu stay calmer. Book two nights a month out.','No altitude worries at 2,082 m. Triund at 2,850 m: go steady, hydrate.','Cash: ATMs in McLeod square work but queue. Carry ₹5k.','Network: Jio and Airtel fine in town, patchy on the Triund trail.']
+},
+{
+  id:'kasol', name:'Kasol & Tosh', code:'KSL', sub:'Parvati Valley · Himachal Pradesh', state:'HP',
+  alt:1640, altLabel:'1,640 m', altNote:'Tosh 2,400 m · Kheerganga 3,050 m',
+  hours:'12–14 h', hoursN:13, km:'≈ 520 km', fare:'₹1,200–2,000', fareN:1600, budget:'₹5–7k', budgetN:6,
+  crowd:'Medium', crowdN:2, vibe:'Backpacker river valley', best:'Kheerganga hot springs & café days',
+  tagline:'A glacial river, a pine forest, Israeli breakfasts, and a hot spring you have to earn.',
+  img:'img/kasol.jpg', imgAlt:'The milky-blue Parvati River rushing over boulders below tall pines and a forested ridge at Kasol', cr:'kasol',
+  img2:'img/kasol-2.jpg', img2Alt:'Terraced green slopes and scattered wooden houses of Tosh village under misty ridges', cr2:'kasol2', cap2:'Tosh, at the head of the valley — an hour up the road and a century back.',
+  lead:'Kasol is a bend in the Parvati River where a village became a backpacker republic. The river is glacier-blue and loud, the pines are enormous, and the cafés serve shakshuka at 11 a.m. to people who have nowhere to be. It is the most unhurried place on this list, and the furthest.',
+  lead2:'The valley rewards going deeper. Chalal is a footbridge away and already quieter; Tosh, at the road-end, is a cliff-side village with roofs to watch the sunset from; Kheerganga is a 12 km trek to a meadow with a hot spring at 3,050 m. Pick your depth — the plan below has both a trekking Saturday and a lazy one.',
+  bus:{dep:'Thu 1 Oct · 18:30–20:30', arr:'Fri 2 Oct · 07:30–09:30', ops:'Zingbus · private Volvo & sleeper direct · HRTC via Bhuntar', cls:'Volvo AC / sleeper',
+    ret:'Sun 4 Oct · 17:00–18:30', retExt:'Mon 5 Oct · 17:00–18:30', from:'Kasol (direct) or Bhuntar bus stand',
+    note:'Direct Kasol buses are the easy option — book early, they fill first. The fallback is any Delhi–Manali Volvo (₹1,200–1,500) to Bhuntar, then a local bus (₹60, 1.5 h) or taxi (₹1,200–1,500) up the valley via Jari.'},
+  days:[
+    {k:'thu', note:'The longest ride of the six. Sleeper buses are worth the extra ₹300 here.', items:[
+      ['19:00','Board at Kashmere Gate ISBT','Sleeper if you got one. Snacks for the 03:00 wake-up.'],
+      ['23:00','Dhaba stop near Chandigarh','Last dal-roti of the plains.'],
+      ['03:30','Mandi, the Aut tunnel, Bhuntar','You’ll half-wake for the 3 km tunnel. The river appears at first light.']]},
+    {k:'fri', note:'Arrive, unpack, cross the bridge to Chalal, and let the river set the pace.', items:[
+      ['08:30','Arrive Kasol','Check in riverside or across in Chalal. Chai at the bridge.',1],
+      ['10:00','Breakfast at Moon Dance / Evergreen','Israeli breakfast: eggs, labneh, salad, pita. Moon Dance’s bakery counter for later.'],
+      ['12:00','Walk to Chalal','20 min along the river through pines. Lunch at a Chalal café with your feet nearly in the water.',1],
+      ['15:00','Boulders and cards','The Parvati bank above the bridge. Bring the deck.'],
+      ['17:00','Kasol market','Dreamcatchers, woollen socks, hemp everything, a spare fleece if you forgot one.'],
+      ['19:30','Dinner in Old Kasol','Jim Morrison Café for the vibe, Bhoj for thalis. Ask your stay about a bonfire.']]},
+    {k:'sat', note:'Two versions. A: Kheerganga — a real 12 km trek to a hot spring at 3,050 m. B: Tosh — a taxi and a short climb to the valley’s best rooftops. Both end sleeping in Tosh.', items:[
+      ['06:00','A · Taxi to Barshaini','1 h, road-end. Register at the checkpoint; trail starts across the dam.'],
+      ['07:30','A · Trek via Nakthan','Village, apple trees, then forest. Rudranag waterfall at ~10:00 for chai.'],
+      ['12:30','A · Kheerganga meadow, 3,050 m','Hot spring pool (separate for women), dhabas, a view straight down the valley. Bath, lunch, lie down.',1],
+      ['14:30','A · Descend to Barshaini','4 h; taxi to Tosh for the night (or camp at Kheerganga, ₹800–1,200 with dinner).'],
+      ['10:00','B · Taxi to Tosh','1.5 h via Barshaini; footbridge and a 15-min climb into the village.'],
+      ['12:30','B · Lunch on a Tosh rooftop','Pink Floyd Café / Stone Garden. The valley view here is the postcard.',1],
+      ['15:00','B · Tosh waterfall walk','1 h round trip through the fields above the village.'],
+      ['18:00','Sunset from the guesthouse roof','Both plans converge. Blankets, chai, the ridge turning pink.']]},
+    {k:'sun', note:'Down the valley slowly: Manikaran’s hot springs and langar, a last Kasol coffee, then the bus.', items:[
+      ['08:30','Breakfast in Tosh, taxi down','Book the taxi the night before; Sunday demand is high.'],
+      ['10:30','Manikaran Sahib','Gurudwara over hot springs — rice is cooked in the spring water. Langar lunch (free; donate). Cover heads.',1],
+      ['13:00','Back to Kasol','Last café lunch, German Bakery cakes for the bus.'],
+      ['15:00','Riverside hour','One more sit by the Parvati. Charge everything.'],
+      ['17:30','Board direct bus from Kasol','Or 20:00 from Bhuntar. Delhi 07:00–09:00 Monday.',1]]},
+    {k:'mon', note:'If we stretch: one more village, on foot.', items:[
+      ['08:00','Malana day-hike','Taxi to the Malana dam road, 4 km climb to the ancient village. Strict customs: don’t touch walls or people; photograph only with permission.'],
+      ['09:00','— or Rasol','Steep 3 km above Chalal to a 2,400 m village with two cafés and no road.'],
+      ['09:00','— or Grahan','9 km gentle forest trail to a slate-roofed village. Dal and rice at a homestay.'],
+      ['17:30','Board the return bus','Kasol direct or Bhuntar. Delhi by breakfast Tuesday.',1]]}
+  ],
+  edit:[
+    ['see','Kheerganga','12 km trek to a 3,050 m meadow with a natural hot-spring pool.'],
+    ['see','Tosh','Cliff-side village at the road’s end; the best rooftops in the valley.'],
+    ['see','Chalal','A footbridge from Kasol; riverside cafés, no cars.'],
+    ['see','Manikaran Sahib','Gurudwara built over hot springs; free langar.'],
+    ['do','Riverside bonfire','Most guesthouses arrange one; bring the guitar person.'],
+    ['do','Malana or Rasol hike','Half-day hikes to villages that still don’t want roads.'],
+    ['do','Trout at a homestay','Ask a day ahead; the valley’s rivers are stocked.'],
+    ['shop','Kasol market','Woollens, hammocks, hemp bags, dreamcatchers.'],
+  ],
+  stay:[['Kasol riverside / Old Kasol','hostels ₹400–800; river-facing rooms ₹1,000–2,000.','base here'],['Chalal','10-min walk, quieter, cheaper, no cars.','quiet'],['Tosh','guesthouses ₹600–1,200 with the valley view. Cold at night.','Saturday']],
+  eat:[['Moon Dance Café','Israeli breakfast and the bakery.',''],['Evergreen','hummus plates, pizzas, the long menu.',''],['Jim Morrison Café','Old Kasol institution; go for the terrace.',''],['Manikaran langar','rice cooked in spring water; sit on the floor.','local'],['Siddu','steamed Himachali bun with walnut filling — at Bhuntar or Jari dhabas.','local']],
+  wx:[['Kasol days','10–20 °C'],['Tosh nights','2–6 °C'],['Kheerganga','−2–8 °C']],
+  notes:['Kheerganga is a proper trek: shoes with grip, 2 L water, headlamp if you camp. No permit; sign the Barshaini register.','Cash is king — the lone SBI ATM in Kasol is often empty. Carry ₹6–8k.','Network: Jio/BSNL only beyond Barshaini; download maps offline.','Police checks on the Bhuntar road are routine. Don’t carry anything you’d regret.','The furthest destination here — 13 h each way. Worth it only if the group is happy on a bus.']
+},
+{
+  id:'bir', name:'Bir Billing', code:'BIR', sub:'Kangra · Himachal Pradesh', state:'HP',
+  alt:1525, altLabel:'1,525 m', altNote:'Billing take-off 2,400 m',
+  hours:'11–13 h', hoursN:12, km:'≈ 500 km', fare:'₹900–1,800', fareN:1350, budget:'₹7–9k', budgetN:8,
+  crowd:'Medium–low', crowdN:1.5, vibe:'Adventure + monastic calm', best:'A tandem paraglide over the Dhauladhar foothills',
+  tagline:'Take off at 2,400 m, land in a meadow by a Tibetan colony, and eat cake about it.',
+  img:'img/bir.jpg', imgAlt:'Several colourful paragliders drifting above cloud-wreathed forested ridges near Bir Billing', cr:'bir',
+  img2:'img/bir-2.jpg', img2Alt:'The red and gold Chokling Monastery courtyard in Bir’s Tibetan Colony, with lawns, a paved path and hills behind', cr2:'bir2', cap2:'Chokling Monastery, ten minutes from the landing meadow — the colony’s quiet centre.',
+  lead:'Bir is a Tibetan colony and a farming village that happens to sit under one of the best paragliding sites on earth. Billing, the launch, is 14 km and 900 m above it; pilots step off the ridge and drift down for twenty minutes over forests, tea gardens and monastery roofs to a landing meadow on the edge of town. In October the air is smooth and the season is at its peak.',
+  lead2:'When you’re not in the air, Bir is slow and kind: monasteries with painted gates, cafés run by people who came for a week and stayed, forest walks to waterfalls, and the sound of prayer flags. It’s the middle option here — more adventure than Lansdowne, less crowd than McLeod.',
+  bus:{dep:'Thu 1 Oct · 19:30–21:00', arr:'Fri 2 Oct · 07:30–09:30', ops:'HRTC Delhi–Bir/Baijnath · Zingbus · private sleepers', cls:'Volvo AC / semi-sleeper',
+    ret:'Sun 4 Oct · 19:00–20:00', retExt:'Mon 5 Oct · 19:00–20:00', from:'Bir Road / Chowgan, or Baijnath bus stand',
+    note:'Direct Bir services exist but are fewer — book the moment they open. Any Delhi–Palampur or Baijnath bus works too: Baijnath to Bir is 30–40 min by local bus (₹40) or taxi (₹700).'},
+  days:[
+    {k:'thu', note:'Via Chandigarh, Una and Kangra; you’ll wake to tea gardens.', items:[
+      ['20:00','Board at Kashmere Gate ISBT','Check the operator’s drop point — Bir Road vs Chowgan matters for the walk.'],
+      ['23:30','Dhaba stop','Somewhere past Ambala.'],
+      ['05:30','Kangra valley at first light','Paragliders sometimes already up over Indrunag as you pass Dharamshala.']]},
+    {k:'fri', note:'Land, walk the colony, watch other people land. Book tomorrow’s flight in person if you haven’t.', items:[
+      ['08:30','Arrive Bir','Check in around the Tibetan Colony (Chowgan). Chai, shower.',1],
+      ['10:00','Breakfast at Garden Café / June16','Wood-fired everything, honey-ginger-lemon, the colony’s slow mornings.'],
+      ['11:30','Chokling Monastery','Painted gates, a big stupa, gardens; the colony’s spiritual centre. Quiet, please.',1],
+      ['13:00','Lunch at Musafir Café','Big portions, the landing site out the window.'],
+      ['15:00','Cycle or walk to the landing meadow','Chowgan. Pilots come in 16:00–18:00 — the best free show in Himachal. Confirm your slot with the operator here.'],
+      ['17:30','Sunset from the meadow','Chai from the stalls, gliders folding, the Dhauladhar going orange.'],
+      ['19:30','Dinner at Avva’s Café','Tibetan + South Indian — thukpa and a dosa on one table.']]},
+    {k:'sat', note:'Flight morning. Wind is calmest 08:00–11:00; the jeep up is included in your tandem package.', items:[
+      ['07:30','Jeep up to Billing','14 km, 45 min, hairpins. 2,400 m, cold and windy — wear the puffer.'],
+      ['08:30','Tandem paraglide','15–30 min glide down to Chowgan, ₹2,500–4,000 with GoPro video. You just run three steps. Book 2–3 weeks ahead for the long weekend.',1],
+      ['10:30','Land, breathe, cake','Bir Bakery’s cinnamon rolls; compare videos.'],
+      ['12:30','Lunch at Silver Linings / Zostel café','Pizza and the post-flight buzz.'],
+      ['15:00','Palpung Sherabling Monastery','12 km forest drive; a giant golden Buddha, a huge quiet courtyard, monks debating.',1],
+      ['17:30','Deer Park Institute walk','Campus paths and prayer-flag lanes back in the colony.'],
+      ['20:00','Homestay bonfire dinner','Ask ahead; most hosts will do dal, sabzi and rotis over the fire.']]},
+    {k:'sun', note:'A forest walk, a 13th-century temple on the way, the tea factory, then the bus.', items:[
+      ['07:00','Hike to Bangoru waterfall','3–4 km through pine forest from Upper Bir, 1.5 h round. Or cycle to Gunehar village.'],
+      ['10:30','Breakfast at Dharmalaya / Northern Café','Organic and slow; the last café of the trip.'],
+      ['12:30','Baijnath Shiva Temple','13th-century Nagara-style temple, 12 km down the road. Dham lunch at a dhaba opposite.',1],
+      ['15:30','Bir Tea Factory + colony shops','Kangra tea to carry home; carpets and incense in the Tibetan shops.'],
+      ['19:00','Board the return bus','From Bir Road or Baijnath. Delhi 07:00–09:00 Monday.',1]]},
+    {k:'mon', note:'If we stretch: a second morning in the air, or a valley nobody else is going to.', items:[
+      ['08:00','Second flight at Billing','Different light, no nerves. Or —'],
+      ['07:00','— Rajgundha valley trek','From Billing, 10–12 km along a ridge to meadows and a homestay lunch. Taxi back from Barot side.'],
+      ['09:00','— Barot valley','2 h drive: the Uhl river, trout, a 1920s hydel colony, almost no tourists.'],
+      ['19:00','Board the return bus','Delhi by breakfast Tuesday.',1]]}
+  ],
+  edit:[
+    ['see','Billing launch, 2,400 m','The take-off ridge; drive up even if you don’t fly.'],
+    ['see','Chowgan landing meadow','Gliders come in every evening; free show.'],
+    ['see','Chokling Monastery','Painted gates, stupa, gardens in the colony.'],
+    ['see','Palpung Sherabling','Vast forest monastery 12 km out; golden Buddha.'],
+    ['do','Tandem paraglide','15–30 min, ₹2,500–4,000 incl. video. Mornings.'],
+    ['do','Bangoru waterfall hike','3–4 km through pines from Upper Bir.'],
+    ['do','Mountain-bike to Gunehar','Rentals in the colony; farm lanes and a village café.'],
+    ['shop','Bir Tea Factory','Kangra tea at factory prices; Tibetan carpets in the colony.'],
+  ],
+  stay:[['Tibetan Colony (Chowgan)','hostels ₹500–900; homestays ₹1,000–2,200. Cafés and the landing site at the door.','base here'],['Upper Bir / Gunehar','quiet farm homestays 20 min up; you’ll walk or cycle in.','quiet'],['Glamping near the meadow','₹2,500–4,000 for a tent with a view; fun for a night.','splurge']],
+  eat:[['Avva’s Café','thukpa, momos, and a proper dosa.',''],['Garden Café','wood-fired pizza under trees.',''],['Bir Bakery','cinnamon rolls after the flight.',''],['Dham at Baijnath','madra, rajma, rice on a leaf plate — weekday dhabas near the temple.','local'],['Kangra tea','light, aromatic; buy at the factory.','carry home']],
+  wx:[['Days','14–24 °C'],['Nights','8–11 °C'],['Billing a.m.','5–10 °C']],
+  notes:['Peak flying season — the Paragliding World Cup was held here in 2015. Book tandem slots 2–3 weeks ahead and keep both Sat and Sun mornings free in case wind grounds flights (>25 km/h).','No altitude issues; Billing is 2,400 m for an hour.','Cash: ATMs at Bir and Baijnath; operators often prefer UPI anyway.','Lanes are unlit — a torch for walking back from dinner.','Two crowd levels: the meadow is busy at landing time, the colony is silent by 21:00.']
+},
+{
+  id:'nainital', name:'Nainital', code:'NTL', sub:'Kumaon · Uttarakhand', state:'UK',
+  alt:2084, altLabel:'2,084 m', altNote:'Naina Peak 2,611 m',
+  hours:'7–8 h', hoursN:7.5, km:'≈ 300 km', fare:'₹700–1,400', fareN:1050, budget:'₹6–8k', budgetN:7,
+  crowd:'Very high', crowdN:4, vibe:'Classic lake town, plus quiet lakes next door', best:'Boats at dawn, an easy summit, and Sattal',
+  tagline:'A crescent lake, a ropeway, a peak with a Nanda Devi view — and seven quieter lakes 30 minutes away.',
+  img:'img/nainital.jpg', imgAlt:'Wooden rowing boats with orange life jackets moored on Naini Lake, forested hills and the town rising behind', cr:'nainital',
+  img2:'img/nainital-2.jpg', img2Alt:'Naini Lake seen from above at Snow View Point, boats dotting the green water between wooded slopes', cr2:'nainital2', cap2:'The whole town from Snow View — ropeway up, walk down through the oaks.',
+  lead:'Nainital is the shortest ride and the biggest crowd. The lake is genuinely lovely — a green crescent in a bowl of oak-covered hills, with rowboats, a temple at one end and Victorian boathouses along the Mall — and on a clear October morning the ridge above it shows the Nanda Devi range. That combination is why the whole of Delhi comes on long weekends.',
+  lead2:'The trick is timing and geography: be on the water at 07:00 when it’s still, hike Naina Peak before the haze, and spend the last day at Sattal — seven interconnected lakes 23 km away where kayaks outnumber people. Book a room now; this one sells out first.',
+  bus:{dep:'Thu 1 Oct · 21:30–23:00', arr:'Fri 2 Oct · 05:30–07:00', ops:'UTC Volvo · redBus operators · Delhi–Haldwani buses + taxi', cls:'Volvo AC seater',
+    ret:'Sun 4 Oct · 21:00–22:00', retExt:'Mon 5 Oct · 21:00–22:00', from:'Tallital bus stand',
+    note:'Direct UTC Volvos go to Tallital, the bus stand at the lake’s southern tip. Cheaper Delhi–Haldwani/Kathgodam buses need a shared taxi up (1.5 h, ₹150–200 pp). Sunday-night traffic near Haldwani can add an hour.'},
+  days:[
+    {k:'thu', note:'Short hop via Moradabad and Rampur; you’ll arrive before sunrise, so plan a slow first hour.', items:[
+      ['22:00','Board at Kashmere Gate ISBT','Late departure — eat dinner in Delhi first.'],
+      ['01:00','Dhaba stop past Moradabad','Optional; most people sleep through.'],
+      ['05:00','Kathgodam, the climb begins','Hairpins for the last hour; the lake appears at Tallital.']]},
+    {k:'fri', note:'Arrival at dawn is a gift here: the lake is empty. Then temple, boats, ropeway, Mall Road as it wakes.', items:[
+      ['06:30','Arrive Tallital','Chai at the lake edge while the mist lifts. Hotels will hold bags if check-in is later.',1],
+      ['07:30','Row the lake','Paddle or row boats from the Tallital end, ₹200–400. Still water, no one else yet.',1],
+      ['09:30','Breakfast at Sakley’s','Bakery since 1944; then check in.'],
+      ['11:00','Naina Devi Temple + the Flats','At the Mallital end; the temple, the bandstand, the sense of a hill station.'],
+      ['13:00','Lunch at Sonam’s / Embassy','Sonam’s for momos in the Tibetan market; Embassy for the wood-panelled classic.'],
+      ['15:00','Ropeway to Snow View','₹300 return. On a clear day: Nanda Devi, Trishul, Nanda Kot along the horizon. Walk down through the oaks.',1],
+      ['17:30','Mall Road promenade','Candles, wooden crafts, the lake going gold. Dinner at Chandni Chowk (Kumaoni) or Machan.']]},
+    {k:'sat', note:'Naina Peak is an easy 6 km forest walk to the town’s highest point. Go early for the range, then viewpoints on the way back.', items:[
+      ['06:30','Hike to Naina Peak (China Peak)','From Mallital via the Cheena Peak road, ~2.5 h up through oak and deodar. 2,611 m.'],
+      ['09:15','The summit view','Nanda Devi range on a clear morning, the lake a green slit far below. Chai stall at the top.',1],
+      ['11:00','Tiffin Top on the way down','Dorothy’s Seat: the classic lake-and-town panorama.'],
+      ['13:00','Lunch at Zooby’s Kitchen / Café Chica','Both above Mall Road; big windows.'],
+      ['15:30','Land’s End + Eco Cave Gardens','Land’s End looks over Khurpatal lake; the caves are silly and fun.'],
+      ['17:30','Kilbury road at dusk','Bird-rich forest road above town; a quiet walk before dinner.'],
+      ['19:30','Dinner at Sher-e-Punjab / Kumaoni thali','Bhatt ki churkani, aloo ke gutke, jhangore ki kheer somewhere with a fire.']]},
+    {k:'sun', note:'Escape the crowd: Sattal’s seven lakes, Bhimtal, sweets for the bus.', items:[
+      ['08:00','Taxi to Sattal','23 km, 45 min; ₹1,200–1,500 for the day. Seven interlinked lakes in oak forest.'],
+      ['09:00','Kayak on Sattal','Rentals at the lake; birding at Garud Tal for the patient. Zip-lines if the group wants noise.',1],
+      ['12:30','Lakeside lunch at Sattal','Simple cafés by the water; trout if it’s on.'],
+      ['14:00','Bhimtal','Island aquarium (boat across), a lakeside walk.'],
+      ['16:30','Back in Nainital: Bal Mithai & Singori','Mamu’s Naini Sweets. Buy for the office too.'],
+      ['18:00','Last lakeside sunset','Then dinner near Tallital.'],
+      ['21:30','Board the return Volvo at Tallital','Delhi 05:00–06:30 Monday.',1]]},
+    {k:'mon', note:'If we stretch: the forest village above town, or the cliff temple an hour away.', items:[
+      ['07:00','Pangot','15 km, 2,000 m: a birding village in Kilbury forest — pine-forest cafés, walks, no traffic. Or —'],
+      ['08:00','— Mukteshwar','50 km, 2,286 m: the Chauli ki Jali cliffs, a hilltop Shiva temple, orchards. Long but grand.'],
+      ['13:00','Lunch out, back by 17:00','Then a final lake hour.'],
+      ['21:30','Board the return Volvo','Delhi by breakfast Tuesday.',1]]}
+  ],
+  edit:[
+    ['see','Naini Lake','Row at 07:00; promenade at 17:30.'],
+    ['see','Naina Peak','2,611 m, 6 km; the Nanda Devi range on clear mornings.'],
+    ['see','Snow View Point','Ropeway up; walk down through the oaks.'],
+    ['see','Sattal','Seven lakes, 23 km away; kayaks, birds, quiet.'],
+    ['do','Tiffin Top & Land’s End','Easy viewpoints on forest paths.'],
+    ['do','Kilbury / Pangot walk','Birding forest road above town.'],
+    ['do','Bhimtal island aquarium','A boat, a small aquarium, a lakeside walk.'],
+    ['shop','Mall Road & Bara Bazaar','Candles, wooden crafts, woollens; Bal Mithai from Mamu’s.'],
+  ],
+  stay:[['Mallital / above Mall Road','hotels ₹1,200–2,500 (long-weekend rates climb fast); Zostel above the Mall ₹600–900 a bed.','base here'],['Tallital','near the bus stand; simpler, cheaper.','budget'],['Sattal / Bhimtal cottages','₹1,500–3,000; quiet nights, 30 min from town.','escape']],
+  eat:[['Bal Mithai & Singori','Kumaon’s sweets — at Mamu’s Naini Sweets.','local'],['Kumaoni thali','bhatt ki churkani, aloo ke gutke, mandua roti.','local'],['Sonam’s Fast Food','momos in the Tibetan market since forever.',''],['Sakley’s','bakery and breakfast since 1944.',''],['Machan / Zooby’s','Mall Road dinners with a lake window.','']],
+  wx:[['Days','12–22 °C'],['Nights','6–9 °C'],['Naina Peak a.m.','4–8 °C']],
+  notes:['Very high long-weekend crowds. Mall Road traffic is restricted — walk everywhere; taxis only for Sattal and Pangot.','Book the hotel 4–6 weeks out; this is the first of the six to sell out.','Himalayan views are a morning thing — Snow View and Naina Peak before 09:00.','Plenty of ATMs; UPI everywhere.','Easy on the body: 2,084 m, paved paths, one optional 6 km hike.']
+},
+{
+  id:'mussoorie', name:'Mussoorie & Landour', code:'MSR', sub:'Garhwal · Uttarakhand', state:'UK',
+  alt:2005, altLabel:'2,005 m', altNote:'Lal Tibba 2,275 m',
+  hours:'7–8 h', hoursN:7.5, km:'≈ 290 km', fare:'₹700–1,500', fareN:1100, budget:'₹7–10k', budgetN:8.5,
+  crowd:'High / low', crowdN:2.5, vibe:'Colonial nostalgia, café-hopping, deodar walks', best:'Landour’s ridge and Char Dukan mornings',
+  tagline:'The Queen of Hills below, and the quiet ridge above it where the omelettes are.',
+  img:'img/mussoorie.jpg', imgAlt:'Mussoorie’s bazaar and stacked hillside houses seen from Landour, with ridges and the Doon valley beyond', cr:'mussoorie',
+  img2:'img/mussoorie-2.jpg', img2Alt:'Shafts of morning light through tall deodar cedars on the forested slopes below Lal Tibba', cr2:'mussoorie2', cap2:'Deodar light below Lal Tibba, Landour — the best 20-minute walk in Uttarakhand.',
+  lead:'Mussoorie is two towns. The one on Mall Road has ropeways, chocolate shops, the Library bazaar and, on a long weekend, half of west Delhi. The one 300 m above it, Landour, is a cantonment ridge of tin-roofed cottages, three churches, a 1928 cheese shop and a crossroads called Char Dukan where you eat bun-omelettes with a Himalayan view.',
+  lead2:'Stay up in Landour and walk down when you feel like the noise. The mornings — Lal Tibba at 08:00, the deodar light, the Bandarpunch massif on the horizon — are the best in this issue for a town that’s only seven hours from Kashmere Gate.',
+  bus:{dep:'Thu 1 Oct · 22:00–23:30', arr:'Fri 2 Oct · 06:00–07:30', ops:'UTC Volvo to Dehradun ISBT · direct private buses to Mussoorie', cls:'Volvo AC seater',
+    ret:'Sun 4 Oct · 21:00–22:00', retExt:'Mon 5 Oct · 21:00–22:00', from:'Dehradun ISBT (taxi down 1.5 h)',
+    note:'Most comfortable: UTC Volvo to Dehradun (₹700–1,100, ~6.5 h), then a shared taxi or UTC bus (₹100–150) up the 35 km to Mussoorie / Landour. Direct Mussoorie buses exist (~8 h) but are fewer. Last Mussoorie–Dehradun buses run ~20:00; taxis go any time (₹1,500–2,000).'},
+  days:[
+    {k:'thu', note:'Meerut, Roorkee, Dehradun in the dark; the sunrise happens on the hill road up.', items:[
+      ['22:30','Board at Kashmere Gate ISBT','Latest departure of the six — dinner in Delhi.'],
+      ['02:00','Roorkee stop','Sleep through it.'],
+      ['06:00','Dehradun ISBT','Taxi up as the Doon valley lights come on below.']]},
+    {k:'fri', note:'Straight up to Landour: breakfast at Char Dukan, Lal Tibba while it’s clear, the ridge loop, cheese.', items:[
+      ['06:30','Arrive Dehradun, taxi to Landour','1.5 h of hairpins; sunrise over the Doon somewhere around Kempty turn-off.',1],
+      ['08:30','Check in on the ridge','Drop bags at the homestay; walk to Char Dukan.'],
+      ['09:15','Breakfast at Char Dukan','Bun-omelette, waffles, ginger-lemon-honey tea at Anil’s or Tip Top. The trip’s first proper view.',1],
+      ['11:00','Lal Tibba, 2,275 m','Highest point around; the café telescope picks out Bandarpunch and the Kedarnath peaks on clear October mornings.',1],
+      ['12:30','Landour loop walk','St Paul’s, Kellogg Memorial Church, the language school lane, cottages with names.'],
+      ['14:00','Lunch at Landour Bakehouse / Emily’s','Scones and soup, or Emily’s Garhwali plate at Rokeby Manor.'],
+      ['16:00','Sisters Bazaar & Prakash’s','Cheese, peanut butter and jams from a shop that opened in 1928. Buy for the bus.'],
+      ['18:00','Sunset at the Eagle’s Nest / Doma’s viewpoint','Then dinner at Café Ivy or Doma’s Inn (Tibetan).']]},
+    {k:'sat', note:'Down into Mussoorie for the classic bits before the crowds, then back up the hill for the quiet.', items:[
+      ['08:00','Camel’s Back Road','3 km level loop from Kulri to Library; the rock, the cemetery, the morning walkers.'],
+      ['10:00','Gun Hill ropeway','₹150; the Doon valley and the snow line on one turn of the head.'],
+      ['11:30','Library Bazaar & Cambridge Book Depot','Ruskin Bond’s bookshop — ask about his Saturday signing. Kulri for antiques and woollens.',1],
+      ['13:30','Lunch on Mall Road','Lovely Omelette Centre (the cheese-chilli), Kalsang Friends Corner for thukpa.'],
+      ['15:30','Cloud’s End forest walk','6 km west of Library; deodar and oak, the town’s western limit, almost nobody.',1],
+      ['18:00','Chic Chocolate, then up the hill','Hot chocolate on Mall Road; taxi or the 40-min climb back to Landour.'],
+      ['20:00','Dinner at Little Llama / Urban Turban','Or the homestay kitchen if the host offered.']]},
+    {k:'sun', note:'A: Dhanaulti for the deodar forest and a 2,756 m ropeway temple. B: Kempty Falls (only before 09:00). Then down to Dehradun for the bus.', items:[
+      ['08:00','A · Dhanaulti','24 km, 2,286 m: Eco Park deodar forest, Surkanda Devi ropeway to 2,756 m, big views, thin crowds.',1],
+      ['08:00','B · Kempty Falls','15 km; the classic waterfall. Go early or skip — by 11:00 on a long weekend it’s a queue.'],
+      ['13:00','Lunch at a Dhanaulti dhaba / back in Landour','Rajma-chawal at 2,200 m, or one more Char Dukan waffle.'],
+      ['16:30','Taxi down to Dehradun','1.5 h; stop at Tapkeshwar cave temple on the Tons if there’s time.'],
+      ['19:00','Dinner near Dehradun ISBT','Or a thali stop on the way down.'],
+      ['21:30','Board the Volvo at Dehradun ISBT','Delhi 04:30–06:00 Monday.',1]]},
+    {k:'mon', note:'If we stretch: a sunrise ruin and a nature reserve nobody visits.', items:[
+      ['06:00','George Everest House at sunrise','Hathipaon, 6 km: the surveyor’s 1830s bungalow on a bare ridge; sunrise over the Doon and the Aglar valley.'],
+      ['09:30','Jabarkhet Nature Reserve','Landour’s private forest reserve (₹350, guided trails): oak, rhododendron, leopard pugmarks if lucky.'],
+      ['13:00','Long lunch at Char Dukan','Then a nap. It’s the extra day.'],
+      ['21:30','Board the Volvo at Dehradun','Delhi by breakfast Tuesday.',1]]}
+  ],
+  edit:[
+    ['see','Lal Tibba','2,275 m; Bandarpunch through the telescope on clear mornings.'],
+    ['see','Char Dukan','Four shops, one crossroads, the best breakfast in the hills.'],
+    ['see','Camel’s Back Road','3 km morning loop with the rock and the old cemetery.'],
+    ['see','Cloud’s End','Deodar forest walk at the town’s western edge.'],
+    ['do','Gun Hill ropeway','₹150 up; Doon valley and the snow line.'],
+    ['do','Jabarkhet Nature Reserve','Guided forest trails above Landour, ₹350.'],
+    ['do','Dhanaulti day trip','Eco Park deodars, Surkanda Devi ropeway to 2,756 m.'],
+    ['shop','Sisters Bazaar & Kulri','Prakash’s cheese and jams (1928); antiques and woollens in Kulri.'],
+  ],
+  stay:[['Landour (Char Dukan / Sisters Bazaar)','homestays and boutique rooms ₹2,000–4,000; few rooms — book 4–6 weeks out.','base here'],['Library Bazaar','hotels ₹1,200–2,500; central to Mall Road, 40 min below Landour.','convenient'],['Hostels','Zostel / Hosteller ₹600–900 a bed, near Library.','budget']],
+  eat:[['Char Dukan','bun-omelette, waffles, ginger-lemon-honey tea.','ritual'],['Landour Bakehouse','scones, cinnamon rolls, soup.',''],['Prakash’s','cheese, peanut butter, jams since 1928.','carry home'],['Lovely Omelette Centre','the cheese-chilli omelette on Mall Road.',''],['Garhwali kafuli & mandua roti','at Emily’s or a Dehradun dhaba on the way down.','local']],
+  wx:[['Days','12–22 °C'],['Nights','7–10 °C'],['Lal Tibba a.m.','5–9 °C']],
+  notes:['Two crowd levels: Mall Road is packed on long weekends, Landour is a cantonment and stays hushed — stay up top.','Clearest Himalayan views of the year from Lal Tibba in October, before 09:00.','Landour is a 30–45 min uphill walk from Mall Road; taxis ₹300–400. Kempty Falls is a queue after 10:00 — go at 08:00 or not at all.','Pricier stays than the other five; homestays are worth it.','Mild altitude; the only climb is optional.']
+},
+{
+  id:'lansdowne', name:'Lansdowne', code:'LDN', sub:'Pauri Garhwal · Uttarakhand', state:'UK',
+  alt:1706, altLabel:'1,706 m', altNote:'Tip-n-Top 1,800 m',
+  hours:'7–8 h', hoursN:7.5, km:'≈ 270 km', fare:'₹600–1,100', fareN:850, budget:'₹5–7k', budgetN:6,
+  crowd:'Low', crowdN:1, vibe:'Hushed cantonment, oak & deodar', best:'Switching off; a Himalayan view with no one else on it',
+  tagline:'A Garhwal Rifles cantonment where the forest starts at the road, the lake has geese, and long weekends stay quiet.',
+  img:'img/lansdowne.jpg', imgAlt:'A misty road curving along a pine-covered ridge above layered forested hills near Lansdowne', cr:'lansdowne',
+  img2:'img/lansdowne-2.jpg', img2Alt:'The small green Bhulla Tal lake at Lansdowne with an arched footbridge, pines and a cottage beyond', cr2:'lansdowne2', cap2:'Bhulla Tal: a lake, a bridge, some geese, and the Garhwal Rifles running the boats.',
+  lead:'Lansdowne is a cantonment town first and a hill station second, and that is exactly why it works. The Garhwal Rifles have kept it small since 1887: no new hotels, no plaza, no music after nine, a forest of oak and deodar that starts at the edge of the parade ground. On a long weekend when Nainital gridlocks, Lansdowne has a lake with pedal boats and a viewpoint with nobody on it.',
+  lead2:'This is the switch-off option. The plan below is deliberately loose — a boating lake, a Shiva temple in a cedar grove an hour away, a sunrise point with telescopes, and a lot of walking under trees. Bring books, cards and cash; leave the speaker at home.',
+  bus:{dep:'Thu 1 Oct · 22:00–23:30', arr:'Fri 2 Oct · 05:30–07:00 (Kotdwar) · +1.5 h jeep', ops:'UTC & private Delhi–Kotdwar · GMOU shared jeeps up', cls:'AC bus + shared jeep',
+    ret:'Sun 4 Oct · 21:00–22:00 from Kotdwar', retExt:'Mon 5 Oct · 21:00–22:00 from Kotdwar', from:'Kotdwar bus stand (jeep down by 19:00)',
+    note:'Buses go to Kotdwar (₹450–900), the railhead in the plains. From there, shared jeeps (₹150–200 pp, from 06:00) or a private taxi (₹1,300–1,600) climb 40 km in about 1.5 h. Occasional direct Delhi–Lansdowne buses exist; don’t plan around them. Backup home: the Kotdwar–Delhi Garhwal Express train.'},
+  days:[
+    {k:'thu', note:'Via Meerut, Bijnor and Najibabad; the shortest sleep of the six, so the arrival is gentle.', items:[
+      ['22:30','Board at Kashmere Gate ISBT','Kotdwar-bound. Eat in Delhi.'],
+      ['02:00','Najibabad','You won’t notice.'],
+      ['05:30','Kotdwar','Chai at the stand; the first shared jeeps up leave around 06:00.']]},
+    {k:'fri', note:'Sunrise on the climb, then a slow first day around the town: lake, museum, churches, sunset.', items:[
+      ['06:00','Shared jeep up to Lansdowne','40 km, 1.5 h of bends; the plains drop away, sal gives way to pine then oak.',1],
+      ['07:30','Check in, chai','Hotels are small; hosts will have tea ready if you message ahead.'],
+      ['09:30','Breakfast at Tipsy Tea Café / Mayur','Paranthas, omelettes, the market waking up slowly.'],
+      ['11:00','Bhulla Tal','The Garhwal Rifles’ small lake: pedal boats, geese, a bamboo footbridge, a children’s park. Sit on the grass.',1],
+      ['13:00','Lunch in the market','Sky Restaurant or a canteen-style dhaba; simple and good.'],
+      ['15:00','Garhwali Museum & War Memorial','Darwan Singh Sanghralaya: the regiment’s history, uniforms, the 1887 parade ground.'],
+      ['16:30','St Mary’s (1895) & St John’s','Two small churches, stone and quiet. Then the cantonment loop road under the deodars.'],
+      ['18:00','Sunset at Tip-n-Top','1,800 m; the Himalayan line if the haze clears. Kitchens close ~21:00 — dinner early.',1]]},
+    {k:'sat', note:'The one drive: Tarkeshwar Mahadev, a Shiva temple in a cedar grove. Then boulders, a snow viewpoint, stars.', items:[
+      ['07:00','Taxi to Tarkeshwar Mahadev','36 km, 1.5 h through forest; ₹1,500–1,800 for the round trip.'],
+      ['08:30','The cedar grove temple','Ancient Shiva shrine ringed by giant deodars; bells, a short forest trail, prasad breakfast. Genuinely hushed.',1],
+      ['12:00','Jaiharikhal viewpoint, lunch','5 km from Lansdowne; a small village with homestays and a long view.'],
+      ['15:00','Bhim Pakora & Snow View Point','Two balanced boulders you can rock with a finger; then the range — Trishul and Nanda Devi on clear October days.',1],
+      ['17:00','Cantonment loop walk','Oak, deodar, rhododendron; langurs in the trees.'],
+      ['19:30','Dinner, then stars','Near-zero light pollution. Lie on the lawn.']]},
+    {k:'sun', note:'Sunrise from the top, a temple walk, the market for pahadi things, a lazy afternoon, then down to Kotdwar in time.', items:[
+      ['06:30','Sunrise at Tip-n-Top','Telescopes for ₹20; the range at its clearest.',1],
+      ['08:30','Breakfast, then Santoshi Mata Temple','A short hilltop walk above the market.'],
+      ['11:00','Lansdowne market','Garhwali woollens, bhang-ki-chutney jars, local honey, rhododendron squash (buransh).'],
+      ['13:00','Lunch, then nothing','Bhulla Tal lawns or the hotel garden. This is the point.'],
+      ['17:30','Jeep down to Kotdwar','Last shared jeeps ~19:00 — leave by 18:00 to be safe. Dinner at Kotdwar.',1],
+      ['21:30','Board the bus at Kotdwar','Delhi 04:30–05:30 Monday.',1]]},
+    {k:'mon', note:'If we stretch: a river hermitage on the way down, or nothing at all.', items:[
+      ['09:00','Kanvashram','On the Malini river, 14 km from Kotdwar: the ashram of Kanva in the Shakuntala story; forest, water, few people.'],
+      ['12:00','Sidhbali Temple, Kotdwar','Hilltop Hanuman temple over the town; last views.'],
+      ['13:00','— or a zero day in Lansdowne','Picnic at Bhulla Tal, a book, the geese.'],
+      ['21:30','Board the bus at Kotdwar','Delhi by breakfast Tuesday.',1]]}
+  ],
+  edit:[
+    ['see','Tip-n-Top','1,800 m sunrise/sunset point with telescopes.'],
+    ['see','Bhulla Tal','Regiment-run lake: pedal boats, geese, lawns.'],
+    ['see','Tarkeshwar Mahadev','Shiva temple in a deodar grove, 36 km away.'],
+    ['see','Snow View Point & Bhim Pakora','The range, and two boulders you can rock.'],
+    ['do','Garhwali Museum & War Memorial','The regiment’s story since 1887.'],
+    ['do','Cantonment forest loop','Oak, deodar, rhododendron; langurs.'],
+    ['do','Stargazing','Almost no light pollution; October skies.'],
+    ['shop','Lansdowne market','Woollens, honey, buransh squash, bhang chutney.'],
+  ],
+  stay:[['Lansdowne market area','the few hotels: ₹1,500–3,000. Cantonment rules cap new building, so book 4+ weeks out.','base here'],['GMVN Tourist Rest House','state-run, plain, well-placed.','budget'],['Jaiharikhal homestays','5 km out; quieter still, ₹1,200–2,000.','quiet']],
+  eat:[['Garhwali thali','kafuli, phaanu, chainsoo, mandua roti, jhangora kheer.','local'],['Bhang ki chutney','roasted hemp-seed chutney — buy a jar.','carry home'],['Tipsy Tea Café','breakfasts and the market’s best chai.',''],['Canteen-style snacks','samosas and bread pakora near the parade ground.',''],['Kitchens close ~21:00','eat early; carry bus snacks from Delhi.','note']],
+  wx:[['Days','12–22 °C'],['Nights','6–9 °C'],['Tarkeshwar a.m.','5–8 °C']],
+  notes:['Cantonment town: no loud music, alcohol only inside rooms, kitchens shut by 21:00. It’s a switch-off weekend — say so in the group.','Only two ATMs; carry ₹6k+. UPI works in most shops.','Network: Jio and Airtel decent in town; patchy at Tarkeshwar.','Sunday: last shared jeeps down leave around 19:00. Miss them and it’s a ₹1,500 taxi — still fine, but book the bus with slack.','Lowest crowds of the six by a distance; also the fewest rooms.']
+}
+];
+
+/* ============================ HELPERS ============================ */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DAY = {thu:['Thu 1','night bus'], fri:['Fri 2','arrive · Gandhi Jayanti'], sat:['Sat 3','the big day'], sun:['Sun 4',''], mon:['Mon 5','']};
+const KIND = {see:'see', do:'do', shop:'market'};
+const sm = p => p.replace('.jpg', '-800.jpg');
+const br = s => s.replace(' · ', '<br>');
+const crd = k => { const c = CREDITS[k]; return `<a class="credit" href="${c.p}" target="_blank" rel="noopener">Photo · ${c.a} · ${c.l}</a>`; };
+
+/* ============================ CONTENTS ============================ */
+function renderCards(order){
+  const el = $('#cards');
+  el.innerHTML = order.map(d => `
+    <a class="card" href="#${d.id}" data-rv>
+      <div class="ph"><img src="${d.img}" srcset="${sm(d.img)} 800w, ${d.img} 1600w" sizes="(max-width:640px) 100vw, 380px" alt="${d.imgAlt}" loading="lazy" decoding="async"></div>
+      <div class="body">
+        <div class="sub">${d.sub}</div>
+        <div class="name">${d.name}</div>
+        <p class="tag">${d.vibe}.</p>
+        <div class="stats">
+          <div class="stat"><b>Altitude</b><span>${d.altLabel}</span></div>
+          <div class="stat"><b>Bus</b><span>${d.hours}</span></div>
+          <div class="stat"><b>Fare, one way</b><span>${d.fare}</span></div>
+          <div class="stat"><b>Crowds</b><span>${d.crowd}</span></div>
+        </div>
+        <div class="go">Read the spread →</div>
+      </div>
+    </a>`).join('');
+}
+const SORTS = {
+  issue: a => a,
+  alt: a => [...a].sort((x,y)=>y.alt-x.alt),
+  hours: a => [...a].sort((x,y)=>x.hoursN-y.hoursN),
+  budget: a => [...a].sort((x,y)=>x.budgetN-y.budgetN),
+  crowd: a => [...a].sort((x,y)=>x.crowdN-y.crowdN),
+};
+renderCards(D);
+$$('.sorts .chip').forEach(b => b.addEventListener('click', () => {
+  $$('.sorts .chip').forEach(c => c.setAttribute('aria-pressed','false'));
+  b.setAttribute('aria-pressed','true');
+  renderCards(SORTS[b.dataset.sort](D));
+}));
+
+/* peaks chart */
+(function peaks(){
+  const svg = $('#peaks'); const W=1200, H=280, base=232, top=44, lo=216, hi=2900;
+  const y = a => base - (a-lo)/(hi-lo)*(base-top);
+  const step = W/ D.length; let s = '';
+  s += `<line class="base" x1="0" x2="${W}" y1="${base}" y2="${base}" stroke-width="1"/>`;
+  s += `<text class="baselbl" x="${W-4}" y="${base+16}" text-anchor="end">DELHI · 216 M</text>`;
+  D.forEach((d,i) => {
+    const cx = step*i + step/2, py = y(d.alt), hw = step*0.62;
+    s += `<a class="pk" href="#${d.id}" role="link" aria-label="${d.name}, ${d.altLabel}">
+      <polygon class="m" points="${cx-hw},${base} ${cx-hw*0.55},${py+ (base-py)*0.45} ${cx-hw*0.22},${py+(base-py)*0.18} ${cx},${py} ${cx+hw*0.2},${py+(base-py)*0.22} ${cx+hw*0.5},${py+(base-py)*0.5} ${cx+hw},${base}"/>
+      <text x="${cx}" y="${py-22}" text-anchor="middle">${d.name}</text>
+      <text class="alt" x="${cx}" y="${py-8}" text-anchor="middle">${d.altLabel.toUpperCase()}</text>
+    </a>`;
+  });
+  svg.innerHTML = s;
+})();
+
+/* ============================ FEATURES ============================ */
+function tl(day){
+  return `<div class="tl-wrap">${day.note ? `<p class="daynote">${day.note}</p>` : ''}
+  <ol class="tl">${day.items.map(([t,w,n,hi]) => `<li${hi?' class="hi"':''}><span class="t">${t}</span><span class="dot"></span><div><div class="w">${w}</div><div class="n">${n}</div></div></li>`).join('')}</ol></div>`;
+}
+function feature(d){
+  const dayBtns = d.days.map(day => {
+    const [lbl, sm] = DAY[day.k]; const opt = day.k==='mon';
+    const small = opt ? `<small><span class="opt-off">if we stretch</span><span class="opt-on">bonus day</span></small>` : (sm ? `<small>${sm}</small>` : `<small><span class="opt-off">night bus home</span><span class="opt-on">one more night</span></small>`);
+    return `<button class="day${opt?' opt':''}" role="tab" data-k="${day.k}" aria-selected="${day.k==='fri'}">${lbl}${day.k==='sun'||opt?small:(sm?small:'')}</button>`;
+  }).join('');
+  const second = `<figure class="ph2" data-rv><img src="${d.img2}" srcset="${sm(d.img2)} 800w, ${d.img2} 1200w" sizes="(max-width:900px) 100vw, 480px" alt="${d.img2Alt}" loading="lazy" decoding="async"><figcaption>${d.cap2}${crd(d.cr2).replace('class="credit"','')}</figcaption></figure>`;
+  return `
+  <article class="feature" id="${d.id}" aria-labelledby="${d.id}-h">
+    <div class="hero">
+      <img src="${d.img}" srcset="${sm(d.img)} 800w, ${d.img} 1600w" sizes="100vw" alt="${d.imgAlt}" loading="lazy" decoding="async">
+      <div class="veil"></div>
+      ${crd(d.cr)}
+      <div class="title"><div class="wrap">
+        <div class="where"><span>${d.sub}</span><span>${d.altLabel}</span><span>${d.hours} by bus</span><span>${d.crowd} crowds</span></div>
+        <h2 class="h-display" id="${d.id}-h">${d.name}</h2>
+        <p class="tag">${d.tagline}</p>
+      </div></div>
+    </div>
+    <div class="wrap">
+      <div class="intro">
+        <div data-rv><p class="lead">${d.lead}</p><p>${d.lead2}</p></div>
+        <div class="glance" data-rv>${glance(d)}</div>
+      </div>
+      <div class="two">
+        <div class="pass" data-rv>
+          <div class="main">
+            <div class="hd"><span>Boarding pass · overnight</span><em>${d.cls || d.bus.cls}</em></div>
+            <div class="route">
+              <div><div class="code">DEL</div><div class="city">Kashmere Gate ISBT</div></div>
+              <div class="arrow">→<small>${d.km}</small></div>
+              <div class="to"><div class="code">${d.code}</div><div class="city">${d.name}</div></div>
+            </div>
+            <div class="grid">
+              <div class="f"><b>Departs</b><span>${br(d.bus.dep)}</span></div>
+              <div class="f"><b>Arrives</b><span>${br(d.bus.arr)}</span></div>
+              <div class="f"><b>Duration</b><span>${d.hours}</span></div>
+              <div class="f"><b>Fare, one way</b><span>${d.fare}</span></div>
+              <div class="f span2"><b>Operators</b><span>${d.bus.ops}</span></div>
+            </div>
+            <p class="note">${d.bus.note}</p>
+          </div>
+          <div class="stub">
+            <div class="hd"><span>Return</span></div>
+            <div class="f"><b>Departs</b><span><span class="ret-off">${br(d.bus.ret)}</span><span class="ret-on">${br(d.bus.retExt)}</span></span></div>
+            <div class="f"><b>From</b><span>${d.bus.from}</span></div>
+            <div class="f"><b>Seat</b><span>Window. Obviously.</span></div>
+            <div class="f"><b>Metro to ISBT</b><span>Kashmere Gate · Red / Yellow / Violet</span></div>
+            <div class="barcode" aria-hidden="true"></div>
+          </div>
+        </div>
+        ${second}
+      </div>
+      <section class="itin" aria-label="Day by day">
+        <div class="hd" data-rv><div><p class="eyebrow">Day by day</p><h3 class="h-display" style="margin-top:8px">The plan</h3></div><p>Times are a rhythm, not a schedule. Tap a day.</p></div>
+        <div class="days" role="tablist" data-rv>${dayBtns}</div>
+        <div class="tlhost" data-rv>${tl(d.days.find(x=>x.k==='fri'))}</div>
+      </section>
+      <section class="edit" data-rv>
+        <p class="eyebrow">The edit</p><h3 class="h-display" style="margin-top:8px">What to see, do and buy</h3>
+        <p class="sub">Highlights in roughly the order the plan hits them.</p>
+        <ul>${d.edit.map(([k,b,n]) => `<li><span class="k${k==='do'?' act':k==='shop'?' mkt':''}">${KIND[k]}</span><div><b>${b}</b><span>${n}</span></div></li>`).join('')}</ul>
+      </section>
+      <div class="cols">
+        <div class="stay" data-rv><p class="eyebrow">Stay</p><h3 class="h-display" style="margin-top:8px">Where to base</h3>
+          <ul>${d.stay.map(([b,s,e]) => `<li><b>${b}</b>${e?`<em>${e}</em>`:''}<br><span>${s}</span></li>`).join('')}</ul></div>
+        <div class="eat" data-rv><p class="eyebrow">Eat</p><h3 class="h-display" style="margin-top:8px">Worth the calories</h3>
+          <ul>${d.eat.map(([b,s,e]) => `<li><b>${b}</b>${e?`<em>${e}</em>`:''}<br><span>${s}</span></li>`).join('')}</ul></div>
+        <div class="notes" data-rv>
+          <div class="hd"><span>Field notes</span><span>October</span></div>
+          <h3 class="h-display">Before you go</h3>
+          <div class="wx">${d.wx.map(([b,s]) => `<div><b>${b}</b><span>${s}</span></div>`).join('')}</div>
+          <ul>${d.notes.map(n => `<li>${n}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+function glance(d){
+  return `<div><b>Altitude</b><span>${d.altLabel}</span></div><div><b>Also</b><span>${d.altNote}</span></div>
+  <div><b>Crowds</b><span>${d.crowd}</span></div><div><b>Budget, 3 nights pp</b><span>${d.budget}</span></div>
+  <div class="wide"><b>Best for</b><span>${d.best}</span></div>`;
+}
+$('#features').innerHTML = D.map(feature).join('');
+
+/* day tabs */
+$('#features').addEventListener('click', e => {
+  const b = e.target.closest('.day'); if(!b) return;
+  const art = b.closest('.feature'); const d = D.find(x => x.id === art.id);
+  $$('.day', art).forEach(x => x.setAttribute('aria-selected','false'));
+  b.setAttribute('aria-selected','true');
+  const host = $('.tlhost', art); host.innerHTML = tl(d.days.find(x => x.k === b.dataset.k));
+});
+
+/* folio tabs */
+$('#tabs').innerHTML = D.map(d => `<a class="tab" href="#${d.id}" data-id="${d.id}">${d.name.split(' ')[0]}</a>`).join('');
+
+
+/* ============================ EXTEND TOGGLE ============================ */
+const ext = $('#ext');
+function setExt(on, save=true){
+  ext.setAttribute('aria-checked', String(on)); document.body.classList.toggle('ext', on);
+  $('.txt', ext).textContent = on ? 'Stretching to Monday' : 'Stretch to Monday';
+  if(save){ try{ localStorage.setItem('overnight.ext', on ? '1' : '0'); }catch(e){} }
+}
+ext.addEventListener('click', () => setExt(ext.getAttribute('aria-checked') !== 'true'));
+try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ setExt(false,false); }
+
+/* ============================ COVER ART ============================ */
+(function cover(){
+  const cov = $('#cover');
+  // stars: 4 twinkle groups instead of one animation per star
+  let seed = 7; const rnd = () => (seed = (seed*9301+49297)%233280)/233280;
+  const groups = [[],[],[],[]];
+  for(let i=0;i<84;i++){
+    const x = rnd()*1600, y = rnd()*430, r = .6 + rnd()*1.5, o = .35 + rnd()*.65;
+    groups[i%4].push(`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="#FFF6E2" opacity="${o.toFixed(2)}"/>`);
+  }
+  $('#stars').innerHTML = groups.map((g,i) => `<g class="sg" style="--d:${(4+i*1.3).toFixed(1)}s;--dl:${(-i*1.7).toFixed(1)}s">${g.join('')}</g>`).join('');
+  // tree-line ridge
+  const pts = ['0,960'];
+  for(let x=0;x<=1600;x+=14){
+    const base = 724 + 26*Math.sin(x/190) + 10*Math.sin(x/47+1);
+    const h = 9 + 13*Math.abs(Math.sin(x*.37));
+    pts.push(`${x},${base.toFixed(1)}`, `${x+7},${(base-h).toFixed(1)}`);
+  }
+  pts.push('1614,740','1614,960');
+  $('#ridgeB').setAttribute('points', pts.join(' '));
+  // prayer flags along the string
+  const line = $('#line'), L = line.getTotalLength(), cols = ['#3B6FD8','#F1F2F6','#E0503C','#3D9C5E','#F0C23C'];
+  let f=''; const n=13;
+  for(let i=0;i<n;i++){
+    const t = 0.06 + (i/(n-1))*0.9, p = line.getPointAtLength(t*L), p2 = line.getPointAtLength(Math.min(L, t*L+4));
+    const ang = Math.atan2(p2.y-p.y, p2.x-p.x)*180/Math.PI;
+    const c = cols[i%cols.length], dark = c==='#F1F2F6' ? 'rgba(20,30,60,.14)' : 'rgba(0,0,0,.2)';
+    f += `<g transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${ang.toFixed(1)})"><g class="flag" style="--wd:${(2.8+(i%4)*.35).toFixed(2)}s;--wdl:${(-i*.37).toFixed(2)}s">
+      <rect x="-15" y="0" width="30" height="23" fill="${c}"/><rect x="-15" y="14" width="30" height="9" fill="${dark}"/><rect x="-8" y="5" width="16" height="6" fill="rgba(0,0,0,.12)"/></g></g>`;
+  }
+  $('#flags').innerHTML = f;
+  // framing: crop the wide scene on portrait screens so the bus and sun stay in view
+  const layers = $$('.L', cov);
+  const frame = () => { const a = innerWidth/innerHeight; const vb = a < .8 ? '330 0 900 900' : (a < 1.1 ? '160 0 1280 900' : '0 0 1600 900'); layers.forEach(l => l.setAttribute('viewBox', vb)); };
+  frame(); addEventListener('resize', frame, {passive:true});
+  // bus: if motion-path is unsupported, park it on the road
+  const bus = $('#bus');
+  if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.setAttribute('transform', 'translate(500 748) rotate(4)');
+  // fallback parallax for browsers without scroll-driven animations
+  if(RM || CSS.supports('animation-timeline', 'scroll()')) return;
+  const PAR = {'l-stars':[0,70],'l-glow':[0,-90],'l-clouds':[-90,30],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
+  const mast = $('#mast'), lines = $('#lines'); let ticking=false;
+  const run = () => {
+    ticking=false; const p = Math.min(1, Math.max(0, scrollY/(innerHeight*.88))); if(p>=1 && run.done) return; run.done = p>=1;
+    layers.forEach(l => { const k = [...l.classList].find(c => PAR[c]); if(!k) return; const [x,y] = PAR[k]; l.style.transform = `translate3d(${(x*p).toFixed(1)}px, ${(y*p).toFixed(1)}px, 0)`; });
+    $('.l-stars', cov).style.opacity = 1 - .8*p; $('.l-mist', cov).style.opacity = 1 - .85*p;
+    mast.style.transform = `translate3d(0, ${(150*p).toFixed(1)}px, 0)`; mast.style.opacity = 1-p;
+    lines.style.transform = `translate3d(0, ${(70*p).toFixed(1)}px, 0)`; lines.style.opacity = 1-p;
+    const portrait = matchMedia('(max-aspect-ratio: 4/5)').matches; bus.style.offsetDistance = (portrait ? 30 + 36*p : 14 + 64*p).toFixed(1) + '%';
+  };
+  addEventListener('scroll', () => { if(!ticking){ ticking=true; requestAnimationFrame(run); } }, {passive:true});
+  run();
+})();
+
+/* ============================ ACTIVE TAB ============================ */
+(function(){
+  const tabs = $$('#tabs .tab'), feats = $$('.feature');
+  if('IntersectionObserver' in window){
+    const act = new IntersectionObserver(es => {
+      es.forEach(e => { if(e.isIntersecting){ tabs.forEach(t => t.classList.toggle('active', t.dataset.id === e.target.id)); const t = $(`#tabs .tab[data-id="${e.target.id}"]`); t && t.scrollIntoView({block:'nearest', inline:'center', behavior: RM?'auto':'smooth'}); } });
+    }, {rootMargin:'-45% 0px -45% 0px'});
+    feats.forEach(f => act.observe(f));
+    const clr = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) tabs.forEach(t => t.classList.remove('active')); }), {rootMargin:'-45% 0px -45% 0px'});
+    ['#contents','#plan','#before-you-board'].forEach(s => clr.observe($(s)));
+  }
+})();
+</script>
