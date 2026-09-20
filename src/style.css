@@ -499,3 +499,53 @@ body.ext .day .opt-off{display:none}
   .plan::after{animation:none}
   .feature .hero img,.card .ph::before,.folio .tab,.cover .inside a,.chip,.day,.switch,.steps .step::before,.feature .hero .title .tag,.hero-index,.glance div,.pass,.pass .barcode,.ph2 img,.ph2 figcaption,.tl li,.tl .dot,.edit li,.cols li,.back .box{transition:none;animation:none}
 }
+
+/* Scroll-linked cover: the illustration answers the scroll — the bus drives up the road, the sun rises and dawn
+   brightens, clouds drift, ridges parallax at their own depths. Entrance animations move to inner wrappers so
+   the two systems never fight over the same transform. */
+.cover .bus,.cover .l-dawn,.cover .mast{animation:none}
+@media (max-aspect-ratio:4/5){.cover .bus{animation:none}}
+.cover .l-dawn{opacity:.3}
+.cover .mast .wrap{animation:hero-enter 1s .12s cubic-bezier(.2,.7,.2,1) both}
+.cover .L{will-change:transform}
+@supports (animation-timeline: scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    .cover .L,.cover .mast,.cover .lines,.cover .bus{animation-timing-function:linear;animation-fill-mode:both;animation-timeline:scroll(root);animation-range:0 88vh}
+    .cover .l-stars,.cover .l-meteors{animation-name:c-stars}
+    .cover .l-dawn{animation-name:c-dawn}
+    .cover .l-glow{animation-name:c-sun}
+    .cover .l-clouds{animation-name:c-clouds}
+    .cover .l-atmos{animation-name:c-atmos}
+    .cover .l-clouds2{animation-name:c-clouds2}
+    .cover .l-far{animation-name:c-far}
+    .cover .l-mist{animation-name:c-mist}
+    .cover .l-mid{animation-name:c-mid}
+    .cover .l-trees{animation-name:c-trees}
+    .cover .l-road{animation-name:c-road}
+    .cover .l-fg{animation-name:c-fg}
+    .cover .l-flags{animation-name:c-flags}
+    .cover .mast{animation-name:c-mast}
+    .cover .lines{animation-name:c-lines}
+    .cover .bus{animation-name:c-bus}
+    .cover-route{animation:hero-enter .9s .85s ease-out both,c-route linear both;animation-timeline:auto,scroll(root);animation-range:normal,0 88vh}
+    @media (max-aspect-ratio:4/5){.cover .bus{animation-name:c-bus-m}}
+  }
+}
+@keyframes c-stars{to{transform:translateY(70px);opacity:.15}}
+@keyframes c-dawn{to{opacity:.95}}
+@keyframes c-sun{to{transform:translateY(-110px)}}
+@keyframes c-clouds{to{transform:translate(-90px,30px)}}
+@keyframes c-atmos{to{transform:translate(-50px,20px);opacity:.35}}
+@keyframes c-clouds2{to{transform:translate(-190px,-40px)}}
+@keyframes c-far{to{transform:translateY(30px)}}
+@keyframes c-mist{to{transform:translate(140px,-30px);opacity:.15}}
+@keyframes c-mid{to{transform:translateY(-20px)}}
+@keyframes c-trees{to{transform:translateY(-70px)}}
+@keyframes c-road{to{transform:translateY(-120px)}}
+@keyframes c-fg{to{transform:translateY(-190px)}}
+@keyframes c-flags{to{transform:translateY(-240px)}}
+@keyframes c-mast{to{transform:translateY(150px);opacity:0}}
+@keyframes c-lines{to{transform:translateY(70px);opacity:0}}
+@keyframes c-route{to{translate:0 120px}}
+@keyframes c-bus{from{offset-distance:14%}to{offset-distance:78%}}
+@keyframes c-bus-m{from{offset-distance:30%}to{offset-distance:66%}}

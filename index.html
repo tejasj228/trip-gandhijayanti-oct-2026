@@ -512,6 +512,56 @@ body.ext .day .opt-off{display:none}
   .plan::after{animation:none}
   .feature .hero img,.card .ph::before,.folio .tab,.cover .inside a,.chip,.day,.switch,.steps .step::before,.feature .hero .title .tag,.hero-index,.glance div,.pass,.pass .barcode,.ph2 img,.ph2 figcaption,.tl li,.tl .dot,.edit li,.cols li,.back .box{transition:none;animation:none}
 }
+
+/* Scroll-linked cover: the illustration answers the scroll — the bus drives up the road, the sun rises and dawn
+   brightens, clouds drift, ridges parallax at their own depths. Entrance animations move to inner wrappers so
+   the two systems never fight over the same transform. */
+.cover .bus,.cover .l-dawn,.cover .mast{animation:none}
+@media (max-aspect-ratio:4/5){.cover .bus{animation:none}}
+.cover .l-dawn{opacity:.3}
+.cover .mast .wrap{animation:hero-enter 1s .12s cubic-bezier(.2,.7,.2,1) both}
+.cover .L{will-change:transform}
+@supports (animation-timeline: scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    .cover .L,.cover .mast,.cover .lines,.cover .bus{animation-timing-function:linear;animation-fill-mode:both;animation-timeline:scroll(root);animation-range:0 88vh}
+    .cover .l-stars,.cover .l-meteors{animation-name:c-stars}
+    .cover .l-dawn{animation-name:c-dawn}
+    .cover .l-glow{animation-name:c-sun}
+    .cover .l-clouds{animation-name:c-clouds}
+    .cover .l-atmos{animation-name:c-atmos}
+    .cover .l-clouds2{animation-name:c-clouds2}
+    .cover .l-far{animation-name:c-far}
+    .cover .l-mist{animation-name:c-mist}
+    .cover .l-mid{animation-name:c-mid}
+    .cover .l-trees{animation-name:c-trees}
+    .cover .l-road{animation-name:c-road}
+    .cover .l-fg{animation-name:c-fg}
+    .cover .l-flags{animation-name:c-flags}
+    .cover .mast{animation-name:c-mast}
+    .cover .lines{animation-name:c-lines}
+    .cover .bus{animation-name:c-bus}
+    .cover-route{animation:hero-enter .9s .85s ease-out both,c-route linear both;animation-timeline:auto,scroll(root);animation-range:normal,0 88vh}
+    @media (max-aspect-ratio:4/5){.cover .bus{animation-name:c-bus-m}}
+  }
+}
+@keyframes c-stars{to{transform:translateY(70px);opacity:.15}}
+@keyframes c-dawn{to{opacity:.95}}
+@keyframes c-sun{to{transform:translateY(-110px)}}
+@keyframes c-clouds{to{transform:translate(-90px,30px)}}
+@keyframes c-atmos{to{transform:translate(-50px,20px);opacity:.35}}
+@keyframes c-clouds2{to{transform:translate(-190px,-40px)}}
+@keyframes c-far{to{transform:translateY(30px)}}
+@keyframes c-mist{to{transform:translate(140px,-30px);opacity:.15}}
+@keyframes c-mid{to{transform:translateY(-20px)}}
+@keyframes c-trees{to{transform:translateY(-70px)}}
+@keyframes c-road{to{transform:translateY(-120px)}}
+@keyframes c-fg{to{transform:translateY(-190px)}}
+@keyframes c-flags{to{transform:translateY(-240px)}}
+@keyframes c-mast{to{transform:translateY(150px);opacity:0}}
+@keyframes c-lines{to{transform:translateY(70px);opacity:0}}
+@keyframes c-route{to{translate:0 120px}}
+@keyframes c-bus{from{offset-distance:14%}to{offset-distance:78%}}
+@keyframes c-bus-m{from{offset-distance:30%}to{offset-distance:66%}}
 </style>
 
 
@@ -591,6 +641,13 @@ body.ext .day .opt-off{display:none}
   <svg class="L l-atmos" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <path class="aurora-band aurora-one" d="M430 315 C700 155 950 390 1310 210 S1690 205 1780 115" fill="none" stroke="url(#aurora)" stroke-width="95"/>
     <path class="aurora-band aurora-two" d="M440 395 C720 250 1050 420 1380 285 S1690 270 1770 225" fill="none" stroke="url(#aurora)" stroke-width="45"/>
+  </svg>
+  <!-- near clouds: bigger, lower, and they move more with the scroll -->
+  <svg class="L l-clouds2" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g class="cloud" style="--dx:-50px;--dd:95s" transform="translate(180 372) scale(1.15)"><g clip-path="url(#c1)"><rect x="-140" y="-80" width="380" height="140" fill="#FBD9C6"/><rect x="-140" y="10" width="380" height="60" fill="#A57A9C"/></g></g>
+    <g class="cloud" style="--dx:70px;--dd:120s" transform="translate(1010 402) scale(1.05)"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#FFE0C9"/><rect x="-140" y="8" width="380" height="60" fill="#B9848F"/></g></g>
+    <g class="cloud" style="--dx:-90px;--dd:140s" transform="translate(1520 352) scale(.85)" opacity=".95"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#FFDDC2"/><rect x="-100" y="6" width="300" height="60" fill="#B77E8B"/></g></g>
+    <g class="cloud" style="--dx:40px;--dd:160s" transform="translate(640 440) scale(.75)" opacity=".9"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#FBD2BE"/><rect x="-100" y="8" width="300" height="60" fill="#A9788F"/></g></g>
   </svg>
   <!-- far snow range -->
   <svg class="L l-far" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
@@ -1385,6 +1442,22 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
   // bus: if motion-path is unsupported, park it on the road
   const bus = $('#bus');
   if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.setAttribute('transform', 'translate(500 748) rotate(4)');
+  // scroll-linked fallback for browsers without CSS scroll-driven animations (mirrors the c-* keyframes)
+  if(!motionEnabled || CSS.supports('animation-timeline', 'scroll()')) return;
+  const PAR = {'l-stars':[0,70],'l-meteors':[0,70],'l-glow':[0,-110],'l-clouds':[-90,30],'l-atmos':[-50,20],'l-clouds2':[-190,-40],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
+  const FADE = {'l-stars':.85,'l-meteors':.85,'l-mist':.85,'l-atmos':.65};
+  const mast = $('#mast'), lines = $('#lines'), route = $('.cover-route'), dawn = $('.l-dawn', cov); let ticking=false;
+  const run = () => {
+    ticking=false; const p = Math.min(1, Math.max(0, scrollY/(innerHeight*.88))); if(p>=1 && run.done) return; run.done = p>=1;
+    layers.forEach(l => { const k = [...l.classList].find(c => PAR[c]); if(!k) return; const [x,y] = PAR[k]; l.style.transform = `translate3d(${(x*p).toFixed(1)}px, ${(y*p).toFixed(1)}px, 0)`; if(FADE[k]) l.style.opacity = 1 - FADE[k]*p; });
+    if(dawn) dawn.style.opacity = .3 + .65*p;
+    mast.style.transform = `translate3d(0, ${(150*p).toFixed(1)}px, 0)`; mast.style.opacity = 1-p;
+    lines.style.transform = `translate3d(0, ${(70*p).toFixed(1)}px, 0)`; lines.style.opacity = 1-p;
+    if(route) route.style.translate = `0 ${(120*p).toFixed(1)}px`;
+    const portrait = matchMedia('(max-aspect-ratio: 4/5)').matches; bus.style.offsetDistance = (portrait ? 30 + 36*p : 14 + 64*p).toFixed(1) + '%';
+  };
+  addEventListener('scroll', () => { if(!ticking){ ticking=true; requestAnimationFrame(run); } }, {passive:true});
+  run();
 })();
 /* ============================ ACTIVE TAB ============================ */
 (function(){

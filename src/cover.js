@@ -36,4 +36,20 @@
   // bus: if motion-path is unsupported, park it on the road
   const bus = $('#bus');
   if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.setAttribute('transform', 'translate(500 748) rotate(4)');
+  // scroll-linked fallback for browsers without CSS scroll-driven animations (mirrors the c-* keyframes)
+  if(!motionEnabled || CSS.supports('animation-timeline', 'scroll()')) return;
+  const PAR = {'l-stars':[0,70],'l-meteors':[0,70],'l-glow':[0,-110],'l-clouds':[-90,30],'l-atmos':[-50,20],'l-clouds2':[-190,-40],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
+  const FADE = {'l-stars':.85,'l-meteors':.85,'l-mist':.85,'l-atmos':.65};
+  const mast = $('#mast'), lines = $('#lines'), route = $('.cover-route'), dawn = $('.l-dawn', cov); let ticking=false;
+  const run = () => {
+    ticking=false; const p = Math.min(1, Math.max(0, scrollY/(innerHeight*.88))); if(p>=1 && run.done) return; run.done = p>=1;
+    layers.forEach(l => { const k = [...l.classList].find(c => PAR[c]); if(!k) return; const [x,y] = PAR[k]; l.style.transform = `translate3d(${(x*p).toFixed(1)}px, ${(y*p).toFixed(1)}px, 0)`; if(FADE[k]) l.style.opacity = 1 - FADE[k]*p; });
+    if(dawn) dawn.style.opacity = .3 + .65*p;
+    mast.style.transform = `translate3d(0, ${(150*p).toFixed(1)}px, 0)`; mast.style.opacity = 1-p;
+    lines.style.transform = `translate3d(0, ${(70*p).toFixed(1)}px, 0)`; lines.style.opacity = 1-p;
+    if(route) route.style.translate = `0 ${(120*p).toFixed(1)}px`;
+    const portrait = matchMedia('(max-aspect-ratio: 4/5)').matches; bus.style.offsetDistance = (portrait ? 30 + 36*p : 14 + 64*p).toFixed(1) + '%';
+  };
+  addEventListener('scroll', () => { if(!ticking){ ticking=true; requestAnimationFrame(run); } }, {passive:true});
+  run();
 })();
