@@ -88,7 +88,7 @@ h1,h2,h3,h4,p{margin:0}
 /* The bus travels on its own clock; page scrolling never controls the illustration. */
 .cover .bus{offset-path:path("M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790");offset-distance:14%;offset-rotate:auto;transform-box:fill-box;offset-anchor:60px 84px;animation:bus-journey 24s ease-in-out infinite alternate}
 @keyframes bus-journey{to{offset-distance:76%}}
-@media (max-aspect-ratio:4/5){.cover .bus{offset-distance:30%;animation-name:bus-journey-mobile}}
+@media (max-aspect-ratio:4/5){.cover .bus{offset-distance:40%;animation-name:bus-journey-mobile}}
 @keyframes bus-journey-mobile{to{offset-distance:64%}}
 @media (prefers-reduced-motion:reduce){.cover .bus{animation:none}}
 
@@ -551,7 +551,7 @@ body.ext .day .opt-off{display:none}
 @keyframes c-lines{to{transform:translateY(70px);opacity:0}}
 @keyframes c-route{to{translate:0 120px}}
 @keyframes c-bus{from{offset-distance:14%}to{offset-distance:78%}}
-@keyframes c-bus-m{from{offset-distance:30%}to{offset-distance:66%}}
+@keyframes c-bus-m{from{offset-distance:40%}to{offset-distance:58%}}
 
 /* Cloud + bird layers are HTML wrappers: the outer .L answers the scroll, the inner wrapper drifts on its own clock,
    so both stay composited and the cloud art (soft shadows) is rasterised once. */
@@ -565,7 +565,7 @@ body.ext .day .opt-off{display:none}
 @supports (animation-timeline: scroll()){@media (prefers-reduced-motion:no-preference){.cover .l-birds{animation-name:c-stars}}}
 
 /* Ambience toggle */
-.snd{display:inline-flex;align-items:center;gap:9px;height:32px;padding:0 13px 0 11px;border-radius:999px;border:1px solid rgba(246,241,232,.38);background:rgba(11,18,48,.38);color:#F6F1E8;cursor:pointer;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;transition:border-color .2s,background .2s,color .2s}
+.snd{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;height:32px;padding:0 13px 0 11px;border-radius:999px;border:1px solid rgba(246,241,232,.38);background:rgba(11,18,48,.38);color:#F6F1E8;cursor:pointer;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;transition:border-color .2s,background .2s,color .2s}
 .snd:hover{border-color:#F6C27A;color:#F6C27A}
 .snd .eq{display:flex;align-items:flex-end;gap:2.5px;height:12px;width:14px}
 .snd .eq i{display:block;width:2.5px;height:4px;background:currentColor;border-radius:1px;transition:height .3s}
@@ -581,6 +581,31 @@ body.ext .day .opt-off{display:none}
 .folio .snd[aria-pressed="true"]{color:var(--ink);border-color:var(--accent)}
 @media (max-width:640px){.folio .snd .lbl{display:none}.folio .snd{padding:0 10px}}
 @media (prefers-reduced-motion:reduce){.snd .eq i{animation:none}}
+
+/* Cloud/bird SVGs must not clip: their wrappers translate, so a clipped edge would slide into view on phones. */
+.cover .L .drift svg,.cover .L .flight svg{overflow:visible}
+
+/* Bus layer: a 1600×900 "scene" box scaled by JS to match the SVG layers' xMidYMax-slice mapping,
+   so a CSS motion path in scene units lands on the drawn road. Moves with the road layer. */
+.cover .l-bus .scene{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0}
+.cover .bus{position:absolute;left:0;top:0;width:400px;height:168px;offset-anchor:200px 84px;transform-origin:200px 84px}
+.cover .bus svg{display:block;width:100%;height:100%;overflow:visible}
+@supports (animation-timeline: scroll()){@media (prefers-reduced-motion:no-preference){.cover .l-bus{animation-name:c-road}}}
+
+/* Smooth scrolling: no per-frame blurs, no filter/scale transitions on full-screen photos, no deferred layout. */
+.folio,.cover-route,.back .box{backdrop-filter:none;-webkit-backdrop-filter:none}
+.cover-route{background:linear-gradient(140deg,rgba(23,31,64,.9),rgba(26,35,67,.78))}
+.feature{content-visibility:visible;contain-intrinsic-size:none}
+.feature .hero img,.feature.is-active .hero img{filter:none;transform:none;transition:none}
+.card .ph img{filter:none}
+.card:hover .ph img,.card:focus-visible .ph img{filter:none}
+
+/* Ambience toggle: bars only move while audio is actually playing (it may be armed but waiting for a first tap). */
+.snd[aria-pressed="true"] .eq i{animation:none}
+.snd.playing .eq i{animation:eq .9s ease-in-out infinite alternate}
+.snd.playing .eq i:nth-child(2){animation-delay:-.3s;animation-duration:1.1s}
+.snd.playing .eq i:nth-child(3){animation-delay:-.6s;animation-duration:.8s}
+@media (prefers-reduced-motion:reduce){.snd.playing .eq i{animation:none}}
 </style>
 
 <header class="cover" id="cover">
@@ -735,7 +760,9 @@ body.ext .day .opt-off{display:none}
     <polygon fill="#172440" points="0,790 200,760 420,780 620,745 860,775 1100,740 1340,770 1600,745 1600,960 0,960"/>
     <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#52628E" stroke-width="16" stroke-linecap="round"/>
     <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#E6D7B3" stroke-width="1.6" stroke-dasharray="12 16" opacity=".55"/>
-    <g class="bus" id="bus">
+  </svg>
+  <!-- the bus: an HTML element on its own layer so its motion-path animation stays off the main thread -->
+  <div class="L l-bus" aria-hidden="true"><div class="scene" id="scene"><div class="bus" id="bus"><svg viewBox="-140 -40 400 168">
       <polygon class="bus-beam" fill="url(#beamg)" points="118,26 400,-40 400,110 118,40"/>
       <rect x="18" y="-5" width="44" height="7" rx="3" fill="#D3DBE6"/>
       <rect x="0" y="0" width="120" height="44" rx="8" fill="#ECF1F7"/>
@@ -747,8 +774,7 @@ body.ext .day .opt-off{display:none}
       <circle cx="2" cy="34" r="2.2" fill="#FF6B6B"/>
       <circle cx="26" cy="44" r="7.5" fill="#0E1526" stroke="#6B7A99" stroke-width="2"/>
       <circle cx="94" cy="44" r="7.5" fill="#0E1526" stroke="#6B7A99" stroke-width="2"/>
-    </g>
-  </svg>
+    </svg></div></div></div>
   <!-- foreground pines -->
   <svg class="L l-fg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" fill="#0B1220">
     <polygon points="0,862 300,838 600,858 900,840 1200,860 1600,842 1600,1100 0,1100"/>
@@ -1496,15 +1522,23 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
   }
   $('#flags').innerHTML = f;
   // framing: crop the wide scene on portrait screens so the bus and sun stay in view
-  const layers = $$('.L', cov), scenes = $$('.L[viewBox], .L svg[viewBox]', cov);
-  const frame = () => { const a = innerWidth/innerHeight; const vb = a < .8 ? '330 0 900 900' : (a < 1.1 ? '160 0 1280 900' : '0 0 1600 900'); scenes.forEach(l => l.setAttribute('viewBox', vb)); };
+  const layers = $$('.L', cov), scenes = $$('.L[viewBox], .L .drift svg, .L .flight svg', cov), scene = $('#scene');
+  const crop = () => { const a = innerWidth/innerHeight; return a < .8 ? [330, 900] : (a < 1.1 ? [160, 1280] : [0, 1600]); };
+  const frame = () => {
+    const [vx, vw] = crop();
+    scenes.forEach(l => l.setAttribute('viewBox', `${vx} 0 ${vw} 900`));
+    // mirror preserveAspectRatio="xMidYMax slice" for the HTML bus scene
+    const W = cov.clientWidth, H = cov.clientHeight, S = Math.max(W/vw, H/900);
+    scene.style.transform = `translate(${((W - vw*S)/2 - vx*S).toFixed(2)}px, ${(H - 900*S).toFixed(2)}px) scale(${S.toFixed(4)})`;
+  };
   frame(); addEventListener('resize', frame, {passive:true});
+  if('ResizeObserver' in window) new ResizeObserver(frame).observe(cov);
   // bus: if motion-path is unsupported, park it on the road
   const bus = $('#bus');
-  if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.setAttribute('transform', 'translate(500 748) rotate(4)');
+  if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.style.transform = 'translate(300px, 704px) rotate(4deg)';
   // scroll-linked fallback for browsers without CSS scroll-driven animations (mirrors the c-* keyframes)
   if(!motionEnabled || CSS.supports('animation-timeline', 'scroll()')) return;
-  const PAR = {'l-stars':[0,70],'l-meteors':[0,70],'l-birds':[0,70],'l-glow':[0,-110],'l-clouds':[-90,30],'l-atmos':[-50,20],'l-clouds2':[-190,-40],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
+  const PAR = {'l-stars':[0,70],'l-meteors':[0,70],'l-birds':[0,70],'l-glow':[0,-110],'l-clouds':[-90,30],'l-atmos':[-50,20],'l-clouds2':[-190,-40],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-bus':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
   const FADE = {'l-stars':.85,'l-meteors':.85,'l-birds':.85,'l-mist':.85,'l-atmos':.65};
   const mast = $('#mast'), lines = $('#lines'), route = $('.cover-route'), dawn = $('.l-dawn', cov); let ticking=false;
   const run = () => {
@@ -1514,7 +1548,7 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
     mast.style.transform = `translate3d(0, ${(150*p).toFixed(1)}px, 0)`; mast.style.opacity = 1-p;
     lines.style.transform = `translate3d(0, ${(70*p).toFixed(1)}px, 0)`; lines.style.opacity = 1-p;
     if(route) route.style.translate = `0 ${(120*p).toFixed(1)}px`;
-    const portrait = matchMedia('(max-aspect-ratio: 4/5)').matches; bus.style.offsetDistance = (portrait ? 30 + 36*p : 14 + 64*p).toFixed(1) + '%';
+    const portrait = matchMedia('(max-aspect-ratio: 4/5)').matches; bus.style.offsetDistance = (portrait ? 40 + 18*p : 14 + 64*p).toFixed(1) + '%';
   };
   addEventListener('scroll', () => { if(!ticking){ ticking=true; requestAnimationFrame(run); } }, {passive:true});
   run();
@@ -1523,8 +1557,12 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
 (function ambience(){
   const btns = $$('.snd'); if(!btns.length) return;
   const KEY = 'overnight.snd', SRC = 'audio/ambience.mp3', LEVEL = 9; // the recording is very quiet; ~+19 dB brings it to a soft bed
-  let ctx, gain, src, buf, loading = false, on = false;
-  const paint = () => btns.forEach(b => { b.setAttribute('aria-pressed', String(on)); b.classList.toggle('busy', loading); $('.lbl', b).textContent = loading ? 'Loading' : (on ? 'Sound on' : 'Sound off'); });
+  let ctx, gain, src, buf, pending, loading = false, playing = false;
+  let on = true; try{ on = localStorage.getItem(KEY) !== '0'; }catch(e){}
+  const paint = () => btns.forEach(b => { b.setAttribute('aria-pressed', String(on)); b.classList.toggle('busy', loading); b.classList.toggle('playing', playing); $('.lbl', b).textContent = loading ? 'Loading' : (on ? 'Sound on' : 'Sound off'); });
+  // Browsers only allow audio after a tap, so the file is fetched early and decoded at the first gesture.
+  const saveData = navigator.connection && navigator.connection.saveData;
+  const prefetch = () => { if(!pending && !buf && !saveData) pending = fetch(SRC).then(r => r.arrayBuffer()).catch(() => { pending = null; }); return pending; };
   async function start(){
     if(!ctx){
       ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1533,24 +1571,31 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
       gain.connect(lp).connect(ctx.destination);
     }
     if(ctx.state === 'suspended') await ctx.resume();
-    if(!buf){ loading = true; paint(); const res = await fetch(SRC); buf = await ctx.decodeAudioData(await res.arrayBuffer()); loading = false; }
+    if(!buf){ loading = true; paint(); const ab = await (pending || prefetch() || fetch(SRC).then(r => r.arrayBuffer())); buf = await ctx.decodeAudioData(ab.slice(0)); loading = false; }
+    if(!on || src) { paint(); return; }
     src = ctx.createBufferSource(); src.buffer = buf; src.loop = true; src.loopStart = 1.5; src.loopEnd = buf.duration - 1.5;
     src.connect(gain); src.start(0, 1.5);
     const t = ctx.currentTime; gain.gain.cancelScheduledValues(t); gain.gain.setValueAtTime(0.0001, t); gain.gain.exponentialRampToValueAtTime(LEVEL, t + 3);
-    on = true; paint();
+    playing = true; paint();
   }
   function stop(){
-    on = false; paint(); if(!ctx || !src) return;
+    playing = false; paint(); if(!ctx || !src) return;
     const t = ctx.currentTime, s = src; src = null;
     gain.gain.cancelScheduledValues(t); gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), t); gain.gain.exponentialRampToValueAtTime(0.0001, t + 1.4);
     setTimeout(() => { try{ s.stop(); }catch(e){} }, 1500);
   }
+  const begin = () => start().catch(() => { loading = false; playing = false; paint(); });
   btns.forEach(b => b.addEventListener('click', () => {
     if(loading) return;
-    const want = !on; try{ localStorage.setItem(KEY, want ? '1' : '0'); }catch(e){}
-    want ? start().catch(() => { loading = false; on = false; paint(); }) : stop();
+    on = !on; try{ localStorage.setItem(KEY, on ? '1' : '0'); }catch(e){}
+    on ? begin() : stop();
   }));
-  document.addEventListener('visibilitychange', () => { if(!ctx || !on) return; document.hidden ? ctx.suspend() : ctx.resume(); });
+  // first gesture anywhere (not on the toggle itself) starts the armed ambience
+  let armed = true;
+  const gesture = e => { if(!armed) return; if(e.target && e.target.closest && e.target.closest('.snd')) return; armed = false; if(on && !playing && !loading) begin(); };
+  ['pointerdown','touchend','keydown'].forEach(ev => addEventListener(ev, gesture, {passive:true}));
+  document.addEventListener('visibilitychange', () => { if(!ctx || !playing) return; document.hidden ? ctx.suspend() : ctx.resume(); });
+  if(on) addEventListener('load', () => setTimeout(prefetch, 800), {once:true});
   paint();
 })();
 /* ============================ ACTIVE TAB ============================ */

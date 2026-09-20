@@ -7,7 +7,7 @@ const read = (p) => readFile(new URL(p, here), "utf8");
 let frag = await read("page.html");
 const css = await read("src/style.css");
 const cover = await read("src/cover.html");
-const coverJs = await read("src/cover.js");
+const coverJs = (await read("src/cover.js")) + (await read("src/ambience.js"));
 
 const rep = (re, val, label) => { if (!re.test(frag)) throw new Error("build: could not find " + label); frag = frag.replace(re, () => val); };
 rep(/<style>[\s\S]*?<\/style>/, `<style>\n${css}</style>`, "style block");

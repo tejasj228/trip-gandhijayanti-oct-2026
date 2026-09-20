@@ -85,7 +85,7 @@ h1,h2,h3,h4,p{margin:0}
 /* The bus travels on its own clock; page scrolling never controls the illustration. */
 .cover .bus{offset-path:path("M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790");offset-distance:14%;offset-rotate:auto;transform-box:fill-box;offset-anchor:60px 84px;animation:bus-journey 24s ease-in-out infinite alternate}
 @keyframes bus-journey{to{offset-distance:76%}}
-@media (max-aspect-ratio:4/5){.cover .bus{offset-distance:30%;animation-name:bus-journey-mobile}}
+@media (max-aspect-ratio:4/5){.cover .bus{offset-distance:40%;animation-name:bus-journey-mobile}}
 @keyframes bus-journey-mobile{to{offset-distance:64%}}
 @media (prefers-reduced-motion:reduce){.cover .bus{animation:none}}
 
@@ -548,7 +548,7 @@ body.ext .day .opt-off{display:none}
 @keyframes c-lines{to{transform:translateY(70px);opacity:0}}
 @keyframes c-route{to{translate:0 120px}}
 @keyframes c-bus{from{offset-distance:14%}to{offset-distance:78%}}
-@keyframes c-bus-m{from{offset-distance:30%}to{offset-distance:66%}}
+@keyframes c-bus-m{from{offset-distance:40%}to{offset-distance:58%}}
 
 /* Cloud + bird layers are HTML wrappers: the outer .L answers the scroll, the inner wrapper drifts on its own clock,
    so both stay composited and the cloud art (soft shadows) is rasterised once. */
@@ -562,7 +562,7 @@ body.ext .day .opt-off{display:none}
 @supports (animation-timeline: scroll()){@media (prefers-reduced-motion:no-preference){.cover .l-birds{animation-name:c-stars}}}
 
 /* Ambience toggle */
-.snd{display:inline-flex;align-items:center;gap:9px;height:32px;padding:0 13px 0 11px;border-radius:999px;border:1px solid rgba(246,241,232,.38);background:rgba(11,18,48,.38);color:#F6F1E8;cursor:pointer;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;transition:border-color .2s,background .2s,color .2s}
+.snd{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;height:32px;padding:0 13px 0 11px;border-radius:999px;border:1px solid rgba(246,241,232,.38);background:rgba(11,18,48,.38);color:#F6F1E8;cursor:pointer;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;transition:border-color .2s,background .2s,color .2s}
 .snd:hover{border-color:#F6C27A;color:#F6C27A}
 .snd .eq{display:flex;align-items:flex-end;gap:2.5px;height:12px;width:14px}
 .snd .eq i{display:block;width:2.5px;height:4px;background:currentColor;border-radius:1px;transition:height .3s}
@@ -578,3 +578,28 @@ body.ext .day .opt-off{display:none}
 .folio .snd[aria-pressed="true"]{color:var(--ink);border-color:var(--accent)}
 @media (max-width:640px){.folio .snd .lbl{display:none}.folio .snd{padding:0 10px}}
 @media (prefers-reduced-motion:reduce){.snd .eq i{animation:none}}
+
+/* Cloud/bird SVGs must not clip: their wrappers translate, so a clipped edge would slide into view on phones. */
+.cover .L .drift svg,.cover .L .flight svg{overflow:visible}
+
+/* Bus layer: a 1600×900 "scene" box scaled by JS to match the SVG layers' xMidYMax-slice mapping,
+   so a CSS motion path in scene units lands on the drawn road. Moves with the road layer. */
+.cover .l-bus .scene{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0}
+.cover .bus{position:absolute;left:0;top:0;width:400px;height:168px;offset-anchor:200px 84px;transform-origin:200px 84px}
+.cover .bus svg{display:block;width:100%;height:100%;overflow:visible}
+@supports (animation-timeline: scroll()){@media (prefers-reduced-motion:no-preference){.cover .l-bus{animation-name:c-road}}}
+
+/* Smooth scrolling: no per-frame blurs, no filter/scale transitions on full-screen photos, no deferred layout. */
+.folio,.cover-route,.back .box{backdrop-filter:none;-webkit-backdrop-filter:none}
+.cover-route{background:linear-gradient(140deg,rgba(23,31,64,.9),rgba(26,35,67,.78))}
+.feature{content-visibility:visible;contain-intrinsic-size:none}
+.feature .hero img,.feature.is-active .hero img{filter:none;transform:none;transition:none}
+.card .ph img{filter:none}
+.card:hover .ph img,.card:focus-visible .ph img{filter:none}
+
+/* Ambience toggle: bars only move while audio is actually playing (it may be armed but waiting for a first tap). */
+.snd[aria-pressed="true"] .eq i{animation:none}
+.snd.playing .eq i{animation:eq .9s ease-in-out infinite alternate}
+.snd.playing .eq i:nth-child(2){animation-delay:-.3s;animation-duration:1.1s}
+.snd.playing .eq i:nth-child(3){animation-delay:-.6s;animation-duration:.8s}
+@media (prefers-reduced-motion:reduce){.snd.playing .eq i{animation:none}}

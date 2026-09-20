@@ -30,15 +30,23 @@
   }
   $('#flags').innerHTML = f;
   // framing: crop the wide scene on portrait screens so the bus and sun stay in view
-  const layers = $$('.L', cov), scenes = $$('.L[viewBox], .L svg[viewBox]', cov);
-  const frame = () => { const a = innerWidth/innerHeight; const vb = a < .8 ? '330 0 900 900' : (a < 1.1 ? '160 0 1280 900' : '0 0 1600 900'); scenes.forEach(l => l.setAttribute('viewBox', vb)); };
+  const layers = $$('.L', cov), scenes = $$('.L[viewBox], .L .drift svg, .L .flight svg', cov), scene = $('#scene');
+  const crop = () => { const a = innerWidth/innerHeight; return a < .8 ? [330, 900] : (a < 1.1 ? [160, 1280] : [0, 1600]); };
+  const frame = () => {
+    const [vx, vw] = crop();
+    scenes.forEach(l => l.setAttribute('viewBox', `${vx} 0 ${vw} 900`));
+    // mirror preserveAspectRatio="xMidYMax slice" for the HTML bus scene
+    const W = cov.clientWidth, H = cov.clientHeight, S = Math.max(W/vw, H/900);
+    scene.style.transform = `translate(${((W - vw*S)/2 - vx*S).toFixed(2)}px, ${(H - 900*S).toFixed(2)}px) scale(${S.toFixed(4)})`;
+  };
   frame(); addEventListener('resize', frame, {passive:true});
+  if('ResizeObserver' in window) new ResizeObserver(frame).observe(cov);
   // bus: if motion-path is unsupported, park it on the road
   const bus = $('#bus');
-  if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.setAttribute('transform', 'translate(500 748) rotate(4)');
+  if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.style.transform = 'translate(300px, 704px) rotate(4deg)';
   // scroll-linked fallback for browsers without CSS scroll-driven animations (mirrors the c-* keyframes)
   if(!motionEnabled || CSS.supports('animation-timeline', 'scroll()')) return;
-  const PAR = {'l-stars':[0,70],'l-meteors':[0,70],'l-birds':[0,70],'l-glow':[0,-110],'l-clouds':[-90,30],'l-atmos':[-50,20],'l-clouds2':[-190,-40],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
+  const PAR = {'l-stars':[0,70],'l-meteors':[0,70],'l-birds':[0,70],'l-glow':[0,-110],'l-clouds':[-90,30],'l-atmos':[-50,20],'l-clouds2':[-190,-40],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-bus':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
   const FADE = {'l-stars':.85,'l-meteors':.85,'l-birds':.85,'l-mist':.85,'l-atmos':.65};
   const mast = $('#mast'), lines = $('#lines'), route = $('.cover-route'), dawn = $('.l-dawn', cov); let ticking=false;
   const run = () => {
@@ -48,42 +56,8 @@
     mast.style.transform = `translate3d(0, ${(150*p).toFixed(1)}px, 0)`; mast.style.opacity = 1-p;
     lines.style.transform = `translate3d(0, ${(70*p).toFixed(1)}px, 0)`; lines.style.opacity = 1-p;
     if(route) route.style.translate = `0 ${(120*p).toFixed(1)}px`;
-    const portrait = matchMedia('(max-aspect-ratio: 4/5)').matches; bus.style.offsetDistance = (portrait ? 30 + 36*p : 14 + 64*p).toFixed(1) + '%';
+    const portrait = matchMedia('(max-aspect-ratio: 4/5)').matches; bus.style.offsetDistance = (portrait ? 40 + 18*p : 14 + 64*p).toFixed(1) + '%';
   };
   addEventListener('scroll', () => { if(!ticking){ ticking=true; requestAnimationFrame(run); } }, {passive:true});
   run();
-})();
-/* ============================ AMBIENCE ============================ */
-(function ambience(){
-  const btns = $$('.snd'); if(!btns.length) return;
-  const KEY = 'overnight.snd', SRC = 'audio/ambience.mp3', LEVEL = 9; // the recording is very quiet; ~+19 dB brings it to a soft bed
-  let ctx, gain, src, buf, loading = false, on = false;
-  const paint = () => btns.forEach(b => { b.setAttribute('aria-pressed', String(on)); b.classList.toggle('busy', loading); $('.lbl', b).textContent = loading ? 'Loading' : (on ? 'Sound on' : 'Sound off'); });
-  async function start(){
-    if(!ctx){
-      ctx = new (window.AudioContext || window.webkitAudioContext)();
-      gain = ctx.createGain(); gain.gain.value = 0.0001;
-      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 8500; lp.Q.value = .5;
-      gain.connect(lp).connect(ctx.destination);
-    }
-    if(ctx.state === 'suspended') await ctx.resume();
-    if(!buf){ loading = true; paint(); const res = await fetch(SRC); buf = await ctx.decodeAudioData(await res.arrayBuffer()); loading = false; }
-    src = ctx.createBufferSource(); src.buffer = buf; src.loop = true; src.loopStart = 1.5; src.loopEnd = buf.duration - 1.5;
-    src.connect(gain); src.start(0, 1.5);
-    const t = ctx.currentTime; gain.gain.cancelScheduledValues(t); gain.gain.setValueAtTime(0.0001, t); gain.gain.exponentialRampToValueAtTime(LEVEL, t + 3);
-    on = true; paint();
-  }
-  function stop(){
-    on = false; paint(); if(!ctx || !src) return;
-    const t = ctx.currentTime, s = src; src = null;
-    gain.gain.cancelScheduledValues(t); gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), t); gain.gain.exponentialRampToValueAtTime(0.0001, t + 1.4);
-    setTimeout(() => { try{ s.stop(); }catch(e){} }, 1500);
-  }
-  btns.forEach(b => b.addEventListener('click', () => {
-    if(loading) return;
-    const want = !on; try{ localStorage.setItem(KEY, want ? '1' : '0'); }catch(e){}
-    want ? start().catch(() => { loading = false; on = false; paint(); }) : stop();
-  }));
-  document.addEventListener('visibilitychange', () => { if(!ctx || !on) return; document.hidden ? ctx.suspend() : ctx.resume(); });
-  paint();
 })();

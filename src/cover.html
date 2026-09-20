@@ -150,7 +150,9 @@
     <polygon fill="#172440" points="0,790 200,760 420,780 620,745 860,775 1100,740 1340,770 1600,745 1600,960 0,960"/>
     <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#52628E" stroke-width="16" stroke-linecap="round"/>
     <path d="M-30 905 C 180 870, 260 790, 470 785 S 760 830, 900 790 S 1180 730, 1320 775 S 1540 810, 1640 790" fill="none" stroke="#E6D7B3" stroke-width="1.6" stroke-dasharray="12 16" opacity=".55"/>
-    <g class="bus" id="bus">
+  </svg>
+  <!-- the bus: an HTML element on its own layer so its motion-path animation stays off the main thread -->
+  <div class="L l-bus" aria-hidden="true"><div class="scene" id="scene"><div class="bus" id="bus"><svg viewBox="-140 -40 400 168">
       <polygon class="bus-beam" fill="url(#beamg)" points="118,26 400,-40 400,110 118,40"/>
       <rect x="18" y="-5" width="44" height="7" rx="3" fill="#D3DBE6"/>
       <rect x="0" y="0" width="120" height="44" rx="8" fill="#ECF1F7"/>
@@ -162,8 +164,7 @@
       <circle cx="2" cy="34" r="2.2" fill="#FF6B6B"/>
       <circle cx="26" cy="44" r="7.5" fill="#0E1526" stroke="#6B7A99" stroke-width="2"/>
       <circle cx="94" cy="44" r="7.5" fill="#0E1526" stroke="#6B7A99" stroke-width="2"/>
-    </g>
-  </svg>
+    </svg></div></div></div>
   <!-- foreground pines -->
   <svg class="L l-fg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" fill="#0B1220">
     <polygon points="0,862 300,838 600,858 900,840 1200,860 1600,842 1600,1100 0,1100"/>
