@@ -520,7 +520,7 @@ body.ext .day .opt-off{display:none}
 @media (max-aspect-ratio:4/5){.cover .bus{animation:none}}
 .cover .l-dawn{opacity:.3}
 .cover .mast .wrap{animation:hero-enter 1s .12s cubic-bezier(.2,.7,.2,1) both}
-.cover .L{will-change:transform}
+
 @supports (animation-timeline: scroll()){
   @media (prefers-reduced-motion:no-preference){
     .cover .L,.cover .mast,.cover .lines,.cover .bus{animation-timing-function:linear;animation-fill-mode:both;animation-timeline:scroll(root);animation-range:0 88vh}
@@ -562,6 +562,35 @@ body.ext .day .opt-off{display:none}
 @keyframes c-route{to{translate:0 120px}}
 @keyframes c-bus{from{offset-distance:14%}to{offset-distance:78%}}
 @keyframes c-bus-m{from{offset-distance:30%}to{offset-distance:66%}}
+
+/* Cloud + bird layers are HTML wrappers: the outer .L answers the scroll, the inner wrapper drifts on its own clock,
+   so both stay composited and the cloud art (soft shadows) is rasterised once. */
+.cover .L .drift,.cover .L .flight{position:absolute;inset:0}
+.cover .L .drift svg,.cover .L .flight svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cover .L .drift{animation:drift var(--dd,120s) linear infinite alternate}
+@keyframes flight{0%{transform:translate(42vw,0)}50%{transform:translate(-50vw,-22px)}100%{transform:translate(-142vw,14px)}}
+@keyframes flight-m{0%{transform:translate(42vw,0)}50%{transform:translate(-110vw,-18px)}100%{transform:translate(-262vw,12px)}}
+.cover .L .flight{animation:flight 78s linear infinite}
+@media (max-aspect-ratio:4/5){.cover .L .flight{animation-name:flight-m;animation-duration:64s}}
+@supports (animation-timeline: scroll()){@media (prefers-reduced-motion:no-preference){.cover .l-birds{animation-name:c-stars}}}
+
+/* Ambience toggle */
+.snd{display:inline-flex;align-items:center;gap:9px;height:32px;padding:0 13px 0 11px;border-radius:999px;border:1px solid rgba(246,241,232,.38);background:rgba(11,18,48,.38);color:#F6F1E8;cursor:pointer;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;transition:border-color .2s,background .2s,color .2s}
+.snd:hover{border-color:#F6C27A;color:#F6C27A}
+.snd .eq{display:flex;align-items:flex-end;gap:2.5px;height:12px;width:14px}
+.snd .eq i{display:block;width:2.5px;height:4px;background:currentColor;border-radius:1px;transition:height .3s}
+.snd[aria-pressed="true"] .eq i{animation:eq .9s ease-in-out infinite alternate}
+.snd[aria-pressed="true"] .eq i:nth-child(2){animation-delay:-.3s;animation-duration:1.1s}
+.snd[aria-pressed="true"] .eq i:nth-child(3){animation-delay:-.6s;animation-duration:.8s}
+@keyframes eq{from{height:3px}to{height:12px}}
+.snd.busy{opacity:.6;cursor:progress}
+.cover .topbar .tb-right{display:inline-flex;align-items:center;gap:16px}
+@media (max-width:640px){.cover .topbar .in span:last-child{display:inline-flex}.cover .topbar .in .tb-right .price{display:none}}
+.folio .snd{border-color:var(--line);background:transparent;color:var(--ink-2);margin-left:10px;flex:none;height:30px}
+.folio .snd:hover{border-color:var(--accent-ink);color:var(--accent-ink)}
+.folio .snd[aria-pressed="true"]{color:var(--ink);border-color:var(--accent)}
+@media (max-width:640px){.folio .snd .lbl{display:none}.folio .snd{padding:0 10px}}
+@media (prefers-reduced-motion:reduce){.snd .eq i{animation:none}}
 </style>
 
 
@@ -596,8 +625,39 @@ body.ext .day .opt-off{display:none}
         <path d="M0 -76 L15 -46 L8 -46 L24 -18 L13 -18 L33 12 L-33 12 L-13 -18 L-24 -18 L-8 -46 L-15 -46 Z"/>
         <rect x="-3" y="10" width="6" height="10"/>
       </symbol>
-      <clipPath id="c1"><ellipse cx="0" cy="0" rx="92" ry="42"/><ellipse cx="74" cy="-16" rx="66" ry="52"/><ellipse cx="150" cy="6" rx="78" ry="38"/><ellipse cx="-62" cy="10" rx="58" ry="28"/></clipPath>
-      <clipPath id="c2"><ellipse cx="0" cy="0" rx="80" ry="36"/><ellipse cx="60" cy="-18" rx="56" ry="46"/><ellipse cx="128" cy="4" rx="64" ry="32"/><ellipse cx="-56" cy="8" rx="50" ry="24"/></clipPath>
+      <linearGradient id="cgA" gradientUnits="userSpaceOnUse" x1="0" y1="-90" x2="0" y2="56">
+        <stop offset="0" stop-color="#FFF8F1"/><stop offset=".38" stop-color="#F9DED0"/><stop offset=".74" stop-color="#C9A3BF"/><stop offset="1" stop-color="#8E73A8"/>
+      </linearGradient>
+      <linearGradient id="cgB" gradientUnits="userSpaceOnUse" x1="0" y1="-90" x2="0" y2="56">
+        <stop offset="0" stop-color="#FFFBF3"/><stop offset=".38" stop-color="#FFE4C8"/><stop offset=".74" stop-color="#DCA6A6"/><stop offset="1" stop-color="#A67E9C"/>
+      </linearGradient>
+      <linearGradient id="cgC" gradientUnits="userSpaceOnUse" x1="0" y1="-90" x2="0" y2="56">
+        <stop offset="0" stop-color="#F6EEF3"/><stop offset=".4" stop-color="#DCC6DA"/><stop offset=".78" stop-color="#9F84B3"/><stop offset="1" stop-color="#6F5A94"/>
+      </linearGradient>
+      <filter id="soft" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="softer" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="2.2"/></filter>
+      <symbol id="cumulus" overflow="visible">
+        <ellipse cx="6" cy="58" rx="160" ry="16" fill="#5E4C86" opacity=".38" filter="url(#soft)"/>
+        <g class="cb">
+          <rect x="-146" y="10" width="298" height="40" rx="20"/>
+          <circle cx="-100" cy="16" r="36"/><circle cx="-56" cy="-8" r="48"/><circle cx="2" cy="-34" r="60"/><circle cx="62" cy="-14" r="52"/><circle cx="114" cy="12" r="38"/><circle cx="-18" cy="8" r="46"/><circle cx="42" cy="16" r="42"/>
+        </g>
+        <g fill="#FFFEFA" opacity=".5" filter="url(#softer)"><circle cx="-68" cy="-30" r="17"/><circle cx="-8" cy="-64" r="22"/><circle cx="54" cy="-42" r="16"/><circle cx="-108" cy="-2" r="10"/></g>
+        <g fill="#7A6199" opacity=".22" filter="url(#softer)"><ellipse cx="-76" cy="36" rx="48" ry="12"/><ellipse cx="34" cy="40" rx="76" ry="13"/><ellipse cx="116" cy="34" rx="30" ry="9"/></g>
+      </symbol>
+      <symbol id="cumulus-wide" overflow="visible">
+        <ellipse cx="10" cy="52" rx="210" ry="15" fill="#5E4C86" opacity=".36" filter="url(#soft)"/>
+        <g class="cb">
+          <rect x="-200" y="12" width="410" height="36" rx="18"/>
+          <circle cx="-160" cy="18" r="30"/><circle cx="-118" cy="0" r="42"/><circle cx="-66" cy="-18" r="50"/><circle cx="-8" cy="-30" r="56"/><circle cx="50" cy="-22" r="52"/><circle cx="104" cy="-6" r="46"/><circle cx="154" cy="10" r="38"/><circle cx="196" cy="22" r="26"/><circle cx="20" cy="12" r="44"/>
+        </g>
+        <g fill="#FFFEFA" opacity=".48" filter="url(#softer)"><circle cx="-80" cy="-40" r="16"/><circle cx="-18" cy="-58" r="20"/><circle cx="46" cy="-50" r="17"/><circle cx="108" cy="-30" r="13"/></g>
+        <g fill="#7A6199" opacity=".22" filter="url(#softer)"><ellipse cx="-120" cy="34" rx="56" ry="11"/><ellipse cx="10" cy="38" rx="90" ry="12"/><ellipse cx="150" cy="32" rx="44" ry="10"/></g>
+      </symbol>
+      <symbol id="puff" overflow="visible">
+        <g class="cb"><rect x="-70" y="6" width="146" height="24" rx="12"/><circle cx="-44" cy="6" r="22"/><circle cx="-6" cy="-14" r="30"/><circle cx="36" cy="0" r="26"/><circle cx="60" cy="14" r="16"/></g>
+        <g fill="#FFFEFA" opacity=".45" filter="url(#softer)"><circle cx="-14" cy="-30" r="11"/><circle cx="-46" cy="-8" r="8"/></g>
+      </symbol>
       <clipPath id="c3"><ellipse cx="0" cy="0" rx="60" ry="22"/><ellipse cx="46" cy="-10" rx="44" ry="30"/><ellipse cx="96" cy="2" rx="50" ry="20"/></clipPath>
     </defs>
   </svg>
@@ -625,30 +685,43 @@ body.ext .day .opt-off{display:none}
     <circle class="sun-ring sun-ring-one" cx="1160" cy="458" r="54" fill="none" stroke="#FFE8B0" stroke-width="1" opacity=".3"/>
     <circle class="sun-ring sun-ring-two" cx="1160" cy="458" r="76" fill="none" stroke="#FFE8B0" stroke-width="1" opacity=".15"/>
     <circle cx="1160" cy="458" r="36" fill="#FFF2C8"/>
-    <g stroke="#1B2440" stroke-width="2" fill="none" stroke-linecap="round" transform="translate(880 300)">
-      <path d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/><path transform="translate(40 -14) scale(.8)" d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/><path transform="translate(76 8) scale(.7)" d="M0 0c4-6 9-6 13 0c4-6 9-6 13 0"/>
-    </g>
   </svg>
-  <!-- clouds -->
-  <svg class="L l-clouds" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-    <g class="cloud" style="--dx:70px;--dd:110s" transform="translate(300 262)"><g clip-path="url(#c1)"><rect x="-140" y="-80" width="380" height="140" fill="#F5CDBB"/><rect x="-140" y="8" width="380" height="60" fill="#8C6EA8"/></g></g>
-    <g class="cloud" style="--dx:-90px;--dd:140s" transform="translate(1210 232) scale(.9)"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#FBD6BE"/><rect x="-140" y="6" width="380" height="60" fill="#A47993"/></g></g>
-    <g class="cloud" style="--dx:50px;--dd:170s" transform="translate(760 350) scale(.55)" opacity=".92"><g clip-path="url(#c1)"><rect x="-140" y="-80" width="380" height="140" fill="#F9D9C6"/><rect x="-140" y="10" width="380" height="60" fill="#B98A94"/></g></g>
-    <g class="cloud" style="--dx:-60px;--dd:125s" transform="translate(560 150) scale(.7)" opacity=".85"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#D9B7C9"/><rect x="-100" y="4" width="300" height="60" fill="#6E5B93"/></g></g>
-    <g class="cloud" style="--dx:80px;--dd:150s" transform="translate(1440 330) scale(.6)" opacity=".9"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#FAD5BE"/><rect x="-100" y="6" width="300" height="60" fill="#B3808F"/></g></g>
-    <g class="cloud" style="--dx:-40px;--dd:200s" transform="translate(80 400) scale(.5)" opacity=".8"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#F3C9BC"/><rect x="-140" y="8" width="380" height="60" fill="#9C7A99"/></g></g>
-  </svg>
+  <!-- high clouds: far, small, slow. Drift lives on an HTML wrapper so it stays on the compositor. -->
+  <div class="L l-clouds" aria-hidden="true">
+    <div class="drift" style="--dx:70px;--dd:150s"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+      <g fill="url(#cgC)"><use href="#cumulus-wide" transform="translate(300 250) scale(.62)"/><use href="#puff" transform="translate(120 330) scale(.7)"/></g>
+      <g fill="url(#cgB)"><use href="#cumulus" transform="translate(1240 236) scale(.58)"/></g>
+    </svg></div>
+    <div class="drift" style="--dx:-80px;--dd:190s"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+      <g fill="url(#cgC)"><use href="#puff" transform="translate(760 330) scale(.55)"/><use href="#cumulus" transform="translate(560 150) scale(.42)" opacity=".85"/></g>
+      <g fill="url(#cgB)"><use href="#puff" transform="translate(1470 330) scale(.62)"/></g>
+    </svg></div>
+  </div>
   <svg class="L l-atmos" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <path class="aurora-band aurora-one" d="M430 315 C700 155 950 390 1310 210 S1690 205 1780 115" fill="none" stroke="url(#aurora)" stroke-width="95"/>
     <path class="aurora-band aurora-two" d="M440 395 C720 250 1050 420 1380 285 S1690 270 1770 225" fill="none" stroke="url(#aurora)" stroke-width="45"/>
   </svg>
-  <!-- near clouds: bigger, lower, and they move more with the scroll -->
-  <svg class="L l-clouds2" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-    <g class="cloud" style="--dx:-50px;--dd:95s" transform="translate(180 372) scale(1.15)"><g clip-path="url(#c1)"><rect x="-140" y="-80" width="380" height="140" fill="#FBD9C6"/><rect x="-140" y="10" width="380" height="60" fill="#A57A9C"/></g></g>
-    <g class="cloud" style="--dx:70px;--dd:120s" transform="translate(1010 402) scale(1.05)"><g clip-path="url(#c2)"><rect x="-140" y="-80" width="380" height="140" fill="#FFE0C9"/><rect x="-140" y="8" width="380" height="60" fill="#B9848F"/></g></g>
-    <g class="cloud" style="--dx:-90px;--dd:140s" transform="translate(1520 352) scale(.85)" opacity=".95"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#FFDDC2"/><rect x="-100" y="6" width="300" height="60" fill="#B77E8B"/></g></g>
-    <g class="cloud" style="--dx:40px;--dd:160s" transform="translate(640 440) scale(.75)" opacity=".9"><g clip-path="url(#c3)"><rect x="-100" y="-60" width="300" height="120" fill="#FBD2BE"/><rect x="-100" y="8" width="300" height="60" fill="#A9788F"/></g></g>
-  </svg>
+  <!-- near clouds: big, dawn-lit, and they move most with the scroll -->
+  <div class="L l-clouds2" aria-hidden="true">
+    <div class="drift" style="--dx:-60px;--dd:120s"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+      <g fill="url(#cgA)"><use href="#cumulus-wide" transform="translate(150 428) scale(.95)"/></g>
+      <g fill="url(#cgB)"><use href="#cumulus" transform="translate(1040 404) scale(.98)"/></g>
+    </svg></div>
+    <div class="drift" style="--dx:90px;--dd:160s"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+      <g fill="url(#cgB)"><use href="#cumulus" transform="translate(1520 350) scale(.78)"/></g>
+      <g fill="url(#cgA)"><use href="#puff" transform="translate(660 446) scale(.9)"/></g>
+    </svg></div>
+  </div>
+  <!-- birds: a flock that flaps (SMIL) and crosses the sky (CSS), on its own layer -->
+  <div class="L l-birds" aria-hidden="true"><div class="flight"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+    <g class="flock" stroke="#1B2440" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(1150 236)">
+      <path d="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"><animate attributeName="d" dur=".82s" repeatCount="indefinite" values="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 -1C4 6 9 6 13 -1C17 6 22 6 26 -1;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"/></path>
+      <path transform="translate(-36 16) scale(.9)" d="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"><animate attributeName="d" dur=".9s" begin="-.3s" repeatCount="indefinite" values="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 -1C4 6 9 6 13 -1C17 6 22 6 26 -1;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"/></path>
+      <path transform="translate(34 18) scale(.85)" d="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"><animate attributeName="d" dur=".78s" begin="-.55s" repeatCount="indefinite" values="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 -1C4 6 9 6 13 -1C17 6 22 6 26 -1;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"/></path>
+      <path transform="translate(-70 34) scale(.75)" d="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"><animate attributeName="d" dur=".95s" begin="-.7s" repeatCount="indefinite" values="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 -1C4 6 9 6 13 -1C17 6 22 6 26 -1;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"/></path>
+      <path transform="translate(64 38) scale(.7)" d="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"><animate attributeName="d" dur=".86s" begin="-.15s" repeatCount="indefinite" values="M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 -1C4 6 9 6 13 -1C17 6 22 6 26 -1;M0 1C4 -1 9 -1 13 1C17 -1 22 -1 26 1;M0 4C4 -4 9 -4 13 4C17 -4 22 -4 26 4"/></path>
+    </g>
+  </svg></div></div>
   <!-- far snow range -->
   <svg class="L l-far" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
     <polygon fill="#4A4E86" points="0,585 70,548 130,570 200,505 255,540 330,462 400,520 470,445 540,498 610,455 690,492 760,418 830,468 905,430 985,480 1060,436 1130,472 1210,400 1290,455 1350,428 1430,478 1500,440 1600,470 1600,760 0,760"/>
@@ -711,7 +784,7 @@ body.ext .day .opt-off{display:none}
 
   <div class="topbar"><div class="wrap in">
     <span>The long-weekend issue &nbsp;·&nbsp; No. 01</span>
-    <span>Oct 2026 &nbsp;·&nbsp; Price: one bus ticket</span>
+    <span class="tb-right"><button class="snd" type="button" aria-pressed="false" title="Mountain morning ambience — 'Atmo – Vögel Standard' by Burkhard Mücke, CC BY-SA 4.0"><span class="eq"><i></i><i></i><i></i></span><span class="lbl">Sound off</span></button><span class="price">Oct 2026 &nbsp;·&nbsp; Price: one bus ticket</span></span>
   </div></div>
   <div class="mast" id="mast"><div class="wrap">
     <h1>Overnight<span>Six hill escapes from Delhi, all by night bus from Kashmere Gate.</span></h1>
@@ -742,6 +815,7 @@ body.ext .day .opt-off{display:none}
 <nav class="folio" id="folio" aria-label="Destinations"><span class="reading-progress" aria-hidden="true"></span><div class="wrap in">
   <a class="brand" href="#cover">Overnight <small>No. 01 · Oct 2026</small></a>
   <div class="tabs" id="tabs"></div>
+  <button class="snd" type="button" aria-pressed="false" title="Mountain morning ambience — ‘Atmo – Vögel Standard’ by Burkhard Mücke, CC BY-SA 4.0"><span class="eq"><i></i><i></i><i></i></span><span class="lbl">Sound off</span></button>
 </div></nav>
 
 <main>
@@ -816,7 +890,7 @@ body.ext .day .opt-off{display:none}
         </ul>
       </div>
     </div>
-    <p class="fine">Fares, timings and prices are approximate as of September 2026 and move with demand — treat the boarding passes as a planning guide and verify on HRTC, UTC, redBus or the operator before paying. Weather figures are typical October ranges. This is a personal trip zine for friends, not an operator or an agency.</p>
+    <p class="fine">Fares, timings and prices are approximate as of September 2026 and move with demand — treat the boarding passes as a planning guide and verify on HRTC, UTC, redBus or the operator before paying. Weather figures are typical October ranges. This is a personal trip zine for friends, not an operator or an agency. Ambience: “Atmo – Vögel Standard” by Burkhard Mücke, CC BY-SA 4.0, via Wikimedia Commons.</p>
   </div></section>
 </main>
 
@@ -1436,16 +1510,16 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
   }
   $('#flags').innerHTML = f;
   // framing: crop the wide scene on portrait screens so the bus and sun stay in view
-  const layers = $$('.L', cov);
-  const frame = () => { const a = innerWidth/innerHeight; const vb = a < .8 ? '330 0 900 900' : (a < 1.1 ? '160 0 1280 900' : '0 0 1600 900'); layers.forEach(l => l.setAttribute('viewBox', vb)); };
+  const layers = $$('.L', cov), scenes = $$('.L[viewBox], .L svg[viewBox]', cov);
+  const frame = () => { const a = innerWidth/innerHeight; const vb = a < .8 ? '330 0 900 900' : (a < 1.1 ? '160 0 1280 900' : '0 0 1600 900'); scenes.forEach(l => l.setAttribute('viewBox', vb)); };
   frame(); addEventListener('resize', frame, {passive:true});
   // bus: if motion-path is unsupported, park it on the road
   const bus = $('#bus');
   if(!CSS.supports('offset-path', 'path("M0 0 L1 1")')) bus.setAttribute('transform', 'translate(500 748) rotate(4)');
   // scroll-linked fallback for browsers without CSS scroll-driven animations (mirrors the c-* keyframes)
   if(!motionEnabled || CSS.supports('animation-timeline', 'scroll()')) return;
-  const PAR = {'l-stars':[0,70],'l-meteors':[0,70],'l-glow':[0,-110],'l-clouds':[-90,30],'l-atmos':[-50,20],'l-clouds2':[-190,-40],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
-  const FADE = {'l-stars':.85,'l-meteors':.85,'l-mist':.85,'l-atmos':.65};
+  const PAR = {'l-stars':[0,70],'l-meteors':[0,70],'l-birds':[0,70],'l-glow':[0,-110],'l-clouds':[-90,30],'l-atmos':[-50,20],'l-clouds2':[-190,-40],'l-far':[0,30],'l-mist':[140,-30],'l-mid':[0,-20],'l-trees':[0,-70],'l-road':[0,-120],'l-fg':[0,-190],'l-flags':[0,-240]};
+  const FADE = {'l-stars':.85,'l-meteors':.85,'l-birds':.85,'l-mist':.85,'l-atmos':.65};
   const mast = $('#mast'), lines = $('#lines'), route = $('.cover-route'), dawn = $('.l-dawn', cov); let ticking=false;
   const run = () => {
     ticking=false; const p = Math.min(1, Math.max(0, scrollY/(innerHeight*.88))); if(p>=1 && run.done) return; run.done = p>=1;
@@ -1458,6 +1532,40 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
   };
   addEventListener('scroll', () => { if(!ticking){ ticking=true; requestAnimationFrame(run); } }, {passive:true});
   run();
+})();
+/* ============================ AMBIENCE ============================ */
+(function ambience(){
+  const btns = $$('.snd'); if(!btns.length) return;
+  const KEY = 'overnight.snd', SRC = 'audio/ambience.mp3', LEVEL = 9; // the recording is very quiet; ~+19 dB brings it to a soft bed
+  let ctx, gain, src, buf, loading = false, on = false;
+  const paint = () => btns.forEach(b => { b.setAttribute('aria-pressed', String(on)); b.classList.toggle('busy', loading); $('.lbl', b).textContent = loading ? 'Loading' : (on ? 'Sound on' : 'Sound off'); });
+  async function start(){
+    if(!ctx){
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      gain = ctx.createGain(); gain.gain.value = 0.0001;
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 8500; lp.Q.value = .5;
+      gain.connect(lp).connect(ctx.destination);
+    }
+    if(ctx.state === 'suspended') await ctx.resume();
+    if(!buf){ loading = true; paint(); const res = await fetch(SRC); buf = await ctx.decodeAudioData(await res.arrayBuffer()); loading = false; }
+    src = ctx.createBufferSource(); src.buffer = buf; src.loop = true; src.loopStart = 1.5; src.loopEnd = buf.duration - 1.5;
+    src.connect(gain); src.start(0, 1.5);
+    const t = ctx.currentTime; gain.gain.cancelScheduledValues(t); gain.gain.setValueAtTime(0.0001, t); gain.gain.exponentialRampToValueAtTime(LEVEL, t + 3);
+    on = true; paint();
+  }
+  function stop(){
+    on = false; paint(); if(!ctx || !src) return;
+    const t = ctx.currentTime, s = src; src = null;
+    gain.gain.cancelScheduledValues(t); gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), t); gain.gain.exponentialRampToValueAtTime(0.0001, t + 1.4);
+    setTimeout(() => { try{ s.stop(); }catch(e){} }, 1500);
+  }
+  btns.forEach(b => b.addEventListener('click', () => {
+    if(loading) return;
+    const want = !on; try{ localStorage.setItem(KEY, want ? '1' : '0'); }catch(e){}
+    want ? start().catch(() => { loading = false; on = false; paint(); }) : stop();
+  }));
+  document.addEventListener('visibilitychange', () => { if(!ctx || !on) return; document.hidden ? ctx.suspend() : ctx.resume(); });
+  paint();
 })();
 /* ============================ ACTIVE TAB ============================ */
 (function(){
