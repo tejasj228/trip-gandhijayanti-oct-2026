@@ -4,19 +4,26 @@
   const KEY = 'overnight.snd', SRC = 'audio/ambience.mp3', LEVEL = 9; // the recording is very quiet; ~+19 dB brings it to a soft bed
   let ctx, gain, src, buf, pending, loading = false, playing = false;
   let on = true; try{ on = localStorage.getItem(KEY) !== '0'; }catch(e){}
-  const paint = () => btns.forEach(b => { b.setAttribute('aria-pressed', String(on)); b.classList.toggle('busy', loading); b.classList.toggle('playing', playing); $('.lbl', b).textContent = loading ? 'Loading' : (on ? 'Sound on' : 'Sound off'); });
+  const paint = () => btns.forEach(b => { b.setAttribute('aria-pressed', String(on)); b.classList.toggle('busy', loading); b.classList.toggle('playing', playing); $('.lbl', b).textContent = loading ? 'Loading' : playing ? 'Sound on' : on ? 'Tap for sound' : 'Sound off'; });
   // Browsers only allow audio after a tap, so the file is fetched early and decoded at the first gesture.
   const saveData = navigator.connection && navigator.connection.saveData;
   const prefetch = () => { if(!pending && !buf && !saveData) pending = fetch(SRC).then(r => r.arrayBuffer()).catch(() => { pending = null; }); return pending; };
+  function ensureCtx(){
+    if(ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    gain = ctx.createGain(); gain.gain.value = 0.0001;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 8500; lp.Q.value = .5;
+    gain.connect(lp).connect(ctx.destination);
+  }
+  // resolves once the context is running, or gives up after a moment (a refused resume() stays pending forever)
+  const running = () => ctx.state === 'running' ? Promise.resolve() : new Promise(res => {
+    const done = () => { ctx.removeEventListener('statechange', h); clearTimeout(t); res(); };
+    const h = () => { if(ctx.state === 'running') done(); };
+    ctx.addEventListener('statechange', h); const t = setTimeout(done, 1800);
+  });
   async function start(){
-    if(!ctx){
-      ctx = new (window.AudioContext || window.webkitAudioContext)();
-      gain = ctx.createGain(); gain.gain.value = 0.0001;
-      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 8500; lp.Q.value = .5;
-      gain.connect(lp).connect(ctx.destination);
-    }
-    // resume() must be called synchronously inside a user gesture; if the browser still refuses, bail and wait for the next gesture
-    if(ctx.state !== 'running') await Promise.race([ctx.resume().catch(() => {}), new Promise(r => setTimeout(r, 1200))]);
+    ensureCtx();
+    if(ctx.state !== 'running'){ ctx.resume().catch(() => {}); await running(); }
     if(ctx.state !== 'running'){ paint(); return; }
     if(!buf){ loading = true; paint(); const ab = await (pending || prefetch() || fetch(SRC).then(r => r.arrayBuffer())); buf = await ctx.decodeAudioData(ab.slice(0)); loading = false; }
     if(!on || src) { paint(); return; }
@@ -33,18 +40,20 @@
   }
   const begin = () => start().catch(() => { loading = false; playing = false; paint(); });
   btns.forEach(b => b.addEventListener('click', () => {
+    if(on && !playing && !loading){ begin(); return; } // armed but blocked until now: this tap is the unlock
     on = !on; try{ localStorage.setItem(KEY, on ? '1' : '0'); }catch(e){}
     on ? begin() : stop();
   }));
-  // any user-activation gesture (tap, click, key — not pointerdown, which touch screens don't count) starts the armed ambience;
-  // keeps listening until playback really begins
+  // A tap is touchend then click; on Android only the click carries activation. So every gesture calls resume()
+  // synchronously (that is the unlock), while a single pending start() waits for the context to turn running.
   let unlocking = false;
   const gesture = e => {
-    if(!on || playing || loading || unlocking) return;
+    if(!on || playing) return;
     if(e.target && e.target.closest && e.target.closest('.snd')) return;
-    unlocking = true; begin().finally(() => { unlocking = false; });
+    ensureCtx(); if(ctx.state !== 'running') ctx.resume().catch(() => {});
+    if(!unlocking && !loading){ unlocking = true; begin().finally(() => { unlocking = false; }); }
   };
-  ['click','touchend','keydown'].forEach(ev => addEventListener(ev, gesture, {passive:true, capture:true}));
+  ['click','touchend','keydown','pointerup'].forEach(ev => addEventListener(ev, gesture, {passive:true, capture:true}));
   document.addEventListener('visibilitychange', () => { if(!ctx || !playing) return; document.hidden ? ctx.suspend() : ctx.resume(); });
   if(on) addEventListener('load', () => setTimeout(prefetch, 800), {once:true});
   paint();
