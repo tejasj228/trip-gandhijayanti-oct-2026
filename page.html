@@ -1570,7 +1570,9 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
       const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 8500; lp.Q.value = .5;
       gain.connect(lp).connect(ctx.destination);
     }
-    if(ctx.state === 'suspended') await ctx.resume();
+    // resume() must be called synchronously inside a user gesture; if the browser still refuses, bail and wait for the next gesture
+    if(ctx.state !== 'running') await Promise.race([ctx.resume().catch(() => {}), new Promise(r => setTimeout(r, 1200))]);
+    if(ctx.state !== 'running'){ paint(); return; }
     if(!buf){ loading = true; paint(); const ab = await (pending || prefetch() || fetch(SRC).then(r => r.arrayBuffer())); buf = await ctx.decodeAudioData(ab.slice(0)); loading = false; }
     if(!on || src) { paint(); return; }
     src = ctx.createBufferSource(); src.buffer = buf; src.loop = true; src.loopStart = 1.5; src.loopEnd = buf.duration - 1.5;
@@ -1586,14 +1588,18 @@ try{ setExt(localStorage.getItem('overnight.ext') === '1', false); }catch(e){ se
   }
   const begin = () => start().catch(() => { loading = false; playing = false; paint(); });
   btns.forEach(b => b.addEventListener('click', () => {
-    if(loading) return;
     on = !on; try{ localStorage.setItem(KEY, on ? '1' : '0'); }catch(e){}
     on ? begin() : stop();
   }));
-  // first gesture anywhere (not on the toggle itself) starts the armed ambience
-  let armed = true;
-  const gesture = e => { if(!armed) return; if(e.target && e.target.closest && e.target.closest('.snd')) return; armed = false; if(on && !playing && !loading) begin(); };
-  ['pointerdown','touchend','keydown'].forEach(ev => addEventListener(ev, gesture, {passive:true}));
+  // any user-activation gesture (tap, click, key — not pointerdown, which touch screens don't count) starts the armed ambience;
+  // keeps listening until playback really begins
+  let unlocking = false;
+  const gesture = e => {
+    if(!on || playing || loading || unlocking) return;
+    if(e.target && e.target.closest && e.target.closest('.snd')) return;
+    unlocking = true; begin().finally(() => { unlocking = false; });
+  };
+  ['click','touchend','keydown'].forEach(ev => addEventListener(ev, gesture, {passive:true, capture:true}));
   document.addEventListener('visibilitychange', () => { if(!ctx || !playing) return; document.hidden ? ctx.suspend() : ctx.resume(); });
   if(on) addEventListener('load', () => setTimeout(prefetch, 800), {once:true});
   paint();
