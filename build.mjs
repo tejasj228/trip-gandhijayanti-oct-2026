@@ -23,11 +23,11 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Six mountain escapes from Delhi over the Gandhi Jayanti long weekend, 1–5 Oct 2026, all by overnight bus from Kashmere Gate.">
+<meta name="description" content="Jibhi, Shoja and the trek to Serolsar Lake — a full Himachal plan for two over the Gandhi Jayanti long weekend, 1–5 Oct 2026, by overnight bus from Delhi.">
 <meta name="color-scheme" content="light dark">
-<meta property="og:title" content="The Overnight Issue">
-<meta property="og:description" content="Six hill escapes from Delhi by night bus — compared, planned day by day, for the Gandhi Jayanti weekend.">
-<meta property="og:image" content="img/mcleod.jpg">
+<meta property="og:title" content="The Himachal Issue">
+<meta property="og:description" content="Jibhi, Shoja, Jalori Pass and Serolsar Lake — itinerary, budget, map, stays and cafés, planned day by day for two.">
+<meta property="og:image" content="img/shoja.jpg">
 ${head}
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
